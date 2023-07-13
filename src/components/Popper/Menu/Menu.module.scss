@@ -1,0 +1,21 @@
+// Menu
+.content {
+  width: 224px;
+}
+
+.menu-item {
+  border: none;
+  width: 100%;
+  justify-content: flex-start;
+  font-weight: 500;
+  border-radius: 0;
+
+  i {
+    margin-right: 8px;
+    width: 18px;
+  }
+  
+  &:last-child {
+    margin-bottom: 8px;
+  }
+}

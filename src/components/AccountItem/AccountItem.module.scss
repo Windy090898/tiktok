@@ -1,0 +1,35 @@
+.wrapper {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    cursor: pointer;
+    padding: 9px 16px;
+
+    &:hover {
+        background-color: rgba(22, 24, 35, 0.02);
+    }
+
+    .avatar {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+.info {
+    flex: 1;
+}
+.name {
+    font-weight: 600;
+    color: var(--primary-color);
+    i {
+        margin-left: 6px;
+        color: rgb(32 213 236);
+        font-size: 1.4rem;
+    }
+}
+.username {
+    font-size: 1.4rem;
+    color: var(--secondary-color);
+}
+}

@@ -1,0 +1,66 @@
+.wrapper {
+  display: inline-flex;
+  font-weight: 600;
+  padding: 8px 20px;
+  min-width: 100px;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--white-color);
+  border: 1px solid var(--secondary-color);
+  user-select: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+
+  &:hover {
+    background-color: rgba(22, 24, 35, 0.03);
+  }
+
+  &.disabled {
+    pointer-events: none;
+    cursor: no-drop;
+    opacity: 0.5;
+  }
+}
+
+// Button type
+.round {
+  border-radius: 52px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  &:hover {
+    border-color: rgba(22, 24, 35, 0.2);
+    background-color: rgba(255, 255, 255, 1);
+  }
+}
+
+.primary {
+  color: var(--white-color);
+  background-color: var(--pink-color);
+  border-color: var(--pink-color);
+
+  &:hover {
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.06), rgba(0, 0, 0, 0.06)),
+      #fe2c55;
+    border-color: var(--pink-color);
+  }
+}
+
+.outline {
+  color: var(--pink-color);
+  border-color: var(--pink-color);
+  &:hover {
+    background-color: rgba(254, 44, 85, 0.08);
+    border-color: var(--pink-color);
+  }
+}
+
+// Button size
+.small {
+  min-width: 88px;
+  padding: 4px 14px;
+}
+
+.large {
+  min-width: 150px;
+  padding: 12px 20px;
+}
