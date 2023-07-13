@@ -14,10 +14,15 @@
   i {
     margin-right: 8px;
     width: 18px;
+    text-align: center;
   }
   
   &:last-child {
     margin-bottom: 8px;
+  }
+
+  &.separate {
+    border-top: 1px solid rgba(22, 24, 35, 0.12);
   }
 }
 

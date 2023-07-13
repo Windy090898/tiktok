@@ -97,6 +97,7 @@
 
     .nav-action {
       display: flex;
+      align-items: center;
       gap: 20px;
       .plus {
         padding-right: 8px;
@@ -113,6 +114,21 @@
         background-color: transparent;
         padding: 8px;
         cursor: pointer;
+      }
+
+      .action-btn {
+        background-color: transparent;
+        font-size: 2rem;
+        cursor: pointer;
+      }
+
+      .avatar {
+        width: 32px;
+        height: 32px;
+        object-fit: cover;
+        border-radius: 50%;
+        cursor: pointer;
+        margin-left: 12px;
       }
       
     }
