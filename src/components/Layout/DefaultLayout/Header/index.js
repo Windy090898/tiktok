@@ -17,11 +17,24 @@ const MENU_ITEMS = [
   {
     icon: <i className="fa-solid fa-earth-asia"></i>,
     title: 'English',
+    children: {
+      title: 'Language',
+      data: [
+        {
+          code: 'en',
+          title: 'English',
+        },
+        {
+          code: 'vn',
+          title: 'Vietnamese',
+        },
+      ],
+    },
   },
   {
     icon: <i className="fa-solid fa-circle-question"></i>,
     title: 'Feedback and help',
-    to: '/feedback'
+    to: '/feedback',
   },
   {
     icon: <i className="fa-solid fa-keyboard"></i>,
@@ -30,7 +43,11 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-  const [searchResult, setSearchResult] = useState([1]);
+  const [searchResult, setSearchResult] = useState([]);
+
+  const handleMenuChange = (menuItem) => {
+
+  }
   return (
     <header className={cx('wrapper')}>
       <div className={cx('inner')}>
@@ -74,7 +91,7 @@ function Header() {
             Upload
           </Button>
           <Button primary>Login</Button>
-          <Menu items={MENU_ITEMS}>
+          <Menu items={MENU_ITEMS} onChange={handleMenuChange}>
             <button className={cx('more-icon')}>
               <i className="fa-solid fa-ellipsis-vertical"></i>
             </button>
