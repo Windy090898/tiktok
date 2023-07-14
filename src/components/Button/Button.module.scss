@@ -1,16 +1,16 @@
 .wrapper {
   display: inline-flex;
-  font-weight: 600;
-  padding: 8px 20px;
+  justify-content: center;
+  align-items: center;
   min-width: 100px;
+  padding: 8px 20px;
+  font-weight: 600;
   height: 36px;
   border-radius: 4px;
   cursor: pointer;
   background-color: var(--white-color);
   border: 1px solid var(--secondary-color);
   user-select: none;
-  justify-content: center;
-  align-items: center;
   font-size: 1.6rem;
 
   &:hover {
@@ -64,4 +64,12 @@
 .large {
   min-width: 150px;
   padding: 12px 20px;
+}
+
+.icon {
+  line-height: normal;
+}
+
+.icon + .title, .title + .icon {
+  margin-left: 8px;
 }

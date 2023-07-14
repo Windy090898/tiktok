@@ -1,4 +1,5 @@
 import { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import className from 'classnames/bind';
 import styles from './Header.module.scss';
@@ -12,7 +13,8 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
-import { Link } from 'react-router-dom';
+import { InboxIcon, MessageIcon, MoreIcon, PlusIcon, SearchIcon } from '~/components/Icon';
+import Image from '~/components/Image';
 
 const cx = className.bind(styles);
 const MENU_ITEMS = [
@@ -106,27 +108,24 @@ function Header() {
             </span>
 
             <button className={cx('search-btn')}>
-              <i className="fa-solid fa-magnifying-glass"></i>
+              <SearchIcon />
             </button>
           </div>
         </HeadlessTippy>
         <div className={cx('nav-action')}>
-          <Button to="/upload">
-            <span className={cx('plus')}>
-              <i className="fa-solid fa-plus"></i>
-            </span>
-            Upload
+          <Button to="/upload" leftIcon={<PlusIcon />}>
+              Upload
           </Button>
           {currentUser ? (
             <Fragment>
               <Tippy content='Message'>
-                <Link className={cx('message', 'action-btn')}>
-                  <i className="fa-solid fa-location-arrow"></i>
+                <Link className={cx('action-btn')}>
+                  <MessageIcon />
                 </Link>
               </Tippy>
               <Tippy content='Inbox'>
-                <button className={cx('inbox', 'action-btn')}>
-                  <i className="fa-solid fa-message"></i>
+                <button className={cx('action-btn')}>
+                  <InboxIcon />
                 </button>
               </Tippy>
             </Fragment>
@@ -135,14 +134,14 @@ function Header() {
           )}
           <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
             {currentUser ? (
-              <img
+              <Image
                 className={cx('avatar')}
-                src="https://p16-sign-sg.tiktokcdn.com/aweme/720x720/tiktok-obj/1682660794030081.jpeg?x-expires=1689386400&x-signature=15Kcfp7q2sKPMEHJGPx3il%2F6hvA%3D"
+                src="sgn-sg.tiktokcdn.com/aweme/720x720/tiktok-obj/1682660794030081.jpeg?x-expires=1689386400&x-signature=15Kcfp7q2sKPMEHJGPx3il%2F6hvA%3D"
                 alt=""
               />
             ) : (
               <button className={cx('more-icon')}>
-                <i className="fa-solid fa-ellipsis-vertical"></i>
+                <MoreIcon />
               </button>
             )}
           </Menu>

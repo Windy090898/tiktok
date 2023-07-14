@@ -25,7 +25,7 @@
         padding: 5px 12px;
       }
     }
-    
+
     .nav-search {
       width: var(--search-width);
       height: var(--search-height);
@@ -36,7 +36,7 @@
       border: 1.5px solid transparent;
       align-items: center;
       position: relative;
-      
+
       input {
         height: 100%;
         flex: 1;
@@ -98,13 +98,16 @@
     .nav-action {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 16px;
       .plus {
         padding-right: 8px;
       }
       .upload {
+        font-style: normal;
         font-weight: 600;
-        color: rgb(22 24 35);
+        font-size: 16px;
+        line-height: 24px;
+        color: rgba(22, 24, 35, 1);
         border: 1px solid var(--secondary-color);
         padding: 5px 15px;
       }
@@ -118,7 +121,7 @@
 
       .action-btn {
         background-color: transparent;
-        font-size: 2rem;
+        line-height: normal;
         cursor: pointer;
       }
 
@@ -130,9 +133,6 @@
         cursor: pointer;
         margin-left: 12px;
       }
-      
     }
   }
 }
-
-
