@@ -126,6 +126,7 @@ function Header() {
               <Tippy content='Inbox'>
                 <button className={cx('action-btn')}>
                   <InboxIcon />
+                  <span className={cx('badge')}>26</span>
                 </button>
               </Tippy>
             </Fragment>
