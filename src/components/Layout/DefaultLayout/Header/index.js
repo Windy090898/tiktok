@@ -1,20 +1,19 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import className from 'classnames/bind';
 import styles from './Header.module.scss';
 
 import Tippy from '@tippyjs/react';
-import HeadlessTippy from '@tippyjs/react/headless';
+
 import 'tippy.js/dist/tippy.css'; // option
 
 import images from '~/assets/img';
-import { Wrapper as PopperWrapper } from '~/components/Popper';
-import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
-import { InboxIcon, MessageIcon, MoreIcon, PlusIcon, SearchIcon } from '~/components/Icon';
+import { InboxIcon, MessageIcon, MoreIcon, PlusIcon } from '~/components/Icon';
 import Image from '~/components/Image';
+import Search from '../Search';
 
 const cx = className.bind(styles);
 const MENU_ITEMS = [
@@ -47,7 +46,6 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-  const [searchResult, setSearchResult] = useState([]);
   const currentUser = true;
 
   const handleMenuChange = (menuItem) => { };
@@ -83,35 +81,7 @@ function Header() {
         <div className={cx('nav-brand')}>
           <img src={images.logo} alt="" />
         </div>
-        <HeadlessTippy
-          render={(attrs) => (
-            <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-              <PopperWrapper>
-                <h4 className={cx('search-label')}>Accounts</h4>
-                <AccountItem />
-                <AccountItem />
-                <AccountItem />
-              </PopperWrapper>
-            </div>
-          )}
-          visible={searchResult.length > 0}
-          onClickOutside
-          interactive
-        >
-          <div className={cx('nav-search')}>
-            <input type="text" placeholder="Search account and videos" />
-            <button className={cx('clear')}>
-              <i className="fa-solid fa-circle-xmark"></i>
-            </button>
-            <span className={cx('loading')}>
-              <i className="fa-solid fa-spinner"></i>
-            </span>
-
-            <button className={cx('search-btn')}>
-              <SearchIcon />
-            </button>
-          </div>
-        </HeadlessTippy>
+        <Search />
         <div className={cx('nav-action')}>
           <Button to="/upload" leftIcon={<PlusIcon />}>
               Upload
