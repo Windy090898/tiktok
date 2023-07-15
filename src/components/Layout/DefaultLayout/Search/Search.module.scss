@@ -39,11 +39,24 @@
   .loading {
     color: var(--secondary-color);
     position: absolute;
-    right: var(--search-btn-width);
-    padding-right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: calc(var(--search-btn-width) + 10px);
 
     &:hover {
       color: var(--primary-color);
+    }
+  }
+
+  .loading {
+    animation: spinner 1s linear infinite;
+  }
+
+  @keyframes spinner {
+    from {
+      transform:translateY(-50%) rotate(0deg);
+    } to {
+      transform:translateY(-50%) rotate(360deg);
     }
   }
 

@@ -9,7 +9,7 @@ function App() {
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
-            const Layout = route.layout ? route.layout : route.layout === null ? Fragment :DefaultLayout;
+            const Layout = route.layout ? route.layout : route.layout === null ? Fragment : DefaultLayout;
             const Page = route.element;
             return <Route key={index} path={route.path} element={<Layout><Page /></Layout>} />;
           })}
