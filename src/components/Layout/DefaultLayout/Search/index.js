@@ -1,13 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
+
+import * as searchServices from '~/apiServices/searchServices';
+
 import className from 'classnames/bind';
 import styles from './Search.module.scss';
+
 import { useDebounce } from '~/hooks';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import { SearchIcon } from '~/components/Icon';
-import axios from 'axios';
 
 const cx = className.bind(styles);
 
@@ -16,31 +19,25 @@ function Search() {
   const [searchResult, setSearchResult] = useState([]);
   const [showResult, setShowResult] = useState(true);
   const [loading, setLoading] = useState(false);
-  
-  const debounced = useDebounce(searchText, 500)
-  
+
+  const debounced = useDebounce(searchText, 500);
+
   const inputRef = useRef();
-
-
 
   useEffect(() => {
     if (!debounced.trim()) {
       setSearchResult([]);
       return;
     }
-    setLoading(true);
 
-    const url = `https://tiktok.fullstack.edu.vn/api/users/search?q=${encodeURIComponent(
-      debounced,
-    )}&type=less`;
+    const fetchApi = async () => {
+      setLoading(true);
+      const result = await searchServices.search(debounced)
+      setSearchResult(result);
+      setLoading(false);
+    } 
 
-    axios
-      .get(url)
-      .then((res) => {
-        setSearchResult(res.data.data);
-        setLoading(false);
-      })
-      .catch((err) => setLoading(false));
+    fetchApi();
   }, [debounced]);
 
   const handleClear = () => {
@@ -65,7 +62,11 @@ function Search() {
           <PopperWrapper>
             <h4 className={cx('search-label')}>Accounts</h4>
             {searchResult.map((item) => (
-              <AccountItem key={item.id} item={item} onClick={handleHideResult}/>
+              <AccountItem
+                key={item.id}
+                item={item}
+                onClick={handleHideResult}
+              />
             ))}
           </PopperWrapper>
         </div>
