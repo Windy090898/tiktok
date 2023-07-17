@@ -1,4 +1,4 @@
-import routeConfig from '~/config/routes';
+import config from '~/config';
 
 import Home from '~/pages/Home';
 import Following from '~/pages/Following';
@@ -7,10 +7,10 @@ import Profile from '~/pages/Profile';
 
 // Public routes: don't need to login
 export const publicRoutes = [
-  { path: routeConfig.home, element: Home },
-  { path: routeConfig.following, element: Following },
-  { path: routeConfig.upload, element: Upload },
-  { path: routeConfig.profile, element: Profile },
+  { path: config.routes.home, element: Home },
+  { path: config.routes.following, element: Following },
+  { path: config.routes.upload, element: Upload },
+  { path: config.routes.profile, element: Profile },
 ];
 
 export const privateRoutes = [];

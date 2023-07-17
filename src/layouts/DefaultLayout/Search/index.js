@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
 
-import * as searchServices from '~/apiServices/searchServices';
+import * as searchService from '~/services/searchService';
 
 import className from 'classnames/bind';
 import styles from './Search.module.scss';
@@ -32,7 +32,7 @@ function Search() {
 
     const fetchApi = async () => {
       setLoading(true);
-      const result = await searchServices.search(debounced);
+      const result = await searchService.search(debounced);
       setSearchResult(result);
       setLoading(false);
     };
