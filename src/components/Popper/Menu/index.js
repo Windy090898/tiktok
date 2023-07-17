@@ -10,32 +10,33 @@ import MenuHeader from './MenuHeader';
 const cx = classNames.bind(styles);
 const defaultFn = () => {}
 
-function Menu({ children, items = [], onChange = defaultFn }) {
+function Menu({ children, items = [], onChange = defaultFn, hideOnClick = false }) {
   const [history, setHistory] = useState([{ data: items }]);
   const current = history[history.length - 1];
   const renderItems = () => {
     return current.data.map((item, index) => {
       const isParent = !!item.children;
       return (
-          <MenuItem
-            key={index}
-            data={item}
-            onClick={() => {
-              if (isParent) {
-                setHistory((prev) => [...prev, item.children]);
-              } else {
-                onChange(item);
-              }
-            }}
-          />
+        <MenuItem
+          key={index}
+          data={item}
+          onClick={() => {
+            if (isParent) {
+              setHistory((prev) => [...prev, item.children]);
+            } else {
+              onChange(item);
+            }
+          }}
+        />
       );
     });
   };
   return (
     <Tippy
       // visible
+      hideOnClick={hideOnClick}
       interactive
-      offset={[10,8]}
+      offset={[10, 8]}
       delay={[0, 500]}
       placement="bottom-end"
       render={(attrs) => (
@@ -49,7 +50,7 @@ function Menu({ children, items = [], onChange = defaultFn }) {
                 }
               />
             )}
-            {renderItems()}
+            <div className={cx('menu-list')}>{renderItems()}</div>
           </PopperWrapper>
         </div>
       )}

@@ -5,8 +5,9 @@ import className from 'classnames/bind';
 import styles from './Header.module.scss';
 
 import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
-import 'tippy.js/dist/tippy.css'; // option
+import routeConfig from '~/config/routes';
 
 import images from '~/assets/img';
 import Button from '~/components/Button';
@@ -78,22 +79,22 @@ function Header() {
   return (
     <header className={cx('wrapper')}>
       <div className={cx('inner')}>
-        <div className={cx('nav-brand')}>
+        <Link to={routeConfig.home} className={cx('nav-brand')}>
           <img src={images.logo} alt="" />
-        </div>
+        </Link>
         <Search />
         <div className={cx('nav-action')}>
           <Button to="/upload" leftIcon={<PlusIcon />}>
-              Upload
+            Upload
           </Button>
           {currentUser ? (
             <Fragment>
-              <Tippy content='Message'>
+              <Tippy content="Message">
                 <Link className={cx('action-btn')}>
                   <MessageIcon />
                 </Link>
               </Tippy>
-              <Tippy content='Inbox'>
+              <Tippy content="Inbox">
                 <button className={cx('action-btn')}>
                   <InboxIcon />
                   <span className={cx('badge')}>26</span>
@@ -101,9 +102,12 @@ function Header() {
               </Tippy>
             </Fragment>
           ) : (
-              <Button primary>Login</Button>
+            <Button primary>Login</Button>
           )}
-          <Menu items={currentUser ? userMenu : MENU_ITEMS} onChange={handleMenuChange}>
+          <Menu
+            items={currentUser ? userMenu : MENU_ITEMS}
+            onChange={handleMenuChange}
+          >
             {currentUser ? (
               <Image
                 className={cx('avatar')}

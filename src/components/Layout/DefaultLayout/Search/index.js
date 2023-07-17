@@ -32,13 +32,21 @@ function Search() {
 
     const fetchApi = async () => {
       setLoading(true);
-      const result = await searchServices.search(debounced)
+      const result = await searchServices.search(debounced);
       setSearchResult(result);
       setLoading(false);
-    } 
+    };
 
     fetchApi();
   }, [debounced]);
+
+  const handleChange = (e) => {
+    const searchValue = e.target.value;
+    if (searchValue.startsWith(' ')) {
+      return;
+    }
+    setSearchText(searchValue);
+  };
 
   const handleClear = () => {
     setSearchText('');
@@ -56,52 +64,55 @@ function Search() {
     setShowResult(true);
   };
   return (
-    <HeadlessTippy
-      render={(attrs) => (
-        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-          <PopperWrapper>
-            <h4 className={cx('search-label')}>Accounts</h4>
-            {searchResult.map((item) => (
-              <AccountItem
-                key={item.id}
-                item={item}
-                onClick={handleHideResult}
-              />
-            ))}
-          </PopperWrapper>
-        </div>
-      )}
-      visible={searchResult.length > 0 && showResult}
-      // onClickOutside={handleHideResult}
-      interactive
-      hideOnClick
-    >
-      <div className={cx('nav-search')}>
-        <input
-          ref={inputRef}
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          onFocus={handleShowResult}
-          placeholder="Search account and videos"
-        />
+    // Using a wrapper <div> tag around the reference element solves Tippy problems by creating a new parentNode context
+    <div>
+      <HeadlessTippy
+        interactive
+        render={(attrs) => (
+          <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+            <PopperWrapper>
+              <h4 className={cx('search-label')}>Accounts</h4>
+              {searchResult.map((item) => (
+                <AccountItem
+                  key={item.id}
+                  item={item}
+                  onClick={handleHideResult}
+                />
+              ))}
+            </PopperWrapper>
+          </div>
+        )}
+        visible={searchResult.length > 0 && showResult}
+        // onClickOutside={handleHideResult}
+        // hideOnClick
+      >
+        <div className={cx('nav-search')}>
+          <input
+            ref={inputRef}
+            value={searchText}
+            onChange={handleChange}
+            onFocus={handleShowResult}
+            placeholder="Search account and videos"
+          />
 
-        {!!searchText && !loading && (
-          <button onClick={handleClear} className={cx('clear')}>
-            <i className="fa-solid fa-circle-xmark"></i>
+          {!!searchText && !loading && (
+            <button onClick={handleClear} className={cx('clear')}>
+              <i className="fa-solid fa-circle-xmark"></i>
+            </button>
+          )}
+
+          {loading && (
+            <span className={cx('loading')}>
+              <i className="fa-solid fa-spinner"></i>
+            </span>
+          )}
+
+          <button className={cx('search-btn')}>
+            <SearchIcon />
           </button>
-        )}
-
-        {loading && (
-          <span className={cx('loading')}>
-            <i className="fa-solid fa-spinner"></i>
-          </span>
-        )}
-
-        <button className={cx('search-btn')}>
-          <SearchIcon />
-        </button>
-      </div>
-    </HeadlessTippy>
+        </div>
+      </HeadlessTippy>
+    </div>
   );
 }
 

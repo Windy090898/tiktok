@@ -7,6 +7,7 @@
     --pink-color: #fe2c55;
     --white-color: #fff;
     
+    --font-family: 'TiktokFont-Regular';
 
     // Default layout
     --default-layout-header-height: 60px;
@@ -24,10 +25,11 @@ html {
 }
 
 body {
-    font-family: 'TiktokFont-Regular', sans-serif;
+    font-family: var(--font-family);
     font-size: 1.6rem;
     line-height: 1.5;
     text-rendering: optimizeSpeed;
+    overflow-y: overlay;
 }
 
 button, input, [tabindex] {
@@ -74,4 +76,18 @@ body .tippy-box {
 
 body .tippy-arrow {
     color: rgba(84, 84, 84, 0.92);
+}
+
+//scollbar
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(22, 24, 35, .2);
+}
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
 }

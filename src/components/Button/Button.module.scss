@@ -12,6 +12,7 @@
   border: 1px solid var(--secondary-color);
   user-select: none;
   font-size: 1.6rem;
+  font-family: var(--font-family);
 
   &:hover {
     background-color: rgba(22, 24, 35, 0.03);
@@ -67,7 +68,7 @@
 }
 
 .icon {
-  line-height: normal;
+  display: flex;
 }
 
 .icon + .title, .title + .icon {
