@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind'
 import styles from './AccountItem.module.scss'
 import Image from '~/components/Image';
@@ -22,5 +23,10 @@ function AccountItem({ item, onClick }) {
       </Link>
     );
 }
+
+AccountItem.propTypes = {
+  item: PropTypes.object,
+  onClick: PropTypes.func,
+};
 
 export default AccountItem
