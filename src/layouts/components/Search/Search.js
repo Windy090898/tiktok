@@ -17,7 +17,7 @@ const cx = className.bind(styles);
 function Search() {
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
-  const [showResult, setShowResult] = useState(true);
+  const [showResult, setShowResult] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const debounced = useDebounce(searchText, 500);
@@ -56,13 +56,17 @@ function Search() {
 
   const handleHideResult = () => {
     setShowResult(false);
-    setSearchText('');
-    setSearchResult([]);
   };
 
   const handleShowResult = () => {
     setShowResult(true);
   };
+
+  const handleClearResult = () => {
+     setShowResult(false);
+     setSearchText('');
+     setSearchResult([]);
+  }
   return (
     // Using a wrapper <div> tag around the reference element solves Tippy problems by creating a new parentNode context
     <div>
@@ -76,14 +80,14 @@ function Search() {
                 <AccountItem
                   key={item.id}
                   item={item}
-                  onClick={handleHideResult}
+                  onClick={handleClearResult}
                 />
               ))}
             </PopperWrapper>
           </div>
         )}
         visible={searchResult.length > 0 && showResult}
-        // onClickOutside={handleHideResult}
+        onClickOutside={handleHideResult}
         // hideOnClick
       >
         <div className={cx('nav-search')}>

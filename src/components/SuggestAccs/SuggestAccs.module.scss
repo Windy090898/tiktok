@@ -1,0 +1,63 @@
+.wrapper {
+  padding: 16px 0;
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 1px;
+    width: 90%;
+    background-color: var(--secondary-color);
+  }
+  .label {
+    font-weight: 600;
+    font-size: 1.6rem;
+  }
+
+  .account-list {
+    margin-top: 6px;
+  }
+
+  .account-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .user-infor {
+      flex: 1;
+      margin-left: 12px;
+    }
+    .nickname {
+      font-size: 1.6rem;
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+    .check {
+      font-size: 1.4rem;
+      margin-left: 4px;
+      color: rgb(32 213 236);
+    }
+    .name {
+      font-size: 1.2rem;
+      color: var(--secondary-color);
+    }
+
+    &:hover {
+      background-color: rgba(22, 24, 35, 0.03);
+    }
+  }
+
+  .more {
+    color: var(--pink-color);
+    font-weight: 600;
+    font-size: 1.4rem;
+    cursor: pointer;
+  }
+}

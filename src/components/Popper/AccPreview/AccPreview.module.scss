@@ -1,0 +1,54 @@
+.account-preview {
+  width: var(--default-layout-sidebar-width);
+  padding: 20px;
+  color: var(--primary-color);
+
+  .action {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+
+  .user-infor {
+    margin-top: 8px;
+    .nickname {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .check {
+      font-size: 1.4rem;
+      margin-left: 4px;
+      color: rgb(32 213 236);
+    }
+    .name {
+      font-size: 1.4rem;
+    }
+  }
+
+  .user-detail {
+    display: flex;
+    margin-top: 8px;
+    font-style: 1.6rem;
+    .detail-item + .detail-item {
+        margin-left: 12px;
+    }
+
+    .number {
+        font-weight: 700;
+        margin-right: 6px;
+        font-size: 1.6rem;
+    }
+
+    .label {
+        color: var(--secondary-color);
+        font-size: 1.4rem;
+    }
+  }
+}
