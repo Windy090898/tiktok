@@ -1,26 +1,47 @@
-import React from 'react'
-import classNames from 'classnames/bind'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons'
-import PropTypes from 'prop-types'
-import styles from './AccPreview.module.scss'
+import React, { useEffect, useState } from 'react';
+import classNames from 'classnames/bind';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
+import styles from './AccPreview.module.scss';
 
-import Wrapper from '../Wrapper'
-import Tippy from '@tippyjs/react/headless'
-import Image from '~/components/Image'
-import Button from '~/components/Button/Button'
+import * as searchService from '~/services/searchService';
 
-const cx = classNames.bind(styles)
+import Wrapper from '../Wrapper';
+import Tippy from '@tippyjs/react/headless';
+import Image from '~/components/Image';
+import Button from '~/components/Button/Button';
+
+const cx = classNames.bind(styles);
 
 function AccPreview({ children, item }) {
-  const { avatar, nickname, first_name, last_name, tick, followers_count, likes_count } = item
+  const [previewItem, setPreviewItem] = useState({});
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      const result = await searchService.users(item.nickname);
+      setPreviewItem(result);
+    };
+    fetchApi();
+  }, [item]);
+  
+  const {
+    avatar,
+    nickname,
+    first_name,
+    last_name,
+    tick,
+    followers_count,
+    likes_count,
+    bio,
+  } = previewItem;
   return (
     // Using a wrapper <div> around the reference element solves this by creating a new parentNode context.
     <div>
       <Tippy
         // visible
         interactive
-        delay={[500, 0]}
+        delay={[800, 0]}
         placement="bottom-start"
         offset=""
         render={(attrs) => (
@@ -52,6 +73,7 @@ function AccPreview({ children, item }) {
                   <span className={cx('label')}>Likes</span>
                 </div>
               </div>
+              <p className={cx('user-bio')}>{bio}</p>
             </div>
           </Wrapper>
         )}
@@ -65,6 +87,6 @@ function AccPreview({ children, item }) {
 AccPreview.propTypes = {
   children: PropTypes.node.isRequired,
   item: PropTypes.object.isRequired,
-}
+};
 
-export default AccPreview
+export default AccPreview;

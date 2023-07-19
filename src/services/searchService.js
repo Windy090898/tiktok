@@ -28,3 +28,12 @@ export const suggestAccs = async (page=1, per_page=5) => {
   }
 };
 
+export const users = async (nickname) => {
+  try {
+    const res = await httpRequest.get(`users/@${nickname}`);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+

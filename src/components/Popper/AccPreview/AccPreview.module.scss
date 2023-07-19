@@ -1,6 +1,6 @@
 .account-preview {
   width: var(--default-layout-sidebar-width);
-  padding: 20px;
+  padding: 15px 20px;
   color: var(--primary-color);
 
   .action {
@@ -25,7 +25,7 @@
     .check {
       font-size: 1.4rem;
       margin-left: 4px;
-      color: rgb(32 213 236);
+      color: var(--tick-color);
     }
     .name {
       font-size: 1.4rem;
@@ -50,5 +50,12 @@
         color: var(--secondary-color);
         font-size: 1.4rem;
     }
+  }
+
+  .user-bio {
+    font-size: 1.4rem;
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--secondary-color);
   }
 }

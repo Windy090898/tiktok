@@ -1,0 +1,83 @@
+.item-container {
+  display: flex;
+  align-items: flex-start;
+  color: var(--primary-color);
+
+  .avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+  }
+
+  .avatar-container:hover ~ .content .nickname {
+    text-decoration: underline;
+  }
+
+  .content {
+    flex: 1;
+    margin-left: 12px;
+
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+
+      .infor {
+        flex: 1;
+
+        .author {
+          display: flex;
+          align-items: center;
+
+          .nickname {
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-right: 8px;
+            .check {
+              color: var(--tick-color);
+              font-size: 1.4rem;
+              margin-left: 4px;
+            }
+          }
+
+          &:hover {
+            .nickname {
+              text-decoration: underline;
+            }
+          }
+
+          .name {
+            font-size: 1.4rem;
+          }
+        }
+
+        .caption {
+          font-size: 1.6rem;
+          .hastag {
+            color: rgba(43, 93, 185, 1);
+            font-weight: 600;
+          }
+        }
+
+        .music {
+          font-size: 1.4rem;
+          display: flex;
+          align-items: center;
+          .music-name {
+            flex: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-left: 4px;
+          }
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+}
