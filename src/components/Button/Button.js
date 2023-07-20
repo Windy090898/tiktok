@@ -15,6 +15,8 @@ function Button({
   large,
   disabled,
   round,
+  circle,
+  square,
   children,
   className,
   leftIcon,
@@ -52,6 +54,8 @@ function Button({
     large,
     disabled,
     round,
+    circle,
+    square,
   });
   return (
     <Comp className={classes} {...props}>
@@ -71,11 +75,12 @@ Button.propTypes = {
   large: PropTypes.bool,
   disabled: PropTypes.bool,
   round: PropTypes.bool,
+  circle: PropTypes.bool,
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   leftIcon: PropTypes.node,
   rightIcon: PropTypes.node,
   onClick: PropTypes.func,
-}
+};
 
 export default Button;

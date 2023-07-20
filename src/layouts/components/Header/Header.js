@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import { Fragment, useRef} from 'react';
 import { Link } from 'react-router-dom';
 
 import className from 'classnames/bind';
@@ -15,6 +15,8 @@ import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, MoreIcon, PlusIcon } from '~/components/Icon';
 import Image from '~/components/Image';
 import Search from '../Search';
+import LoginModal from './LoginModal';
+
 
 const cx = className.bind(styles);
 const MENU_ITEMS = [
@@ -48,6 +50,7 @@ const MENU_ITEMS = [
 
 function Header() {
   const currentUser = false;
+  
 
   const handleMenuChange = (menuItem) => { };
   
@@ -76,6 +79,11 @@ function Header() {
     },
   ];
 
+  const loginModalRef = useRef()
+  const handleLoginShow = () => {
+    loginModalRef.current.setShow(true);
+  }
+  
   return (
     <header className={cx('wrapper')}>
       <div className={cx('inner')}>
@@ -102,7 +110,7 @@ function Header() {
               </Tippy>
             </Fragment>
           ) : (
-            <Button primary to='/'>Login</Button>
+            <Button primary onClick={handleLoginShow}>Login</Button>
           )}
           <Menu
             items={currentUser ? userMenu : MENU_ITEMS}
@@ -122,6 +130,7 @@ function Header() {
           </Menu>
         </div>
       </div>
+      <LoginModal ref={loginModalRef} />
     </header>
   );
 }

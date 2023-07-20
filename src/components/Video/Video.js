@@ -9,16 +9,22 @@ import VideoActions from './VideoActions';
 const cx = classNames.bind(styles);
 
 function Video({ control }) {
-  const [play, setPlay] = useState(true);
+  const [play, setPlay] = useState(false);
   const [volume, setVolume] = useState(0);
 
   const videoRef = useRef();
 
   useEffect(() => {
+    let playPromise = videoRef.current.play();
     if (play) {
       videoRef.current.play();
     } else {
-      videoRef.current.pause();
+      // solve: DOMException - The play() request was interrupted by a call to pause().
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => videoRef.current.pause())
+          .catch((err) => console.log(err));
+      }
     }
     videoRef.current.loop = true;
   }, [play]);
@@ -44,7 +50,7 @@ function Video({ control }) {
           src={video1}
           className={cx('video')}
           ref={videoRef}
-          autoPlay
+          // autoPlay
           muted={true}
         ></video>
         <div className={cx('control')}>

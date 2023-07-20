@@ -15,7 +15,7 @@
 		{
 			"id": "ac73e3ec-83a9-4ee0-8b29-67845be2912a",
 			"name": "[Auth] Get current user",
-			"url": "https://tiktok.fullstack.edu.vn//api/auth/me",
+			"url": "https://tiktok.fullstack.edu.vn/api/auth/me",
 			"time": 228,
 			"responseCode": {
 				"code": 404,
@@ -33,7 +33,7 @@
 		{
 			"id": "61a17a30-b6b0-4440-8484-2f403ac557a4",
 			"name": "[Auth] Update current user",
-			"url": "https://tiktok.fullstack.edu.vn//api/auth/me?_method=PATCH",
+			"url": "https://tiktok.fullstack.edu.vn/api/auth/me?_method=PATCH",
 			"time": 96,
 			"responseCode": {
 				"code": 404,
@@ -51,7 +51,7 @@
 		{
 			"id": "30a76394-4fcd-4bba-b478-6c5d8c66c5f6",
 			"name": "Register",
-			"url": "https://tiktok.fullstack.edu.vn//api/auth/register",
+			"url": "https://tiktok.fullstack.edu.vn/api/auth/register",
 			"time": 83,
 			"responseCode": {
 				"code": 404,
@@ -69,7 +69,7 @@
 		{
 			"id": "8d2572e3-2434-4f76-9a4e-9cff2f899ec2",
 			"name": "Login",
-			"url": "https://tiktok.fullstack.edu.vn//api/auth/login",
+			"url": "https://tiktok.fullstack.edu.vn/api/auth/login",
 			"time": 100,
 			"responseCode": {
 				"code": 404,
@@ -87,7 +87,7 @@
 		{
 			"id": "622db9d0-e435-4af3-8816-4e728074618a",
 			"name": "Logout",
-			"url": "https://tiktok.fullstack.edu.vn//api/auth/logout",
+			"url": "https://tiktok.fullstack.edu.vn/api/auth/logout",
 			"time": 87,
 			"responseCode": {
 				"code": 404,
@@ -105,7 +105,7 @@
 		{
 			"id": "b6024960-6302-4e7a-b4c1-0657c1722690",
 			"name": "Get videos list",
-			"url": "https://tiktok.fullstack.edu.vn//api/videos?type=for-you&page=1",
+			"url": "https://tiktok.fullstack.edu.vn/api/videos?type=for-you&page=1",
 			"time": 78,
 			"responseCode": {
 				"code": 404,
@@ -123,7 +123,7 @@
 		{
 			"id": "f440249f-7c48-4069-a984-2054d02b1c52",
 			"name": "Get a video",
-			"url": "https://tiktok.fullstack.edu.vn//api/posts/334c1ddb-186d-4805-9bcd-0bb6622e79bc",
+			"url": "https://tiktok.fullstack.edu.vn/api/posts/334c1ddb-186d-4805-9bcd-0bb6622e79bc",
 			"time": 75,
 			"responseCode": {
 				"code": 404,
@@ -141,7 +141,7 @@
 		{
 			"id": "d84a39fd-e558-4882-9793-555715b33faa",
 			"name": "[Auth] Update a video",
-			"url": "https://tiktok.fullstack.edu.vn//api/videos/12?_method=PATCH",
+			"url": "https://tiktok.fullstack.edu.vn/api/videos/12?_method=PATCH",
 			"time": 95,
 			"responseCode": {
 				"code": 404,
@@ -159,7 +159,7 @@
 		{
 			"id": "6a9cd849-0043-4e34-92c6-c797258d8290",
 			"name": "[Auth] Delete a video",
-			"url": "https://tiktok.fullstack.edu.vn//api/videos/10",
+			"url": "https://tiktok.fullstack.edu.vn/api/videos/10",
 			"time": 83,
 			"responseCode": {
 				"code": 404,
@@ -177,7 +177,7 @@
 		{
 			"id": "a28d0571-39db-4452-a2fb-2109267e661b",
 			"name": "[Auth] Create a new video",
-			"url": "https://tiktok.fullstack.edu.vn//api/videos",
+			"url": "https://tiktok.fullstack.edu.vn/api/videos",
 			"time": 83,
 			"responseCode": {
 				"code": 404,
@@ -195,7 +195,7 @@
 		{
 			"id": "55d99c63-5417-43df-b708-ffa47785361f",
 			"name": "[Aurh] Get user's liked videos",
-			"url": "https://tiktok.fullstack.edu.vn//api/users/1/liked-posts",
+			"url": "https://tiktok.fullstack.edu.vn/api/users/1/liked-posts",
 			"time": 80,
 			"responseCode": {
 				"code": 404,
@@ -213,7 +213,7 @@
 		{
 			"id": "97815f4d-4cbb-46f6-ade7-f19dc0940c7b",
 			"name": "Get user's videos",
-			"url": "https://tiktok.fullstack.edu.vn//api/users/1/posts",
+			"url": "https://tiktok.fullstack.edu.vn/api/users/1/posts",
 			"time": 83,
 			"responseCode": {
 				"code": 404,
@@ -231,7 +231,7 @@
 		{
 			"id": "0f3c3b24-2906-4b5e-b1e7-01b82d567f91",
 			"name": "Get suggested users list",
-			"url": "https://tiktok.fullstack.edu.vn//api/users/suggested?page=1&per_page=12",
+			"url": "https://tiktok.fullstack.edu.vn/api/users/suggested?page=1&per_page=12",
 			"time": 77,
 			"responseCode": {
 				"code": 404,
@@ -249,7 +249,7 @@
 		{
 			"id": "a0ef5755-0255-4b06-ad36-5ee3162c68db",
 			"name": "Get an user",
-			"url": "https://tiktok.fullstack.edu.vn//api/users/@sondnf8",
+			"url": "https://tiktok.fullstack.edu.vn/api/users/@sondnf8",
 			"time": 85,
 			"responseCode": {
 				"code": 404,
@@ -267,7 +267,7 @@
 		{
 			"id": "3af588a2-c424-4671-8a85-b95cb3da0056",
 			"name": "[Auth] Like a post",
-			"url": "https://tiktok.fullstack.edu.vn//api/posts/1/like",
+			"url": "https://tiktok.fullstack.edu.vn/api/posts/1/like",
 			"time": 76,
 			"responseCode": {
 				"code": 404,
@@ -285,7 +285,7 @@
 		{
 			"id": "80545911-97a5-4e35-b86b-af5b989d640b",
 			"name": "[Auth] Unlike a post",
-			"url": "https://tiktok.fullstack.edu.vn//api/posts/1/unlike",
+			"url": "https://tiktok.fullstack.edu.vn/api/posts/1/unlike",
 			"time": 80,
 			"responseCode": {
 				"code": 404,
@@ -303,7 +303,7 @@
 		{
 			"id": "95afc1e9-8de7-4c0d-848e-364cc337584d",
 			"name": "[Auth] Like a comment",
-			"url": "https://tiktok.fullstack.edu.vn//api/comments/5/like",
+			"url": "https://tiktok.fullstack.edu.vn/api/comments/5/like",
 			"time": 85,
 			"responseCode": {
 				"code": 404,
@@ -321,7 +321,7 @@
 		{
 			"id": "92253cb9-5b29-40d5-bbe4-d101396c22e2",
 			"name": "[Auth] Unlike a comment",
-			"url": "https://tiktok.fullstack.edu.vn//api/comments/4/unlike",
+			"url": "https://tiktok.fullstack.edu.vn/api/comments/4/unlike",
 			"time": 78,
 			"responseCode": {
 				"code": 404,
@@ -339,7 +339,7 @@
 		{
 			"id": "68535008-6ada-48fd-a6e9-91efe29b9ef1",
 			"name": "[Auth] Update a comment",
-			"url": "https://tiktok.fullstack.edu.vn//api/comments/1",
+			"url": "https://tiktok.fullstack.edu.vn/api/comments/1",
 			"time": 79,
 			"responseCode": {
 				"code": 404,
@@ -357,7 +357,7 @@
 		{
 			"id": "c1d6a761-2774-4949-93c5-21d322b5ad0c",
 			"name": "[Auth] Delete a comment",
-			"url": "https://tiktok.fullstack.edu.vn//api/comments/1",
+			"url": "https://tiktok.fullstack.edu.vn/api/comments/1",
 			"time": 76,
 			"responseCode": {
 				"code": 404,
@@ -375,7 +375,7 @@
 		{
 			"id": "1e193b39-b445-49e1-aac9-61b8653bb191",
 			"name": "[Auth] Create a new comment on a post",
-			"url": "https://tiktok.fullstack.edu.vn//api/posts/49df7460-faaa-4739-9f02-ec6f80b5458d/comments",
+			"url": "https://tiktok.fullstack.edu.vn/api/posts/49df7460-faaa-4739-9f02-ec6f80b5458d/comments",
 			"time": 82,
 			"responseCode": {
 				"code": 404,
@@ -393,7 +393,7 @@
 		{
 			"id": "370cca58-49b8-4a3d-add8-5cdfca770073",
 			"name": "[Auth] Get comments list of a post",
-			"url": "https://tiktok.fullstack.edu.vn//api/posts/1/comments",
+			"url": "https://tiktok.fullstack.edu.vn/api/posts/1/comments",
 			"time": 85,
 			"responseCode": {
 				"code": 404,
@@ -411,7 +411,7 @@
 		{
 			"id": "9676465a-44f7-4846-8d6d-41f3930cc0d3",
 			"name": "[Auth] Get followings list",
-			"url": "https://tiktok.fullstack.edu.vn//api/me/followings?page=1",
+			"url": "https://tiktok.fullstack.edu.vn/api/me/followings?page=1",
 			"time": 79,
 			"responseCode": {
 				"code": 404,
@@ -429,7 +429,7 @@
 		{
 			"id": "c4f64296-c446-4f49-b404-48421fa95a69",
 			"name": "[Auth] Unfollow a user",
-			"url": "https://tiktok.fullstack.edu.vn//api/users/3/unfollow",
+			"url": "https://tiktok.fullstack.edu.vn/api/users/3/unfollow",
 			"time": 76,
 			"responseCode": {
 				"code": 404,
@@ -447,7 +447,7 @@
 		{
 			"id": "93af297d-bdce-42d5-a400-8f401f73d5d4",
 			"name": "[Auth] Follow a user",
-			"url": "https://tiktok.fullstack.edu.vn//api/users/3/follow",
+			"url": "https://tiktok.fullstack.edu.vn/api/users/3/follow",
 			"time": 90,
 			"responseCode": {
 				"code": 404,
@@ -465,7 +465,7 @@
 		{
 			"id": "475fd8fe-f379-433a-ab07-235cce972c38",
 			"name": "Search users",
-			"url": "https://tiktok.fullstack.edu.vn//api/users/search?q=f&type=less",
+			"url": "https://tiktok.fullstack.edu.vn/api/users/search?q=f&type=less",
 			"time": 76,
 			"responseCode": {
 				"code": 404,
