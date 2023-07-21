@@ -1,5 +1,7 @@
+import HeaderModal from "~/components/HeaderModal";
+import signupImg from '~/assets/img/signup-image.jpg';
+import { forwardRef, useImperativeHandle, useRef, useState } from "react";
 import { Form } from 'react-bootstrap';
-import { forwardRef, useImperativeHandle, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -11,14 +13,13 @@ import {
 import className from 'classnames/bind';
 import styles from './Header.module.scss';
 
-import HeaderModal from '~/components/HeaderModal';
-import loginImg from '~/assets/img/login-image.jpg';
 import Button from '~/components/Button';
-
+import { Link } from "react-router-dom";
 
 const cx = className.bind(styles);
 
-function LoginModal({ onChange}, ref) {
+
+function LoginModal({ onChange }, ref) {
   const [show, setShow] = useState(false);
 
   useImperativeHandle(ref, () => ({
@@ -33,15 +34,15 @@ function LoginModal({ onChange}, ref) {
   };
   return (
     <HeaderModal
-      signin
-      img={loginImg}
+      signup
+      img={signupImg}
       show={show}
       onHide={handleHide}
       onChange={onChange}
     >
       <div className={cx('form-section')}>
         <Form>
-          <Form.Label className={cx('form-label')}>Sign In</Form.Label>
+          <Form.Label className={cx('form-label')}>Sign Up</Form.Label>
           <Form.Group className={cx('form-group', 'mb-3')}>
             <FontAwesomeIcon icon={faUser} className={cx('icon')} />
             <Form.Control
@@ -77,27 +78,18 @@ function LoginModal({ onChange}, ref) {
             <Form.Check
               className={cx('checkbox')}
               type="checkbox"
-              label="Remember me"
+              label={
+                <span>
+                  I agree all statements in 
+                  <Link className={cx('term-link')}>Terms of service</Link>
+                </span>
+              }
             />
           </Form.Group>
           <Button type="submit" primary>
-            Sign In
+            Register
           </Button>
         </Form>
-        <div className={cx('other-options')}>
-          <span className={cx('title')}>Or sign in with </span>
-          <span>
-            <Button square className={cx('icon-facebook')}>
-              <FontAwesomeIcon icon={faFacebook} />
-            </Button>
-            <Button square className={cx('icon-twitter')}>
-              <FontAwesomeIcon icon={faTwitter} />
-            </Button>
-            <Button square className={cx('icon-google')}>
-              <FontAwesomeIcon icon={faGoogle} />
-            </Button>
-          </span>
-        </div>
       </div>
     </HeaderModal>
   );

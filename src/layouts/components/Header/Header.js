@@ -15,7 +15,11 @@ import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, MoreIcon, PlusIcon } from '~/components/Icon';
 import Image from '~/components/Image';
 import Search from '../Search';
+
+
 import LoginModal from './LoginModal';
+import SignupModal from './SignupModal';
+
 
 
 const cx = className.bind(styles);
@@ -80,8 +84,20 @@ function Header() {
   ];
 
   const loginModalRef = useRef()
+  const signupModalRef = useRef();
   const handleLoginShow = () => {
     loginModalRef.current.setShow(true);
+  }
+
+  const showOtherOption = () => {
+    if (loginModalRef.current.show) {
+      signupModalRef.current.setShow(true)
+      loginModalRef.current.setShow(false);
+    } 
+    if (signupModalRef.current.show) {
+      loginModalRef.current.setShow(true);
+      signupModalRef.current.setShow(false);
+    }
   }
   
   return (
@@ -110,7 +126,9 @@ function Header() {
               </Tippy>
             </Fragment>
           ) : (
-            <Button primary onClick={handleLoginShow}>Login</Button>
+            <Button primary onClick={handleLoginShow}>
+              Login
+            </Button>
           )}
           <Menu
             items={currentUser ? userMenu : MENU_ITEMS}
@@ -130,7 +148,8 @@ function Header() {
           </Menu>
         </div>
       </div>
-      <LoginModal ref={loginModalRef} />
+      <LoginModal ref={loginModalRef} onChange={showOtherOption} />
+      <SignupModal ref={signupModalRef} onChange={showOtherOption} />
     </header>
   );
 }
