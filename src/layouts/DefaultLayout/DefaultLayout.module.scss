@@ -6,11 +6,17 @@
         width: var(--default-layout-width);
         max-width: 100%;
         display: flex;
+        gap: 30px;
         margin-top: var(--default-layout-header-height);
+        position: relative;
         // height: 2000px;
 
         .content {
-            flex: 1;
+            
+            position: absolute;
+            flex-shrink: 1;
+            width: calc(100% - var(--default-layout-sidebar-width) - 30px);
+            right: 0;
         }
     }
 }

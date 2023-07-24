@@ -25,7 +25,9 @@ function SuggestAccs({ label, preview, accounts }) {
 }
 
 SuggestAccs.propTypes = {
-    label: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
+  preview: PropTypes.bool,
+  accounts: PropTypes.object.isRequired,
 }
 
 export default SuggestAccs

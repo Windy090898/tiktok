@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
 
-import * as searchService from '~/services/searchService';
+import * as services from '~/services/services';
 
 import className from 'classnames/bind';
 import styles from './Search.module.scss';
@@ -32,7 +32,7 @@ function Search() {
 
     const fetchApi = async () => {
       setLoading(true);
-      const result = await searchService.search(debounced);
+      const result = await services.search(debounced);
       setSearchResult(result);
       setLoading(false);
     };
@@ -63,10 +63,10 @@ function Search() {
   };
 
   const handleClearResult = () => {
-     setShowResult(false);
-     setSearchText('');
-     setSearchResult([]);
-  }
+    setShowResult(false);
+    setSearchText('');
+    setSearchResult([]);
+  };
   return (
     // Using a wrapper <div> tag around the reference element solves Tippy problems by creating a new parentNode context
     <div>

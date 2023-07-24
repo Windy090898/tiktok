@@ -25,6 +25,17 @@
   }
 
   // Button type
+  &.text {
+    border: none;
+    background-color: transparent;
+    color: var(--primary-color);
+    text-decoration: underline;
+    padding: 0;
+    font-size: 1.8rem;
+    &:hover {
+      background-color: transparent;
+    }
+  }
   &.round {
     border-radius: 52px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);

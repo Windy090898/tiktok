@@ -8,7 +8,7 @@ import VideoActions from './VideoActions';
 
 const cx = classNames.bind(styles);
 
-function Video({ control }) {
+function Video() {
   const [play, setPlay] = useState(false);
   const [volume, setVolume] = useState(0);
 

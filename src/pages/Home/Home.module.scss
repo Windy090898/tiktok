@@ -1,8 +1,15 @@
+.wrapper {
+  padding-right: 20px;
+}
+
+
 .item-container {
   display: flex;
   align-items: flex-start;
   color: var(--primary-color);
   font-family: var(--font-family);
+  padding: 20px 0;
+  border-bottom: 1px solid var(--secondary-color);
 
   .avatar {
     width: 56px;

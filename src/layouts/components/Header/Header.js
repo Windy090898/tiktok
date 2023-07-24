@@ -1,4 +1,4 @@
-import { Fragment, useRef} from 'react';
+import { Fragment, useContext, useRef} from 'react';
 import { Link } from 'react-router-dom';
 
 import className from 'classnames/bind';
@@ -16,11 +16,8 @@ import { InboxIcon, MessageIcon, MoreIcon, PlusIcon } from '~/components/Icon';
 import Image from '~/components/Image';
 import Search from '../Search';
 
-
-import LoginModal from './LoginModal';
-import SignupModal from './SignupModal';
-
-
+import { AuthContext } from '~/context/AuthProvider';
+import { TOKEN, storage } from '~/storage';
 
 const cx = className.bind(styles);
 const MENU_ITEMS = [
@@ -53,11 +50,19 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-  const currentUser = false;
-  
+  const { setShowModal, setAuth } = useContext(AuthContext);
+  let currentUser = useRef()
 
-  const handleMenuChange = (menuItem) => { };
-  
+  currentUser.current = storage.get(TOKEN)
+  const handleLogout = () => {
+    storage.remove(TOKEN)
+    setAuth({})
+  }
+
+  const handleMenuChange = (menuItem) => {
+    menuItem.onClick()
+  };
+
   const userMenu = [
     {
       icon: <i className="fa-regular fa-user"></i>,
@@ -78,28 +83,16 @@ function Header() {
     {
       icon: <i className="fa-solid fa-arrow-right-from-bracket"></i>,
       title: 'Log out',
-      to: '/logout',
+      // to: '/',
+      onClick: handleLogout,
       separate: true,
     },
   ];
 
-  const loginModalRef = useRef()
-  const signupModalRef = useRef();
   const handleLoginShow = () => {
-    loginModalRef.current.setShow(true);
-  }
+    setShowModal(true);
+  };
 
-  const showOtherOption = () => {
-    if (loginModalRef.current.show) {
-      signupModalRef.current.setShow(true)
-      loginModalRef.current.setShow(false);
-    } 
-    if (signupModalRef.current.show) {
-      loginModalRef.current.setShow(true);
-      signupModalRef.current.setShow(false);
-    }
-  }
-  
   return (
     <header className={cx('wrapper')}>
       <div className={cx('inner')}>
@@ -108,11 +101,11 @@ function Header() {
         </Link>
         <Search />
         <div className={cx('nav-action')}>
-          <Button to="/upload" leftIcon={<PlusIcon />}>
-            Upload
-          </Button>
-          {currentUser ? (
+          {currentUser.current ? (
             <Fragment>
+              <Button to="/upload" leftIcon={<PlusIcon />}>
+                Upload
+              </Button>
               <Tippy content="Message">
                 <Link className={cx('action-btn')}>
                   <MessageIcon />
@@ -126,18 +119,23 @@ function Header() {
               </Tippy>
             </Fragment>
           ) : (
-            <Button primary onClick={handleLoginShow}>
-              Login
-            </Button>
+            <Fragment>
+              <Button onClick={handleLoginShow} leftIcon={<PlusIcon />}>
+                Upload
+              </Button>
+              <Button primary onClick={handleLoginShow}>
+                Login
+              </Button>
+            </Fragment>
           )}
           <Menu
-            items={currentUser ? userMenu : MENU_ITEMS}
+            items={currentUser.current ? userMenu : MENU_ITEMS}
             onChange={handleMenuChange}
           >
-            {currentUser ? (
+            {currentUser.current ? (
               <Image
                 className={cx('avatar')}
-                src="sgn-sg.tiktokcdn.com/aweme/720x720/tiktok-obj/1682660794030081.jpeg?x-expires=1689386400&x-signature=15Kcfp7q2sKPMEHJGPx3il%2F6hvA%3D"
+                src=""
                 alt=""
               />
             ) : (
@@ -148,8 +146,6 @@ function Header() {
           </Menu>
         </div>
       </div>
-      <LoginModal ref={loginModalRef} onChange={showOtherOption} />
-      <SignupModal ref={signupModalRef} onChange={showOtherOption} />
     </header>
   );
 }

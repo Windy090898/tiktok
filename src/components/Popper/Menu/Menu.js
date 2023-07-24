@@ -54,14 +54,17 @@ function Menu({
   };
 
   const handleReset = () => setHistory([history[0]]);
+
   return (
     <Tippy
       // visible
+      arrow
       hideOnClick={hideOnClick}
       interactive
       offset={[10, 8]}
       delay={[0, 500]}
       placement="bottom-end"
+      allowHTML
       render={renderMenu}
       onHide={handleReset}
     >

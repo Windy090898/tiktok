@@ -5,6 +5,7 @@ export const Context = createContext();
 
 function Provider({ children }) {
   const [suggestAccs, setSuggestAccs] = useState([])
+  
     useEffect(() => {
         axios
           .get(

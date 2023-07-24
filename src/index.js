@@ -3,15 +3,17 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import GlobalStyles from './components/GlobalStyles';
-import Provider from './context/Context';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import Provider from './context/Context';
+import Provider from './context/AuthProvider';
+import UserModal from './components/UserModal/UserModal';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <GlobalStyles>
-      <Provider>  
+      <Provider>
         <App />
+        <UserModal />
       </Provider>
     </GlobalStyles>
   </React.StrictMode>,
