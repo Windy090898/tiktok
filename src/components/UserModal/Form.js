@@ -9,7 +9,7 @@ import styles from './UserModal.module.scss';
 import { AuthContext } from '~/context/AuthProvider';
 import Button from '~/components/Button';
 import * as services from '~/services/services';
-import { TOKEN, storage } from '~/storage';
+import { IS_LOGIN, TOKEN, storage } from '~/storage';
 
 const cx = classNames.bind(styles);
 
@@ -40,6 +40,7 @@ function Form({ formDisplay, setFormDisplay }) {
       const accessToken = response?.meta?.token;
       setAuth({ userInfor, accessToken });
       storage.set(TOKEN, accessToken);
+      storage.set(IS_LOGIN, true);
       setEmail('');
       setPassword('');
       setShowModal(false);

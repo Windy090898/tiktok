@@ -6,6 +6,8 @@
 
   .video-container {
     height: calc(450px + (100vw - 768px) / 1152 * 200);
+    // width: 100%;
+    // max-width: 330px;
     position: relative;
 
     .video {
@@ -13,44 +15,44 @@
       height: 100%;
       border-radius: 8px;
     }
+  }
+}
 
-    .control {
+.control {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px 8px;
+  color: var(--white-color);
+  cursor: pointer;
+
+  .control-volume {
+    position: relative;
+
+    input[type='range'][orient='vertical'] {
+      writing-mode: bt-lr; /* IE */
+      -webkit-appearance: slider-vertical; /* Chromium */
+      appearance: slider-vertical;
+      accent-color: var(--white-color);
+      width: 4px;
+      height: 70px;
+      padding: 0;
+    }
+
+    .volume-change {
       position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 10px 8px;
-      color: var(--white-color);
-      cursor: pointer;
+      top: -70px;
+      right: 12px;
+      display: none;
+    }
 
-      .control-volume {
-        position: relative;
-
-        input[type='range'][orient='vertical'] {
-          writing-mode: bt-lr; /* IE */
-          -webkit-appearance: slider-vertical; /* Chromium */
-          appearance: slider-vertical;
-          accent-color: var(--white-color);
-          width: 4px;
-          height: 70px;
-          padding: 0;
-        }
-
-        .volume-change {
-          position: absolute;
-          top: -70px;
-          right: 12px;
-          display: none;
-        }
-
-        &:hover {
-          .volume-change {
-            display: block;
-          }
-        }
+    &:hover {
+      .volume-change {
+        display: block;
       }
     }
   }
@@ -75,14 +77,14 @@
       display: flex;
       cursor: pointer;
     }
-    .heart-icon.active {
+    .heart-icon.like {
       color: var(--pink-color);
       transition: all ease-in-out 200ms;
       animation: scaleUp 0.2s linear;
     }
 
     .save-icon.active {
-      color: #FACE15;
+      color: #face15;
       transition: all ease-in-out 200ms;
       animation: scaleUp 0.2s linear;
     }
@@ -98,7 +100,6 @@
 @keyframes scaleUp {
   from {
     transform: scale(1);
-    
   }
   to {
     transform: scale(1.2);

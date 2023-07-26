@@ -1,4 +1,4 @@
-import { Fragment, useContext, useRef} from 'react';
+import { Fragment, useContext, useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import className from 'classnames/bind';
@@ -17,8 +17,9 @@ import Image from '~/components/Image';
 import Search from '../Search';
 
 import { AuthContext } from '~/context/AuthProvider';
-import { TOKEN, storage } from '~/storage';
+import { IS_LOGIN, TOKEN, storage } from '~/storage';
 
+import * as services from '~/services/services';
 const cx = className.bind(styles);
 const MENU_ITEMS = [
   {
@@ -51,16 +52,18 @@ const MENU_ITEMS = [
 
 function Header() {
   const { setShowModal, setAuth } = useContext(AuthContext);
-  let currentUser = useRef()
+  const isLoggedIn = storage.get(IS_LOGIN);
 
-  currentUser.current = storage.get(TOKEN)
-  const handleLogout = () => {
-    storage.remove(TOKEN)
-    setAuth({})
-  }
+  const handleLogout = async () => {
+    let token = storage.get(TOKEN);
+    await services.signout(token);
+    storage.remove(TOKEN);
+    storage.remove(IS_LOGIN);
+    setAuth({});
+  };
 
   const handleMenuChange = (menuItem) => {
-    menuItem.onClick()
+    menuItem.onClick();
   };
 
   const userMenu = [
@@ -93,6 +96,7 @@ function Header() {
     setShowModal(true);
   };
 
+
   return (
     <header className={cx('wrapper')}>
       <div className={cx('inner')}>
@@ -101,7 +105,7 @@ function Header() {
         </Link>
         <Search />
         <div className={cx('nav-action')}>
-          {currentUser.current ? (
+          {isLoggedIn ? (
             <Fragment>
               <Button to="/upload" leftIcon={<PlusIcon />}>
                 Upload
@@ -129,15 +133,11 @@ function Header() {
             </Fragment>
           )}
           <Menu
-            items={currentUser.current ? userMenu : MENU_ITEMS}
+            items={isLoggedIn ? userMenu : MENU_ITEMS}
             onChange={handleMenuChange}
           >
-            {currentUser.current ? (
-              <Image
-                className={cx('avatar')}
-                src=""
-                alt=""
-              />
+            {isLoggedIn ? (
+              <Image className={cx('avatar')} src="" alt="" />
             ) : (
               <button className={cx('more-icon')}>
                 <MoreIcon />

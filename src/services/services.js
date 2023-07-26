@@ -1,3 +1,4 @@
+import { TOKEN, storage } from '~/storage';
 import * as httpRequest from '~/utils/httpRequest';
 const accessToken =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC90aWt0b2suZnVsbHN0YWNrLmVkdS52blwvYXBpXC9hdXRoXC9yZWdpc3RlciIsImlhdCI6MTY1MTc0MjI1OSwiZXhwIjoxNjU0MzM0MjU5LCJuYmYiOjE2NTE3NDIyNTksImp0aSI6ImdremlxN05LcFJrdVJYSVoiLCJzdWIiOjUsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.IF9kZeYa8zqAaTmUJFh640ylAb8Lmku2sb2OkPcQ0M0';
@@ -39,6 +40,7 @@ export const users = async (nickname) => {
   }
 };
 
+// Authentication
 export const getCurrentUser = async (token) => {
   try {
     const res = await httpRequest.get('auth/me', {
@@ -95,7 +97,7 @@ export const signin = async (inputData) => {
 
 export const signout = async (token) => {
   try {
-    const res = await httpRequest.post(
+    await httpRequest.post(
       'auth/logout',
       {},
       {
@@ -105,10 +107,85 @@ export const signout = async (token) => {
         },
       },
     );
-    return res;
   } catch (error) {
     return {
       error: error.response.data.message,
     };
+  }
+};
+
+// Videos
+
+export const videoList = async (type, page) => {
+  try {
+     let res = await httpRequest.get(
+       'videos',
+       {
+         params: {
+           type,
+           page,
+         },
+       },
+       {
+         headers: {
+           Authorization: 'Bearer ' + storage.get(TOKEN),
+           'Content-Type': 'application/json',
+         },
+       },
+    );
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+};
+
+export const getVideo = async (uuid) => {
+  try {
+    let res = await httpRequest.get(`videos/${uuid}`, {
+      headers: {
+        Authorization: 'Bearer ' + storage.get(TOKEN),
+        'Content-Type': 'application/json',
+      },
+    });
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+// Like
+export const likeVideo = async (id) => {
+  try {
+    let res = await httpRequest.post(
+      `videos/${id}/like`,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + storage.get(TOKEN),
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return res.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const unLikeVideo = async (id) => {
+  try {
+    let res = await httpRequest.post(
+      `videos/${id}/unlike`,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + storage.get(TOKEN),
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
   }
 };
