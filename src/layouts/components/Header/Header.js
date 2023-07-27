@@ -1,4 +1,4 @@
-import { Fragment, useContext, useMemo, useRef, useState } from 'react';
+import { Fragment, useContext} from 'react';
 import { Link } from 'react-router-dom';
 
 import className from 'classnames/bind';
@@ -57,6 +57,7 @@ function Header() {
   const handleLogout = async () => {
     let token = storage.get(TOKEN);
     await services.signout(token);
+    window.location.reload();
     storage.remove(TOKEN);
     storage.remove(IS_LOGIN);
     setAuth({});

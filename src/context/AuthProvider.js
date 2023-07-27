@@ -2,7 +2,7 @@ import { createContext, useState } from 'react';
 
 export const AuthContext = createContext();
 
-function Provider({ children }) {
+function AuthProvider({ children }) {
   const [showModal, setShowModal] = useState(false)
   const [auth, setAuth] = useState({})
 
@@ -13,4 +13,4 @@ function Provider({ children }) {
   );
 }
 
-export default Provider;
+export default AuthProvider;

@@ -1,11 +1,4 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './Video.module.scss';
 
@@ -21,6 +14,7 @@ function Video({ video }) {
 
   const [play, setPlay] = useState(false);
   const [volume, setVolume] = useState(0);
+
   let options = {
     root: null,
     rootMargin: '0px',
@@ -32,10 +26,12 @@ function Video({ video }) {
     if (visible) {
       if (!play) {
         let playPromise = videoRef.current.play();
-        playPromise.then(() => {
-          setPlay(true);
-        })
-        .catch(err => console.log(err))
+        playPromise
+          .then(() => {
+            setPlay(true);
+            setVolume(50);
+          })
+          .catch((err) => console.log(err));
       }
     } else {
       if (play) {
@@ -44,6 +40,7 @@ function Video({ video }) {
       }
     }
     videoRef.current.loop = true;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visible]);
 
   useEffect(() => {
@@ -55,10 +52,11 @@ function Video({ video }) {
     }
   }, [volume]);
 
-  const handlePlay = () => {
+  const handlePlayControl = () => {
     if (!play) {
       let playPromise = videoRef.current.play();
-      setVolume(50)
+      setVolume(50);
+
       if (playPromise !== undefined) {
         playPromise
           .then(() => setPlay(!play))
@@ -72,41 +70,26 @@ function Video({ video }) {
       videoRef.current.pause();
       setPlay(!play);
     }
-    // if (playPromise !== undefined) {
-    //   playPromise
-    //     .then(() => {
-    //       if (play){
-    //         videoRef.current.pause()
-    //       }
-
-    //     })
-    //     .catch(() => {
-
-    //       console.log('errr');
-    //     });
-    // }
   };
 
-  const handleMute = useCallback(() => {
+  const handleMute = () => {
     let newVolume = volume === 0 ? 50 : 0;
     setVolume(newVolume);
-  }, [volume]);
+  };
 
   return (
     <div className={cx('wrapper')}>
       <div className={cx('video-container')}>
-        <div className={cx('video')} onClick={handlePlay}>
+        <div className={cx('video')} onClick={handlePlayControl}>
           <video
             src={file_url}
             className={cx('video')}
             ref={videoRef}
-            // preload="auto"
-            // allow="autoplay"
             poster={thumb_url}
           ></video>
         </div>
         <div className={cx('control')}>
-          <div className={cx('control-play')} onClick={handlePlay}>
+          <div className={cx('control-play')} onClick={handlePlayControl}>
             {!play && <PlayIcon />}
             {play && <PauseIcon />}
           </div>

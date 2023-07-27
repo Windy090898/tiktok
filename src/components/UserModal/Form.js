@@ -46,6 +46,7 @@ function Form({ formDisplay, setFormDisplay }) {
       setShowModal(false);
     }
     setFormDisplay('signin');
+    window.location.reload();
   };
 
   return (

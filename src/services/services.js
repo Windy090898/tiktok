@@ -133,11 +133,12 @@ export const videoList = async (type, page) => {
          },
        },
     );
-    return res.data
+    return res
   } catch (error) {
     console.log(error)
   }
 };
+
 
 export const getVideo = async (uuid) => {
   try {
