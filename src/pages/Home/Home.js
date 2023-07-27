@@ -1,14 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 
+import classNames from 'classnames/bind';
+import styles from './Home.module.scss';
+
 import Image from '~/components/Image';
 import Video from '~/components/Video';
 import AccPreview from '~/components/Popper/AccPreview';
-import * as services from '~/services/services';
+import * as videoServices from '~/services/videoServices';
 import { useElementOnBottom } from '~/hooks';
-
-import classNames from 'classnames/bind';
-import styles from './Home.module.scss';
 import VideoHeader from './VideoHeader';
 
 const cx = classNames.bind(styles);
@@ -20,7 +20,7 @@ function Home() {
 
   useEffect(() => {
     const getVideoList = async () => {
-      let response = await services.videoList('for-you', page);
+      let response = await videoServices.videoList('for-you', page);
       const newList = [...videoList, ...response.data];
       setVideoList(newList);
       setEndPage(newList.length - 1);

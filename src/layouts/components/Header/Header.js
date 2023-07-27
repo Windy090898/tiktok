@@ -1,26 +1,24 @@
 import { Fragment, useContext} from 'react';
 import { Link } from 'react-router-dom';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 import className from 'classnames/bind';
 import styles from './Header.module.scss';
 
-import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css';
-
 import config from '~/config';
-
 import images from '~/assets/img';
 import Button from '~/components/Button';
 import Menu from '~/components/Popper/Menu';
 import { InboxIcon, MessageIcon, MoreIcon, PlusIcon } from '~/components/Icon';
 import Image from '~/components/Image';
 import Search from '../Search';
-
 import { AuthContext } from '~/context/AuthProvider';
 import { IS_LOGIN, TOKEN, storage } from '~/storage';
+import * as authServices from '~/services/authServices';
 
-import * as services from '~/services/services';
 const cx = className.bind(styles);
+
 const MENU_ITEMS = [
   {
     icon: <i className="fa-solid fa-earth-asia"></i>,
@@ -56,7 +54,7 @@ function Header() {
 
   const handleLogout = async () => {
     let token = storage.get(TOKEN);
-    await services.signout(token);
+    await authServices.signout(token);
     window.location.reload();
     storage.remove(TOKEN);
     storage.remove(IS_LOGIN);

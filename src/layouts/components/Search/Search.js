@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
 
-import * as services from '~/services/services';
-
 import className from 'classnames/bind';
 import styles from './Search.module.scss';
 
+import * as searchServices from '~/services/searchServices';
 import { useDebounce } from '~/hooks';
-
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import AccountItem from '~/components/AccountItem';
 import { SearchIcon } from '~/components/Icon';
@@ -32,7 +30,7 @@ function Search() {
 
     const fetchApi = async () => {
       setLoading(true);
-      const result = await services.search(debounced);
+      const result = await searchServices.search(debounced);
       setSearchResult(result);
       setLoading(false);
     };

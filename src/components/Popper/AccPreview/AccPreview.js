@@ -5,7 +5,7 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import PropTypes from 'prop-types';
 import styles from './AccPreview.module.scss';
 
-import * as services from '~/services/services';
+import * as userServices from '~/services/userServices';
 
 import Wrapper from '../Wrapper';
 import Tippy from '@tippyjs/react/headless';
@@ -28,7 +28,7 @@ function AccPreview({ children, item }) {
 
   useEffect(() => {
     const fetchApi = async () => {
-      const result = await services.users(item.nickname);
+      const result = await userServices.users(item.nickname);
       setPreviewItem(result);
     };
     fetchApi();

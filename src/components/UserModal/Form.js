@@ -4,11 +4,11 @@ import { faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types'
-import styles from './UserModal.module.scss';
 
+import styles from './UserModal.module.scss';
 import { AuthContext } from '~/context/AuthProvider';
 import Button from '~/components/Button';
-import * as services from '~/services/services';
+import * as authServices from '~/services/authServices';
 import { IS_LOGIN, TOKEN, storage } from '~/storage';
 
 const cx = classNames.bind(styles);
@@ -24,13 +24,13 @@ function Form({ formDisplay, setFormDisplay }) {
     e.preventDefault();
     let response = '';
     if (formDisplay === 'signup') {
-      response = await services.register({
+      response = await authServices.register({
         type: 'email',
         email,
         password,
       });
     } else {
-      response = await services.signin({ email, password });
+      response = await authServices.signin({ email, password });
     }
 
     if (response.error) {
@@ -65,6 +65,7 @@ function Form({ formDisplay, setFormDisplay }) {
           autoComplete="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          onKeyUp={(e) => e.key === 'Enter' && handleSubmit()}
         />
         <div className={cx('err-message')} id="emailHelpId"></div>
       </div>

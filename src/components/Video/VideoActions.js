@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types'
 import classNames from 'classnames/bind';
 import styles from './Video.module.scss';
 
 import { CommentIcon, HeartIcon, SaveIcon, ShareIcon } from '../Icon';
 import Button from '../Button';
-import * as services from '~/services/services';
+import * as videoServices from '~/services/videoServices';
 
 const cx = classNames.bind(styles);
 
@@ -16,7 +17,7 @@ function VideoActions({ video }) {
 
   useEffect(() => {
     const getVideo = async () => {
-      let response = await services.getVideo(video.uuid);
+      let response = await videoServices.getVideo(video.uuid);
       setLike(response.is_liked);
     };
     getVideo();
@@ -27,13 +28,13 @@ function VideoActions({ video }) {
     setLike(!like);
     if (!like) {
       const likeVideo = async () => {
-        let response = await services.likeVideo(video.id);
+        let response = await videoServices.likeVideo(video.id);
         setLikeCount(response.likes_count);
       };
       likeVideo();
     } else {
       const unLikeVideo = async () => {
-        let response = await services.unLikeVideo(video.id);
+        let response = await videoServices.unLikeVideo(video.id);
         setLikeCount(response.likes_count);
       };
       unLikeVideo();
@@ -68,6 +69,10 @@ function VideoActions({ video }) {
       </li>
     </ul>
   );
+}
+
+VideoActions.propTypes = {
+  video: PropTypes.object.isRequired,
 }
 
 export default VideoActions;

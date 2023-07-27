@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types'
+
 import classNames from 'classnames/bind';
 import styles from './Video.module.scss';
 
@@ -114,6 +116,10 @@ function Video({ video }) {
       <VideoActions video={video} />
     </div>
   );
+}
+
+Video.propTypes = {
+  video: PropTypes.object.isRequired,
 }
 
 export default Video;

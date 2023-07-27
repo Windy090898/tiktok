@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import classNames from 'classnames/bind'
 import styles from './SuggestAccs.module.scss'
+
 import AccountItem from './AccountItem'
 import { Link } from 'react-router-dom'
 import config from '~/config'
-
 
 const cx = classNames.bind(styles)
 

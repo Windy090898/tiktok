@@ -1,17 +1,19 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { AuthContext } from '~/context/AuthProvider';
-import classNames from 'classnames/bind';
-import styles from './UserModal.module.scss';
-import Image from '../Image/Image';
-import signinImg from '~/assets/img/login-image.jpg';
-import signupImg from '~/assets/img/signup-image.jpg';
-import Button from '~/components/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebook,
   faGoogle,
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons';
+
+import classNames from 'classnames/bind';
+import styles from './UserModal.module.scss';
+
+import { AuthContext } from '~/context/AuthProvider';
+import Image from '../Image/Image';
+import signinImg from '~/assets/img/login-image.jpg';
+import signupImg from '~/assets/img/signup-image.jpg';
+import Button from '~/components/Button';
 import Form from './Form';
 
 const cx = classNames.bind(styles);
