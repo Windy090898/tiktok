@@ -23,6 +23,7 @@ function AccPreview({
   isFollow,
   onFollow = defaultFn,
   followerCount,
+  likeCount,
   isLogin = storage.get(IS_LOGIN),
 }) {
   const {
@@ -32,7 +33,6 @@ function AccPreview({
     first_name,
     last_name,
     tick,
-    likes_count,
     bio,
   } = item;
 
@@ -104,7 +104,7 @@ function AccPreview({
                   <span className={cx('label')}>Followers</span>
                 </div>
                 <div className={cx('detail-item')}>
-                  <span className={cx('number')}>{likes_count}</span>
+                  <span className={cx('number')}>{likeCount}</span>
                   <span className={cx('label')}>Likes</span>
                 </div>
               </div>

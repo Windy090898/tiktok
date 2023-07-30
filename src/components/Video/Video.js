@@ -5,7 +5,6 @@ import classNames from 'classnames/bind';
 import styles from './Video.module.scss';
 
 import { PauseIcon, PlayIcon, VolumeOffIcon, VolumeOnIcon } from '../Icon';
-import VideoActions from './VideoActions';
 import { useElementOnScreen } from '~/hooks';
 import images from '~/assets/img'
 
@@ -119,8 +118,6 @@ function Video({ video, fallback: customFallback = images.noVideo }) {
           </div>
         </div>
       </div>
-
-      <VideoActions video={video} />
     </div>
   );
 }

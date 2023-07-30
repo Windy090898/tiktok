@@ -14,13 +14,27 @@ import { IS_LOGIN, storage } from '~/storage';
 import { AuthContext } from '~/context/AuthProvider';
 import Button from '~/components/Button';
 import { MusicIcon } from '~/components/Icon';
+import { CommentIcon, HeartIcon, ShareIcon } from '~/components/Icon';
+import * as videoServices from '~/services/videoServices';
+
 
 const cx = classNames.bind(styles);
 
 function HomeItem({ video }) {
-  const { user, description, music } = video;
+  const {
+    user,
+    description,
+    music,
+    likes_count,
+    comments_count,
+    shares_count,
+  } = video;
   const [isFollow, setIsFollow] = useState(user.is_followed);
   const [followerCount, setFollowerCount] = useState(user.followers_count);
+  const [like, setLike] = useState(false);
+  const [likeCount, setLikeCount] = useState(likes_count || 0);
+  const [commentCount, setCommentCount] = useState(comments_count || 0);
+  const [shareCount, setShareCount] = useState(shares_count || 0);
 
   let isLogin = storage.get(IS_LOGIN);
   const { setShowModal } = useContext(AuthContext);
@@ -65,6 +79,22 @@ function HomeItem({ video }) {
         </Button>
       );
     }
+  }; 
+  const handleLike = () => {
+    setLike(!like);
+    if (!like) {
+      const likeVideo = async () => {
+        let response = await videoServices.likeVideo(video.id);
+        setLikeCount(response.likes_count);
+      };
+      likeVideo();
+    } else {
+      const unLikeVideo = async () => {
+        let response = await videoServices.unLikeVideo(video.id);
+        setLikeCount(response.likes_count);
+      };
+      unLikeVideo();
+    }
   };
   return (
     <>
@@ -73,6 +103,7 @@ function HomeItem({ video }) {
         onFollow={handleFollow}
         isFollow={isFollow}
         followerCount={followerCount}
+        likeCount={likeCount}
         isLogin={isLogin}
       >
         <Link className={cx('avatar-container')}>
@@ -87,6 +118,7 @@ function HomeItem({ video }) {
               onFollow={handleFollow}
               isFollow={isFollow}
               followerCount={followerCount}
+              likeCount={likeCount}
               isLogin={isLogin}
             >
               <Link className={cx('author')}>
@@ -115,7 +147,29 @@ function HomeItem({ video }) {
           </div>
           {renderButtonFollow()}
         </div>
-        <Video video={video} />
+        <div className={cx('body')}>
+          <Video video={video} />
+          <ul className={cx('actions')}>
+            <li className={cx('action-item')}>
+              <Button circle className={cx('icon')} onClick={handleLike}>
+                <HeartIcon className={cx('heart-icon', { like })} />
+              </Button>
+              <div className={cx('label')}>{likeCount}</div>
+            </li>
+            <li className={cx('action-item')}>
+              <Button circle to="/comment" className={cx('icon')}>
+                <CommentIcon />
+              </Button>
+              <div className={cx('label')}>{commentCount}</div>
+            </li>
+            <li className={cx('action-item')}>
+              <Button circle className={cx('icon')}>
+                <ShareIcon />
+              </Button>
+              <div className={cx('label')}>{shareCount}</div>
+            </li>
+          </ul>
+        </div>
       </div>
     </>
   );

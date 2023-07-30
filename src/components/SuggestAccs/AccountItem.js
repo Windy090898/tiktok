@@ -21,6 +21,7 @@ function AccountItem({ preview, item }) {
     last_name,
     nickname,
     followers_count,
+    likes_count,
     is_followed,
   } = item;
 
@@ -56,6 +57,7 @@ function AccountItem({ preview, item }) {
       <AccPreview
         item={item}
         followerCount={followers_count}
+        likeCount={likes_count}
         isFollow={isFollow}
         onFollow={handleFollow}
       >
