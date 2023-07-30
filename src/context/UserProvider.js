@@ -28,6 +28,7 @@ function UserProvider({ children }) {
     if (isLogin) {
       getFollowList();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // get suggested accs from API => suggestAccs will have value and transfer to render UI
@@ -39,6 +40,7 @@ function UserProvider({ children }) {
       setSuggestAccs(response);
     };
     getSuggestAccs();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [followedList.length]);
 
   return (

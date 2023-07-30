@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
@@ -7,14 +7,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import styles from './AccPreview.module.scss';
 
-import * as userServices from '~/services/userServices';
-import * as followServices from '~/services/followServices';
 import Wrapper from '../Wrapper';
 import Image from '~/components/Image';
 import Button from '~/components/Button/Button';
-import { IS_LOGIN, TOKEN, storage } from '~/storage';
+import { IS_LOGIN, storage } from '~/storage';
 import { AuthContext } from '~/context/AuthProvider';
-import { UserContext } from '~/context/UserProvider';
 
 const cx = classNames.bind(styles);
 
@@ -42,7 +39,7 @@ function AccPreview({
   const { setShowModal } = useContext(AuthContext);
 
   const tippyRef = useRef();
-  
+
   const handleCreate = (tippy) => {
     tippyRef.current = tippy;
   };

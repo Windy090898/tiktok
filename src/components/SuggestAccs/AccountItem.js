@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +8,6 @@ import styles from './SuggestAccs.module.scss';
 
 import Image from '../Image';
 import AccPreview from '~/components/Popper/AccPreview';
-import * as userServices from '~/services/userServices';
 import * as followServices from '~/services/followServices';
 import { UserContext } from '~/context/UserProvider';
 
