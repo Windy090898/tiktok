@@ -7,10 +7,16 @@ import styles from './Video.module.scss';
 import { PauseIcon, PlayIcon, VolumeOffIcon, VolumeOnIcon } from '../Icon';
 import VideoActions from './VideoActions';
 import { useElementOnScreen } from '~/hooks';
+import images from '~/assets/img'
 
 const cx = classNames.bind(styles);
 
-function Video({ video }) {
+function Video({ video, fallback: customFallback = images.noVideo }) {
+  const [fallback, setFallback] = useState('')
+  const handleFallback = () => {
+    setFallback(customFallback)
+  }
+  
   const { file_url, thumb_url } = video;
   const videoRef = useRef();
 
@@ -84,10 +90,11 @@ function Video({ video }) {
       <div className={cx('video-container')}>
         <div className={cx('video')} onClick={handlePlayControl}>
           <video
-            src={file_url}
+            onError={handleFallback}
+            src={file_url || fallback}
             className={cx('video')}
             ref={videoRef}
-            poster={thumb_url}
+            poster={thumb_url || images.noImage}
           ></video>
         </div>
         <div className={cx('control')}>

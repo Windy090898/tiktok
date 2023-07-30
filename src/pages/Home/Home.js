@@ -1,15 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 
-import Image from '~/components/Image';
-import Video from '~/components/Video';
-import AccPreview from '~/components/Popper/AccPreview';
 import * as videoServices from '~/services/videoServices';
 import { useElementOnBottom } from '~/hooks';
-import VideoHeader from './VideoHeader';
+import HomeItem from './HomeItem';
 
 const cx = classNames.bind(styles);
 
@@ -44,19 +40,10 @@ function Home() {
   return (
     <div className={cx('wrapper')}>
       {videoList.map((video, index) => {
-        const { id, user} = video;
         let ref = index === endPage ? lastVideoRef : undefined;
         return (
-          <div className={cx('item-container')} key={id} ref={ref}>
-            <AccPreview item={user}>
-              <Link className={cx('avatar-container')}>
-                <Image src="" alt="" className={cx('avatar')}></Image>
-              </Link>
-            </AccPreview>
-            <div className={cx('content')}>
-              <VideoHeader video={video} />
-              <Video video={video} />
-            </div>
+          <div className={cx('item-container')} key={video.id} ref={ref}>
+            <HomeItem video={ video} />
           </div>
         );
       })}

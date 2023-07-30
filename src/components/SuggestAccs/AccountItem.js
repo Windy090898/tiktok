@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
@@ -8,11 +8,34 @@ import styles from './SuggestAccs.module.scss';
 
 import Image from '../Image';
 import AccPreview from '~/components/Popper/AccPreview';
+import * as userServices from '~/services/userServices';
+import * as followServices from '~/services/followServices';
+import { UserContext } from '~/context/UserProvider';
 
 const cx = classNames.bind(styles);
 
-function AccountItem({ item, preview }) {
-  const {avatar, nickname, tick, first_name, last_name} = item
+function AccountItem({ preview, item }) {
+  const {
+    avatar,
+    tick,
+    first_name,
+    last_name,
+    nickname,
+    followers_count,
+    is_followed,
+  } = item;
+
+  const [isFollow, setIsFollow] = useState(is_followed);
+  const { followedList, setFollowedList } = useContext(UserContext);
+
+  const handleFollow = (id) => {
+    const followUser = async () => {
+      await followServices.follow(id);
+      setFollowedList([...followedList, id]);
+      setIsFollow(!isFollow);
+    };
+    followUser();
+  };
   const renderItem = () => {
     return (
       <div className={cx('account-item')}>
@@ -30,9 +53,18 @@ function AccountItem({ item, preview }) {
     );
   };
   if (preview) {
-    return <AccPreview item={item}>{renderItem()}</AccPreview>;
+    return (
+      <AccPreview
+        item={item}
+        followerCount={followers_count}
+        isFollow={isFollow}
+        onFollow={handleFollow}
+      >
+        {renderItem()}
+      </AccPreview>
+    );
   } else {
-    renderItem()
+    renderItem();
   }
 }
 

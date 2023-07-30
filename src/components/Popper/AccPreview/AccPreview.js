@@ -1,59 +1,78 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import Tippy from '@tippyjs/react/headless';
 import PropTypes from 'prop-types';
+
+import classNames from 'classnames/bind';
 import styles from './AccPreview.module.scss';
 
 import * as userServices from '~/services/userServices';
-
+import * as followServices from '~/services/followServices';
 import Wrapper from '../Wrapper';
-import Tippy from '@tippyjs/react/headless';
 import Image from '~/components/Image';
 import Button from '~/components/Button/Button';
-import { TOKEN, storage } from '~/storage';
+import { IS_LOGIN, TOKEN, storage } from '~/storage';
 import { AuthContext } from '~/context/AuthProvider';
+import { UserContext } from '~/context/UserProvider';
 
 const cx = classNames.bind(styles);
 
-function AccPreview({ children, item }) {
-  const [previewItem, setPreviewItem] = useState({});
-  const tippyRef = useRef()
+const defaultFn = () => {};
 
-  let currentUser = useRef();
-  currentUser.current = storage.get(TOKEN);
-
-  const { setShowModal } = useContext(AuthContext);
-  
-
-  useEffect(() => {
-    const fetchApi = async () => {
-      const result = await userServices.users(item.nickname);
-      setPreviewItem(result);
-    };
-    fetchApi();
-  }, [item]);
-
+function AccPreview({
+  children,
+  item,
+  isFollow,
+  onFollow = defaultFn,
+  followerCount,
+  isLogin = storage.get(IS_LOGIN),
+}) {
   const {
+    id,
     avatar,
     nickname,
     first_name,
     last_name,
     tick,
-    followers_count,
     likes_count,
     bio,
-  } = previewItem;
+  } = item;
 
+  const { setShowModal } = useContext(AuthContext);
+
+  const tippyRef = useRef();
+  
   const handleCreate = (tippy) => {
     tippyRef.current = tippy;
-  }
+  };
 
   const handleLoginShow = () => {
     setShowModal(true);
-    tippyRef.current.hide()
+    tippyRef.current.hide();
   };
-  
+
+  const renderButtonFollow = () => {
+    if (!isLogin) {
+      return (
+        <Button primary onClick={handleLoginShow}>
+          Follow
+        </Button>
+      );
+    } else if (!isFollow) {
+      return (
+        <Button primary onClick={() => onFollow(id)}>
+          Follow
+        </Button>
+      );
+    } else {
+      return (
+        <Button outline onClick={() => onFollow(id)}>
+          Following
+        </Button>
+      );
+    }
+  };
   return (
     // Using a wrapper <div> around the reference element solves this by creating a new parentNode context.
     <div>
@@ -68,13 +87,7 @@ function AccPreview({ children, item }) {
             <div className={cx('account-preview')} tabIndex="-1" {...attrs}>
               <div className={cx('action')}>
                 <Image src={avatar} alt="" className={cx('avatar')}></Image>
-                {currentUser.current ? (
-                  <Button primary>Follow</Button>
-                ) : (
-                  <Button primary onClick={handleLoginShow}>
-                    Follow
-                  </Button>
-                )}
+                {renderButtonFollow()}
               </div>
               <div className={cx('user-infor')}>
                 <h4 className={cx('nickname')}>
@@ -90,7 +103,7 @@ function AccPreview({ children, item }) {
               </div>
               <div className={cx('user-detail')}>
                 <div className={cx('detail-item')}>
-                  <span className={cx('number')}>{followers_count}</span>
+                  <span className={cx('number')}>{followerCount}</span>
                   <span className={cx('label')}>Followers</span>
                 </div>
                 <div className={cx('detail-item')}>

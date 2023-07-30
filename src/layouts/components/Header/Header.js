@@ -56,7 +56,7 @@ function Header() {
     let token = storage.get(TOKEN);
     await authServices.signout(token);
     window.location.reload();
-    storage.remove(TOKEN);
+    // storage.remove(TOKEN);
     storage.remove(IS_LOGIN);
     setAuth({});
   };

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import classNames from 'classnames/bind';
 import styles from './Sidebar.module.scss';
@@ -16,14 +16,23 @@ import {
   PeopleIcon,
 } from '~/components/Icon';
 import SuggestAccs from '~/components/SuggestAccs';
-import { Context } from '~/context/Context';
 import Footer from './Footer';
+import UserProvider, { UserContext } from '~/context/UserProvider'
 
 const cx = classNames.bind(styles);
 
 function Sidebar() {
-  const context = useContext(Context)
-  const suggestAccs = context.suggestAccs
+  const userContext = useContext(UserContext);
+  const { suggestAccs } = userContext;
+  // const [renderArr, setRenderArr] = useState([]);
+  // // Because suggestAccs and type will change => renderArr will change too
+  // // If directly use suggestAccs to render => create error "The final argument passed to useLayoutEffect changed size between renders"
+  // useEffect(() => {
+  //   if (type === 'suggest') {
+  //     setRenderArr(suggestAccs.filter((account) => !account.is_followed));
+  //   }
+  // }, [suggestAccs, type]);
+  
   return (
     <aside className={cx('wrapper')}>
       <Menu>
@@ -54,7 +63,13 @@ function Sidebar() {
         />
       </Menu>
 
-      <SuggestAccs label="Suggested accounts" preview accounts={suggestAccs} />
+      {suggestAccs && (
+        <SuggestAccs
+          label="Suggested accounts"
+          preview
+          renderArr={suggestAccs}
+        />
+      )}
       {/* <SuggestAccs label="Following accounts" accounts={followingAccs} /> */}
 
       <Footer />
