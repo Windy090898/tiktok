@@ -14,4 +14,15 @@ export const post = async (path, data = {}, config) => {
   return res?.data;
 };
 
+export const remove = async (path, config) => {
+  const res = await httpRequest.delete(path, config)
+  return res?.data;
+};
+
+export const patch = async (path, data, config) => {
+  const res = await httpRequest.patch(path, data, config);
+  return res?.data;
+}
+
+
 export default httpRequest;

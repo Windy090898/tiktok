@@ -1,3 +1,4 @@
+import { TOKEN, storage } from '~/storage';
 import * as httpRequest from '~/utils/httpRequest';
 const accessToken =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC90aWt0b2suZnVsbHN0YWNrLmVkdS52blwvYXBpXC9hdXRoXC9yZWdpc3RlciIsImlhdCI6MTY1MTc0MjI1OSwiZXhwIjoxNjU0MzM0MjU5LCJuYmYiOjE2NTE3NDIyNTksImp0aSI6ImdremlxN05LcFJrdVJYSVoiLCJzdWIiOjUsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.IF9kZeYa8zqAaTmUJFh640ylAb8Lmku2sb2OkPcQ0M0';
@@ -7,8 +8,7 @@ export const getCurrentUser = async (token) => {
   try {
     const res = await httpRequest.get('auth/me', {
       headers: {
-        Authorization: 'Bearer ' + token,
-        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + storage.get(TOKEN),
       },
     });
     return res.data;

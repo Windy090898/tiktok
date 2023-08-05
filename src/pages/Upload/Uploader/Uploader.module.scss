@@ -1,0 +1,45 @@
+// Uploader
+.uploader {
+  padding: 64px 50px;
+  .content-container {
+    border-radius: 8px;
+    border: 2px dashed var(--secondary-color);
+    padding: 50px 35px;
+    color: rgba(22, 24, 35, 0.75);
+    font-size: 1.4rem;
+    line-height: 1.5;
+    &:hover {
+      background-color: rgba(22, 24, 35, 0.03);
+    }
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      .icon {
+        color: rgba(22, 24, 35, 0.34);
+      }
+      .title {
+        font-size: 1.8rem;
+        color: var(--primary-color);
+        font-weight: 500;
+        margin-top: 24px;
+      }
+      .sub-title {
+        margin: 4px 0 24px;
+      }
+      .requirement {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        line-height: 2.9rem;
+        margin-bottom: 32px;
+      }
+      .select-btn {
+        width: 400px;
+        border-radius: 2px;
+      }
+    }
+  }
+}

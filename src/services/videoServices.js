@@ -74,3 +74,44 @@ export const unLikeVideo = async (id) => {
     console.log(error);
   }
 };
+
+export const createNewVideo = async (dataInput, handleProgress) => {
+  try {
+    let res = await httpRequest.post('/videos', dataInput, {
+      headers: {
+        Authorization: 'Bearer ' + storage.get(TOKEN),
+        'Content-Type': 'multipart/form-data',
+      },
+      onUploadProgress: handleProgress,
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error.request.response);
+  }
+};
+
+export const deleteVideo = async (id) => {
+  try {
+    let res = await httpRequest.remove(`/videos/${id}`, {
+      headers: {
+        Authorization: 'Bearer ' + storage.get(TOKEN),
+      },
+    });
+    return res?.data;
+  } catch (error) {
+    console.log(error.request.response);
+  }
+};
+
+export const updateVideo = async (id, dataInput) => {
+  try {
+    await httpRequest.post(`videos/${id}?_method=PATCH`, dataInput, {
+      headers: {
+        Authorization: 'Bearer ' + storage.get(TOKEN),
+        'Content-Type': 'multipart/form-data',
+      },
+    });
+  } catch (error) {
+    console.log(error.request.response);
+  }
+};

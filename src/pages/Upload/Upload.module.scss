@@ -1,0 +1,106 @@
+:root {
+  --radius: 46.875;
+  --PI: 3.14159265358979;
+  --circumference: calc(var(--PI) * var(--radius) * 2px);
+}
+
+.wrapper {
+  width: 1100px;
+  margin: 0 auto;
+  padding: 16px 0 48px;
+  .container {
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    background-color: var(--white-color);
+    // padding: 64px 50px;
+    transition: all 0.2s linear;
+  }
+}
+
+// Publisher
+.publisher {
+  padding: 24px 40px;
+  .header {
+    .title {
+      font-size: 2.4rem;
+      font-weight: 700;
+    }
+    .sub-title {
+      font-size: 1.8rem;
+      color: rgba(22,24,35,0.5);
+      margin-top: 2px;
+    }
+  }
+  .content {
+    display: flex;
+    justify-content: flex-start;
+    margin: 24px 0 130px;
+    .preview {
+      margin-right: 8px;
+
+      .preview-loading {
+        height: 458px;
+        width: 260px;
+        border: 2px dashed var(--secondary-color);
+        border-radius: 8px;
+        height: 100%;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .loading-title {
+          margin: 30px 0 20px;
+        }
+      }
+    }
+    
+  }
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-width: 200px;
+  padding: 16px;
+  position: relative;
+  .spinner {
+    width: 64px;
+    height: 64px;
+    transform: rotate(-90deg);
+
+    .circle {
+      cx: 50px;
+      cy: 50px;
+      r: var(--radius);
+      fill: none;
+      stroke-width: 6.25;
+    }
+
+    .unload {
+      stroke: rgba(22, 24, 35, 0.12);
+      transform-origin: center center;
+    }
+
+    .loaded {
+      transform-origin: center;
+      stroke: rgba(254, 44, 85, 1);
+      stroke-linecap: butt;
+      transition: all 0.02s linear;
+    }
+  }
+
+  .percentage {
+    position: absolute;
+  }
+}
+
+.loading-title {
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

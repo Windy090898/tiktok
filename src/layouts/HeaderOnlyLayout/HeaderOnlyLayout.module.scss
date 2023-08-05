@@ -1,0 +1,11 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  .container {
+    position: absolute;
+    top: var(--default-layout-header-height);
+    width: 100%;
+    background-color: #f8f8f8;
+
+  }
+}

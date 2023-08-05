@@ -7,12 +7,13 @@ import Profile from '~/pages/Profile';
 import Live from '~/pages/Live';
 import Explore from '~/pages/Explore';
 import Suggest from '~/pages/Suggest';
+import HeaderOnlyLayout from '~/layouts/HeaderOnlyLayout';
 
 // Public routes: don't need to login
 export const publicRoutes = [
   { path: config.routes.home, element: Home },
   { path: config.routes.following, element: Following },
-  { path: config.routes.upload, element: Upload },
+  { path: config.routes.upload, element: Upload, layout: HeaderOnlyLayout},
   { path: config.routes.profile, element: Profile },
   { path: config.routes.live, element: Live },
   { path: config.routes.explore, element: Explore },
