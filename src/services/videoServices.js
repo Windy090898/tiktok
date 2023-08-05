@@ -10,8 +10,6 @@ export const videoList = async (type, page) => {
           type,
           page,
         },
-      },
-      {
         headers: {
           Authorization: 'Bearer ' + storage.get(TOKEN),
           'Content-Type': 'application/json',

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
 import classNames from 'classnames/bind';
-import styles from './Home.module.scss';
+import styles from './VideoList.module.scss';
 
 import Image from '~/components/Image';
 import Video from '~/components/Video';
@@ -17,10 +17,9 @@ import { MusicIcon } from '~/components/Icon';
 import { CommentIcon, HeartIcon, ShareIcon } from '~/components/Icon';
 import * as videoServices from '~/services/videoServices';
 
-
 const cx = classNames.bind(styles);
 
-function HomeItem({ video }) {
+function VideoItem({ video }) {
   const {
     user,
     description,
@@ -79,7 +78,7 @@ function HomeItem({ video }) {
         </Button>
       );
     }
-  }; 
+  };
   const handleLike = () => {
     setLike(!like);
     if (!like) {
@@ -175,4 +174,4 @@ function HomeItem({ video }) {
   );
 }
 
-export default HomeItem;
+export default VideoItem;
