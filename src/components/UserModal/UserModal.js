@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebook,
@@ -15,28 +15,19 @@ import signinImg from '~/assets/img/login-image.jpg';
 import signupImg from '~/assets/img/signup-image.jpg';
 import Button from '~/components/Button';
 import Form from './Form';
+import Modal from '../Modal/Modal';
 
 const cx = classNames.bind(styles);
 
 function UserModal() {
   const [formDisplay, setFormDisplay] = useState('signin');
-
-  const modalRef = useRef();
   const {showModal, setShowModal} = useContext(AuthContext);
-
-  useEffect(() => {
-    window.addEventListener('click', (e) => {
-      if (e.target === modalRef.current) {
-        setShowModal(false);
-      }
-    });
-  }, [setShowModal]);
 
   if (showModal) {
     return (
-      <div className={cx('wrapper')} ref={modalRef}>
+      <Modal modalState={[showModal, setShowModal]}>
         <div
-          className={cx('content-container', {
+          className={cx('user-modal-container', {
             signup: formDisplay === 'signup' ? true : false,
           })}
         >
@@ -87,7 +78,7 @@ function UserModal() {
             )}
           </div>
         </div>
-      </div>
+      </Modal>
     );
   }
 }

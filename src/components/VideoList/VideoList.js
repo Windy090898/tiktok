@@ -39,7 +39,6 @@ function VideoList() {
       setEndPage(newList.length - 1);
     };
     if (page) {
-      console.log(page);
       getVideoList();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

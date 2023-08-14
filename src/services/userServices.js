@@ -49,7 +49,7 @@ export const totalPageSuggestAccs = async () => {
   }
 };
 
-export const users = async (nickname) => {
+export const getUser = async (nickname) => {
   try {
     const res = await httpRequest.get(`users/@${nickname}`);
     return res.data;

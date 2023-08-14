@@ -44,6 +44,8 @@ button, input, [tabindex] {
     border: none;
     outline: none;
     font-family: var(--content-font-family);
+    background-color: transparent;
+    cursor: pointer;
 }
 
 a[href] {

@@ -1,26 +1,47 @@
-import React, { useEffect, useRef, useState } from 'react';
-import PropTypes from 'prop-types'
+import React, {
+  forwardRef,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
+import PropTypes from 'prop-types';
 
 import classNames from 'classnames/bind';
 import styles from './Video.module.scss';
 
 import { PauseIcon, PlayIcon, VolumeOffIcon, VolumeOnIcon } from '../Icon';
 import { useElementOnScreen } from '~/hooks';
-import images from '~/assets/img'
+import images from '~/assets/img';
+import ReactPlayer from 'react-player';
 
 const cx = classNames.bind(styles);
 
-function Video({ video, fallback: customFallback = images.noVideo }) {
-  const [fallback, setFallback] = useState('')
+function Video(
+  {
+    video,
+    fallback: customFallback = images.noVideo,
+    control = false,
+    volume: initialVolume,
+    loop = false,
+    id: idList,
+    activeId,
+    handleNextVideo,
+  },
+  ref,
+) {
+  const [fallback, setFallback] = useState('');
   const handleFallback = () => {
-    setFallback(customFallback)
-  }
-  
-  const { file_url, thumb_url } = video;
+    setFallback(customFallback);
+  };
+
+  const { file_url, thumb_url, id } = video;
   const videoRef = useRef();
 
-  const [play, setPlay] = useState(false);
-  const [volume, setVolume] = useState(0);
+  const [playing, setPlaying] = useState(true);
+  const [volume, setVolume] = useState(initialVolume);
+  const [visibleVideo, setVisibleVideo] = useState([]);
+  // const [activeId, setActiveId] = useState(idList[0]);
 
   let options = {
     root: null,
@@ -29,80 +50,71 @@ function Video({ video, fallback: customFallback = images.noVideo }) {
   };
 
   const visible = useElementOnScreen(options, videoRef);
+
   useEffect(() => {
     if (visible) {
-      if (!play) {
-        let playPromise = videoRef.current.play();
-        playPromise
-          .then(() => {
-            setPlay(true);
-            setVolume(50);
-          })
-          .catch((err) => console.log(err));
+      if (activeId) {
+        if (id === activeId) {
+          setPlaying(true);
+        }
+      } else {
+        setPlaying(true);
       }
     } else {
-      if (play) {
-        videoRef.current.pause();
-        setPlay(false);
-      }
+      setPlaying(false);
     }
-    videoRef.current.loop = true;
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [visible]);
-
-  useEffect(() => {
-    if (volume === 0) {
-      videoRef.current.muted = true;
-    } else {
-      videoRef.current.muted = false;
-      videoRef.current.volume = volume / 100;
-    }
-  }, [volume]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [visible, activeId]);
 
   const handlePlayControl = () => {
-    if (!play) {
-      let playPromise = videoRef.current.play();
+    setPlaying(!playing);
+    if (!playing) {
       setVolume(50);
-
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => setPlay(!play))
-          .catch((err) => {
-            console.log(err);
-            videoRef.current.pause();
-            setPlay(false);
-          });
-      }
-    } else {
-      videoRef.current.pause();
-      setPlay(!play);
     }
   };
 
-  const handleMute = () => {
-    let newVolume = volume === 0 ? 50 : 0;
-    setVolume(newVolume);
+  const handleVolume = () => {
+    setVolume((prev) => (prev === 0 ? 50 : 0));
   };
 
+  const handleVolumeChange = (e) => {
+    if (isNaN(e.target.value)) {
+      setVolume(0);
+    } else {
+      setVolume(e.target.value);
+    }
+  };
+
+  
+
   return (
-    <div className={cx('wrapper')}>
-      <div className={cx('video-container')}>
-        <div className={cx('video')} onClick={handlePlayControl}>
-          <video
-            onError={handleFallback}
-            src={file_url || fallback}
-            className={cx('video')}
-            ref={videoRef}
-            poster={thumb_url || images.noImage}
-          ></video>
-        </div>
+    <>
+      <div className={cx('video-container')} onClick={handlePlayControl}>
+        <ReactPlayer
+          // onError={handleFallback}
+          url={file_url || fallback}
+          // fallback={fallback}
+          playing={playing}
+          volume={parseFloat(volume / 100) || 0}
+          muted={volume === 0}
+          // playsinline
+          loop={loop}
+          className={cx('video')}
+          ref={videoRef}
+          poster={thumb_url || images.noImage}
+          width={'100%'}
+          height={'100%'}
+          onEnded={handleNextVideo}
+        ></ReactPlayer>
+      </div>
+      {control && (
         <div className={cx('control')}>
           <div className={cx('control-play')} onClick={handlePlayControl}>
-            {!play && <PlayIcon />}
-            {play && <PauseIcon />}
+            {!playing && <PlayIcon />}
+            {playing && <PauseIcon />}
           </div>
           <div className={cx('control-volume')}>
-            <div className={cx('volume-icon')} onClick={handleMute}>
+            <div className={cx('volume-icon')} onClick={handleVolume}>
               {volume !== 0 && <VolumeOnIcon />}
               {volume === 0 && <VolumeOffIcon />}
             </div>
@@ -113,17 +125,13 @@ function Video({ video, fallback: customFallback = images.noVideo }) {
               min={0}
               max={100}
               value={volume}
-              onChange={(e) => setVolume(e.target.value)}
+              onChange={handleVolumeChange}
             />
           </div>
         </div>
-      </div>
-    </div>
+      )}
+    </>
   );
 }
 
-Video.propTypes = {
-  video: PropTypes.object.isRequired,
-}
-
-export default Video;
+export default forwardRef(Video);

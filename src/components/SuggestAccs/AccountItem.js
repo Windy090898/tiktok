@@ -10,6 +10,7 @@ import Image from '../Image';
 import AccPreview from '~/components/Popper/AccPreview';
 import * as followServices from '~/services/followServices';
 import { UserContext } from '~/context/UserProvider';
+import { Link } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
@@ -38,7 +39,7 @@ function AccountItem({ preview, item }) {
   };
   const renderItem = () => {
     return (
-      <div className={cx('account-item')}>
+      <Link className={cx('account-item')} to={`/@${nickname}`}>
         <Image src={avatar} alt="" className={cx('avatar')}></Image>
         <div className={cx('user-infor')}>
           <h4 className={cx('nickname')}>
@@ -49,7 +50,7 @@ function AccountItem({ preview, item }) {
           </h4>
           <p className={cx('name')}>{`${first_name} ${last_name}`}</p>
         </div>
-      </div>
+      </Link>
     );
   };
   if (preview) {

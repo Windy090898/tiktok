@@ -4,11 +4,25 @@ const accessToken =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC90aWt0b2suZnVsbHN0YWNrLmVkdS52blwvYXBpXC9hdXRoXC9yZWdpc3RlciIsImlhdCI6MTY1MTc0MjI1OSwiZXhwIjoxNjU0MzM0MjU5LCJuYmYiOjE2NTE3NDIyNTksImp0aSI6ImdremlxN05LcFJrdVJYSVoiLCJzdWIiOjUsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.IF9kZeYa8zqAaTmUJFh640ylAb8Lmku2sb2OkPcQ0M0';
 
 // Authentication
-export const getCurrentUser = async (token) => {
+export const getCurrentUser = async () => {
   try {
     const res = await httpRequest.get('auth/me', {
       headers: {
         Authorization: 'Bearer ' + storage.get(TOKEN),
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateCurrentUser = async (dataInput) => {
+  try {
+    const res = await httpRequest.post(`auth/me?_method=PATCH`, dataInput, {
+      headers: {
+        Authorization: 'Bearer ' + storage.get(TOKEN),
+        'Content-Type': 'multipart/form-data',
       },
     });
     return res.data;

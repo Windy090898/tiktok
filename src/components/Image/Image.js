@@ -1,4 +1,4 @@
-import React, { forwardRef, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types'
 import images from '~/assets/img';
 
@@ -10,6 +10,14 @@ function Image(
   const handleError = () => {
     setFallback(customFallback);
   };
+
+  useEffect(() => {
+    if (src) {
+      setFallback('');
+    }
+  }, [src])
+  
+ 
   return (
     <img
       onError={() => handleError()}

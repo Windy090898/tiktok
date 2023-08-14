@@ -1,4 +1,4 @@
-import { Fragment, useContext} from 'react';
+import { Fragment, useContext, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
@@ -49,52 +49,69 @@ const MENU_ITEMS = [
 ];
 
 function Header() {
-  const { setShowModal, setAuth } = useContext(AuthContext);
+  const { setShowModal, currentUser } = useContext(AuthContext);
   const isLoggedIn = storage.get(IS_LOGIN);
+
+  const [user, setCurrentUser] = useState(currentUser);
+  const [menuDisplay, setMenuDisplay] = useState(MENU_ITEMS);
+
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      let response = await authServices.getCurrentUser();
+      if (response) {
+        setCurrentUser(response);
+        const useMenu = [
+          {
+            icon: <i className="fa-regular fa-user"></i>,
+            title: 'View profile',
+            to: `/@${response.nickname}`,
+          },
+          {
+            icon: <i className="fa-solid fa-coins"></i>,
+            title: 'Get coins',
+            to: '/coin',
+          },
+          {
+            icon: <i className="fa-solid fa-gear"></i>,
+            title: 'Settings',
+            to: '/settings',
+          },
+          ...MENU_ITEMS,
+          {
+            icon: <i className="fa-solid fa-arrow-right-from-bracket"></i>,
+            title: 'Log out',
+            // to: '/',
+            onClick: handleLogout,
+            separate: true,
+          },
+        ];
+        setMenuDisplay(useMenu);
+      }
+    };
+    if (isLoggedIn) {
+      getCurrentUser();
+    } else {
+      setCurrentUser(null);
+    }
+  }, [isLoggedIn]);
 
   const handleLogout = async () => {
     let token = storage.get(TOKEN);
     await authServices.signout(token);
-    window.location.reload();
-    // storage.remove(TOKEN);
-    storage.remove(IS_LOGIN);
-    setAuth({});
+    window.location.href = '/';
+    storage.set(IS_LOGIN, false);
+    setCurrentUser(null);
   };
 
   const handleMenuChange = (menuItem) => {
-    menuItem.onClick();
+    if (menuItem.onClick) {
+      menuItem.onClick();
+    }
   };
-
-  const userMenu = [
-    {
-      icon: <i className="fa-regular fa-user"></i>,
-      title: 'View profile',
-      to: '/profile',
-    },
-    {
-      icon: <i className="fa-solid fa-coins"></i>,
-      title: 'Get coins',
-      to: '/coin',
-    },
-    {
-      icon: <i className="fa-solid fa-gear"></i>,
-      title: 'Settings',
-      to: '/settings',
-    },
-    ...MENU_ITEMS,
-    {
-      icon: <i className="fa-solid fa-arrow-right-from-bracket"></i>,
-      title: 'Log out',
-      // to: '/',
-      onClick: handleLogout,
-      separate: true,
-    },
-  ];
 
   const handleLoginShow = () => {
     setShowModal(true);
   };
-
 
   return (
     <header className={cx('wrapper')}>
@@ -131,12 +148,9 @@ function Header() {
               </Button>
             </Fragment>
           )}
-          <Menu
-            items={isLoggedIn ? userMenu : MENU_ITEMS}
-            onChange={handleMenuChange}
-          >
+          <Menu items={menuDisplay} onChange={handleMenuChange}>
             {isLoggedIn ? (
-              <Image className={cx('avatar')} src="" alt="" />
+              <Image className={cx('avatar')} src={user.avatar} alt="" />
             ) : (
               <button className={cx('more-icon')}>
                 <MoreIcon />

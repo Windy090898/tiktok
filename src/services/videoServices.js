@@ -113,3 +113,32 @@ export const updateVideo = async (id, dataInput) => {
     console.log(error.request.response);
   }
 };
+
+export const getUserVideo = async (id) => {
+  try {
+    let res = await httpRequest.get(`users/${id}/videos`, {
+      headers: {
+        Authorization: 'Bearer ' + storage.get(TOKEN),
+        'Content-Type': 'application/json',
+      },
+    });
+    return res.data
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export const getLikedVideos = async (id) => {
+  try {
+    let res = await httpRequest.get(`users/${id}/liked-videos`, {
+      headers: {
+        Authorization: 'Bearer ' + storage.get(TOKEN),
+        'Content-Type': 'application/json',
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

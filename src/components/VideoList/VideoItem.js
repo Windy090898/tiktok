@@ -40,6 +40,7 @@ function VideoItem({ video }) {
   const handleLoginShow = () => {
     setShowModal(true);
   };
+
   const handleFollow = (id) => {
     let response;
     const followUser = async () => {
@@ -58,6 +59,7 @@ function VideoItem({ video }) {
       followUser();
     }
   };
+
   const renderButtonFollow = () => {
     if (!isLogin) {
       return (
@@ -79,6 +81,7 @@ function VideoItem({ video }) {
       );
     }
   };
+
   const handleLike = () => {
     setLike(!like);
     if (!like) {
@@ -95,6 +98,7 @@ function VideoItem({ video }) {
       unLikeVideo();
     }
   };
+  
   return (
     <>
       <AccPreview
@@ -105,8 +109,8 @@ function VideoItem({ video }) {
         likeCount={likeCount}
         isLogin={isLogin}
       >
-        <Link className={cx('avatar-container')}>
-          <Image src="" alt="" className={cx('avatar')}></Image>
+        <Link className={cx('avatar-container')} to={`/@${user.nickname}`}>
+          <Image src={user.avatar} alt="" className={cx('avatar')}></Image>
         </Link>
       </AccPreview>
       <div className={cx('content')}>
@@ -120,7 +124,7 @@ function VideoItem({ video }) {
               likeCount={likeCount}
               isLogin={isLogin}
             >
-              <Link className={cx('author')}>
+              <Link className={cx('author')} to={`/@${user.nickname}`}>
                 <div className={cx('nickname')}>
                   {user.nickname}
                   <FontAwesomeIcon
@@ -147,7 +151,11 @@ function VideoItem({ video }) {
           {renderButtonFollow()}
         </div>
         <div className={cx('body')}>
-          <Video video={video} />
+          <div className={cx('wrapper')}>
+            <div className={cx('video-container')}>
+              <Video video={video} control volume={50} loop />
+            </div>
+          </div>
           <ul className={cx('actions')}>
             <li className={cx('action-item')}>
               <Button circle className={cx('icon')} onClick={handleLike}>

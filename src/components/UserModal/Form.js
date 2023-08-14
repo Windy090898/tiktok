@@ -9,7 +9,7 @@ import styles from './UserModal.module.scss';
 import { AuthContext } from '~/context/AuthProvider';
 import Button from '~/components/Button';
 import * as authServices from '~/services/authServices';
-import { IS_LOGIN, TOKEN, storage } from '~/storage';
+import { IS_LOGIN, TOKEN, USER_ID, storage } from '~/storage';
 
 const cx = classNames.bind(styles);
 
@@ -18,7 +18,7 @@ function Form({ formDisplay, setFormDisplay }) {
   const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
 
-  const { setAuth, setShowModal } = useContext(AuthContext);
+  const { setAuth, setShowModal, setCurrentUser } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,17 +36,19 @@ function Form({ formDisplay, setFormDisplay }) {
     if (response.error) {
       setErrMsg(response.error);
     } else {
-      const userInfor = response?.data;
+      // const userInfor = response?.data;
       const accessToken = response?.meta?.token;
-      setAuth({ userInfor, accessToken });
+      // setAuth({ userInfor, accessToken });
+      // setCurrentUser(userInfor)
       storage.set(TOKEN, accessToken);
       storage.set(IS_LOGIN, true);
+      storage.set(USER_ID, response?.data?.id)
       setEmail('');
       setPassword('');
       setShowModal(false);
     }
     setFormDisplay('signin');
-    window.location.reload();
+    window.location.href = '/';
   };
 
   return (
