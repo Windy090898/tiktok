@@ -1,0 +1,139 @@
+.video-container {
+    flex: 1 0 600px;
+    max-width: 100%;
+    padding: 0px 80px;
+    background: rgb(0, 0, 0);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    .blur-background {
+      background-image: url('https://p9-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oUNbETAyAwUIs7KPrh6ltBLATYdzafJKbqOZBB~tplv-efzqqlc8t1-1:720:720.jpeg?x-expires=1692021600&x-signature=qoqozvYJ4qGk1Fqig15aadoFIDE%3D');
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 10%;
+      height: 10%;
+      filter: blur(2px);
+      transform: scale(11);
+      opacity: 0.3;
+    }
+    .right-side-icon {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .more-wrapper {
+        background-color: rgb(27, 27, 27);
+        border-radius: 8px;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+        color: var(--white-color);
+        width: 200px;
+        a {
+          color: var(--white-color);
+        }
+        .more-item:hover {
+          background-color: rgba(255, 255, 255, 0.08);
+        }
+      }
+    }
+    .page-nav-button {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .icon {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      width: 40px;
+      border-radius: 50%;
+      color: var(--white-color);
+      background-color: rgba(84, 84, 84, 0.5);
+      z-index: 2;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .close-icon {
+      position: absolute;
+      left: 20px;
+      top: 20px;
+      // z-index: 101;
+    }
+    .up-icon {
+      transform: rotate(-90deg);
+    }
+    .video-wrapper {
+      position: absolute;
+      left: 0px;
+      width: 100%;
+      height: 100%;
+      .player-control {
+        width: calc(100% - 160px);
+        max-width: 56.25vh;
+        display: flex;
+        align-items: center;
+        height: 24px;
+        padding-inline: 16px;
+        position: absolute;
+        bottom: 28px;
+        left: 50%;
+        transform: translateX(-50%);
+        color: var(--white-color);
+      }
+      .progess-bar-container {
+        flex: 1;
+        height: 3px;
+        background-color: rgba(86, 86, 86, 0.8);
+        position: relative;
+        .progress-bar {
+          position: absolute;
+          left: 0;
+          background-color: var(--white-color);
+          height: 100%;
+          &:after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translate(50%, -50%);
+            height: 5px;
+            width: 5px;
+            border-radius: 50%;
+            background-color: var(--white-color);
+            box-shadow: rgba(0, 0, 0, 0.1) -1px 1px 1px;
+          }
+        }
+        input[type='range'] {
+          appearance: none;
+          opacity: 0;
+        }
+      }
+      .progress-time {
+        flex: 0 0 88px;
+        max-width: 88px;
+        margin-left: 8px;
+        font-size: 1.4rem;
+        text-align: end;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  .more-icon,
+.down-icon {
+  transform: rotate(90deg);
+}
+
+.tippy-link-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  &:hover {
+    background: rgba(22, 24, 35, 0.03);
+  }
+}

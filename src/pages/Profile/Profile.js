@@ -29,7 +29,7 @@ const PROFILE_TABS = [
 
 function Profile() {
   const { nickname } = useParams();
-  const {currentUser} = useContext(AuthContext)
+  const { currentUser } = useContext(AuthContext);
 
   //User section
   const [user, setUser] = useState();
@@ -40,33 +40,24 @@ function Profile() {
   const [activeTab, setActiveTab] = useState(0);
 
   // Video Section
-  const [userVideos, setUserVideos] = useState([]);
-  const [userIds, setUserIds] = useState([]);
-  const [likedVideos, setLikedVideos] = useState([]);
-  const [likedIds, setLikedIds] = useState([]);
-
-
-  const getUserVideo = async (id) => {
-    let response = await videoServices.getUserVideo(id);
-    setUserVideos(response);
-    setUserIds(response.map((video) => video.id));
-  };
-  const getLikedVideo = async (id) => {
-    let response = await videoServices.getLikedVideos(id);
-    setLikedVideos(response);
-    setLikedIds(response.map((video) => video.id));
-  }
+  const [videoList, setVideoList] = useState([]);
+  const [idList, setIdList] = useState([]);
 
   useEffect(() => {
     const getUser = async () => {
       let response = await userServices.getUser(nickname);
       setUser(response);
-      getUserVideo(response.id);
-      getLikedVideo(response.id);
+      let newVideoList = [];
+      if (activeTab === 0) {
+        newVideoList = await videoServices.getUserVideo(response.id);
+      } else if (activeTab === 2 && response.id === currentUser.id) {
+        newVideoList = await videoServices.getLikedVideos(response.id);
+      }
+      setVideoList(newVideoList);
+      setIdList(newVideoList.map((video) => video.id));
     };
     getUser();
-    
-  }, [nickname]);
+  }, [nickname, activeTab]);
 
   const tabRef = useRef();
 
@@ -81,7 +72,7 @@ function Profile() {
   };
 
   useEffect(() => {
-    setActiveTab(0)
+    setActiveTab(0);
     handleBottomLine(0);
   }, [nickname]);
 
@@ -119,18 +110,19 @@ function Profile() {
             }}
           ></div>
         </div>
-        {activeTab === 0 && (
-          <ProfileVideos videoList={userVideos} idList={userIds} />
-        )}
-        {activeTab === 2 && (user.id === currentUser.id ? (
-          <ProfileVideos videoList={likedVideos} idList={likedIds} />
+        {videoList.length > 0 ? (
+          <ProfileVideos videoList={videoList} idList={idList} />
         ) : (
           <div className={cx('lock-msg')}>
-            <RegularLockIcon className={cx('lock-icon')}/>
-            <h3 className={cx('title')}>This user's liked videos are private</h3>
-            <p className={cx('sub-title')}>Videos liked by letuankhang2002 are currently hidden</p>
+            <RegularLockIcon className={cx('lock-icon')} />
+            <h3 className={cx('title')}>
+              This user's liked videos are private
+            </h3>
+            <p className={cx('sub-title')}>
+              Videos liked by letuankhang2002 are currently hidden
+            </p>
           </div>
-        ))}
+        )}
       </section>
     </div>
   );

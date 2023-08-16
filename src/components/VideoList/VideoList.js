@@ -68,7 +68,7 @@ function VideoList() {
         let ref = index === endPage ? lastVideoRef : undefined;
         return (
           <div className={cx('item-container')} key={video.id} ref={ref}>
-            <VideoItem video={video} />
+            <VideoItem video={video} videoType={videoType} />
           </div>
         );
       })}

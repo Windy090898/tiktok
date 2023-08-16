@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,7 +10,7 @@ import Image from '~/components/Image';
 import Video from '~/components/Video';
 import AccPreview from '~/components/Popper/AccPreview';
 import * as followServices from '~/services/followServices';
-import { IS_LOGIN, storage } from '~/storage';
+import { IS_LOGIN, VIDEO_LIST, storage } from '~/storage';
 import { AuthContext } from '~/context/AuthProvider';
 import Button from '~/components/Button';
 import { MusicIcon } from '~/components/Icon';
@@ -19,7 +19,7 @@ import * as videoServices from '~/services/videoServices';
 
 const cx = classNames.bind(styles);
 
-function VideoItem({ video }) {
+function VideoItem({ video, videoType }) {
   const {
     user,
     description,
@@ -98,7 +98,13 @@ function VideoItem({ video }) {
       unLikeVideo();
     }
   };
-  
+
+  const navigate = useNavigate();
+
+  const navigateToVidDetail = () => {
+    navigate(`/@${video.user.nickname}/video/${video.uuid}`);
+  };
+
   return (
     <>
       <AccPreview
@@ -152,7 +158,10 @@ function VideoItem({ video }) {
         </div>
         <div className={cx('body')}>
           <div className={cx('wrapper')}>
-            <div className={cx('video-container')}>
+            <div
+              className={cx('video-container')}
+              onClick={navigateToVidDetail}
+            >
               <Video video={video} control volume={50} loop />
             </div>
           </div>

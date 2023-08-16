@@ -14,34 +14,26 @@ import { PauseIcon, PlayIcon, VolumeOffIcon, VolumeOnIcon } from '../Icon';
 import { useElementOnScreen } from '~/hooks';
 import images from '~/assets/img';
 import ReactPlayer from 'react-player';
+import { useNavigate } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
 function Video(
   {
     video,
-    fallback: customFallback = images.noVideo,
     control = false,
     volume: initialVolume,
     loop = false,
-    id: idList,
     activeId,
     handleNextVideo,
   },
   ref,
 ) {
-  const [fallback, setFallback] = useState('');
-  const handleFallback = () => {
-    setFallback(customFallback);
-  };
-
   const { file_url, thumb_url, id } = video;
   const videoRef = useRef();
 
   const [playing, setPlaying] = useState(true);
   const [volume, setVolume] = useState(initialVolume);
-  const [visibleVideo, setVisibleVideo] = useState([]);
-  // const [activeId, setActiveId] = useState(idList[0]);
 
   let options = {
     root: null,
@@ -89,15 +81,12 @@ function Video(
 
   return (
     <>
-      <div className={cx('video-container')} onClick={handlePlayControl}>
+      <div className={cx('video-container')}>
         <ReactPlayer
-          // onError={handleFallback}
-          url={file_url || fallback}
-          // fallback={fallback}
+          url={file_url}
           playing={playing}
           volume={parseFloat(volume / 100) || 0}
           muted={volume === 0}
-          // playsinline
           loop={loop}
           className={cx('video')}
           ref={videoRef}

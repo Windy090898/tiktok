@@ -1,0 +1,125 @@
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.content-container {
+  flex: 0 0 544px;
+  width: 544px;
+  padding-top: 24px;
+  color: rgb(22, 24, 35);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  .comment-container {
+    border-bottom: 1px solid rgba(22, 24, 35, 0.2);
+    overflow: hidden;
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    .comment-list-container {
+      overflow: hidden auto;
+      flex-grow: 1;
+      position: relative;
+      padding: 0px 32px 24px;
+    }
+  }
+}
+
+.share-wrapper {
+  width: 280px;
+}
+
+.comment-wrapper {
+  // padding: 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: scroll;
+  .comment-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .comment-content {
+    flex: 1;
+    .nickname {
+      font-weight: 600;
+    }
+    .view-reply,
+    .reply {
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      color: rgba(22, 24, 35, 0.5);
+      font-size: 1.4rem;
+      .comment-date {
+        min-width: 80px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 10px;
+      }
+    }
+
+    .view-reply {
+      font-weight: 500;
+      gap: 10px;
+    }
+  }
+}
+
+.bottom-comment-container {
+  padding: 21px 0;
+  margin: 0 30px;
+  display: flex;
+  font-size: 1.4rem;
+  .create-comment-container {
+    flex: 1;
+    display: flex;
+    background-color: rgba(22, 24, 35, 0.06);
+    padding: 0 9px;
+    border-radius: 6px;
+    .comment-input {
+      font-size: 1.4rem;
+      padding: 10px 8px;
+      flex: 1;
+      cursor: text;
+    }
+    .comment-icon {
+      flex: 0 0 32px;
+      width: 32px;
+      height: 32px;
+      padding: 5px;
+      margin: 3px;
+      cursor: pointer;
+      background-color: transparent;
+      border-radius: 8px;
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.12);
+      }
+    }
+  }
+  .comment-btn {
+    font-size: 1.5rem;
+    flex: 0 0 48px;
+    color: rgba(22, 24, 35, 0.34);
+    font-weight: 500;
+    margin-right: 4px;
+    text-align: end;
+    &.active {
+      color: var(--pink-color);
+    }
+  }
+}
+
+.check {
+  font-size: 1.4rem;
+  margin-left: 4px;
+  color: var(--tick-color);
+}
+
+

@@ -49,6 +49,8 @@ function AccPreview({
     tippyRef.current.hide();
   };
 
+  
+
   const renderButtonFollow = () => {
     if (!isLogin) {
       return (
