@@ -27,6 +27,8 @@ function AccountItem({ preview, item }) {
   } = item;
 
   const [isFollow, setIsFollow] = useState(is_followed);
+  const [followerCount, setFollowerCount] = useState(followers_count);
+
   const { followedList, setFollowedList } = useContext(UserContext);
 
   const handleFollow = (id) => {
@@ -57,10 +59,12 @@ function AccountItem({ preview, item }) {
     return (
       <AccPreview
         item={item}
-        followerCount={followers_count}
         likeCount={likes_count}
         isFollow={isFollow}
         onFollow={handleFollow}
+        followerCount={followerCount}
+        setFollowerCount={setFollowerCount}
+        setIsFollow={setIsFollow}
       >
         {renderItem()}
       </AccPreview>

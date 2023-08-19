@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 
 import classNames from 'classnames/bind';
 import styles from './TabMenu.module.scss';
@@ -11,15 +11,27 @@ import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import Button from '~/components/Button';
 import { MusicIcon } from '~/components/Icon';
 import * as followServices from '~/services/followServices';
+import { IS_LOGIN, storage } from '~/storage';
+import { AuthContext } from '~/context/AuthProvider';
+import { VideoDetailContext } from '~/context/VideoDetailProvider';
 
 const cx = classNames.bind(styles);
 
-function Description({ user, video, convertDate }) {
+function Description() {
+  const {
+    author,
+    video,
+    authorIsFollow,
+    setAuthorIsFollow,
+    authorFollowCount,
+    setAuthorFollowCount,
+    convertDate,
+    videoLikeCount,
+    totalVideoLike,
+  } = useContext(VideoDetailContext);
   const captionRef = useRef();
 
   const [captionExpanded, setCaptionExpanded] = useState(false);
-  const [isFollow, setIsFollow] = useState(user.is_followed);
-  const [followerCount, setFollowerCount] = useState(user.followers_count);
 
   const toggleCaptionExpanded = () => {
     setCaptionExpanded(!captionExpanded);
@@ -28,32 +40,40 @@ function Description({ user, video, convertDate }) {
   const handleFollow = (id) => {
     const followUser = async (id) => {
       let response = await followServices.follow(id);
-      setFollowerCount(response.followers_count);
-      setIsFollow(!isFollow);
+      setAuthorIsFollow(!authorIsFollow);
+      setAuthorFollowCount(response.followers_count);
     };
 
     const unFollowUser = async (id) => {
       let response = await followServices.unFollow(id);
-      setFollowerCount(response.followers_count);
-      setIsFollow(!isFollow);
+      setAuthorIsFollow(!authorIsFollow);
+      setAuthorFollowCount(response.followers_count);
+
     };
-    if (isFollow) {
+    if (authorIsFollow) {
       unFollowUser(id);
     } else {
       followUser(id);
     }
   };
 
-  const renderButtonFollow = () => {
-    if (!isFollow) {
+  const { setShowModal } = useContext(AuthContext);
+  const renderButtonFollow = (id) => {
+    if (!storage.get(IS_LOGIN)) {
       return (
-        <Button primary onClick={() => handleFollow(user.id)}>
+        <Button primary onClick={() => setShowModal(true)}>
+          Follow
+        </Button>
+      );
+    } else if (!authorIsFollow) {
+      return (
+        <Button primary onClick={() => handleFollow(id)}>
           Follow
         </Button>
       );
     } else {
       return (
-        <Button outline onClick={() => handleFollow(user.id)}>
+        <Button outline onClick={() => handleFollow(id)}>
           Following
         </Button>
       );
@@ -64,18 +84,19 @@ function Description({ user, video, convertDate }) {
     <div className={cx('description')}>
       <div className={cx('author-wrapper')}>
         <AccPreview
-          item={user}
-          onFollow={handleFollow}
-          isFollow={isFollow}
-          followerCount={followerCount}
-          likeCount={user.likes_count}
+          item={author}
+          likeCount={totalVideoLike}
+          followerCount={authorFollowCount}
+          setFollowerCount={setAuthorFollowCount}
+          isFollow={authorIsFollow}
+          setIsFollow={setAuthorIsFollow}
         >
-          <Link className={cx('user-container')} to={`/@${user.nickname}`}>
-            <Image src={user.avatar} alt="" className={cx('avatar')}></Image>
+          <Link className={cx('author-container')} to={`/@${author.nickname}`}>
+            <Image src={author.avatar} alt="" className={cx('avatar')}></Image>
             <div>
               <span className={cx('nickname')}>
-                {user.nickname}
-                {user.tick && (
+                {author.nickname}
+                {author.tick && (
                   <FontAwesomeIcon
                     className={cx('check')}
                     icon={faCircleCheck}
@@ -84,14 +105,14 @@ function Description({ user, video, convertDate }) {
               </span>
               <br />
               <div className={cx('post-infor')}>
-                <span>{`${user.first_name} ${user.last_name}`}</span>
+                <span>{`${author.first_name} ${author.last_name}`}</span>
                 <span> · </span>
                 <span>{convertDate(video.published_at)}</span>
               </div>
             </div>
           </Link>
         </AccPreview>
-        {renderButtonFollow()}
+        {renderButtonFollow(author.id)}
       </div>
       <div className={cx('caption-wrapper')}>
         <div

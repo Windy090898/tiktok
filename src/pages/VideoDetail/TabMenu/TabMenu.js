@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './TabMenu.module.scss';
 import {
@@ -25,6 +25,7 @@ import Button from '~/components/Button';
 import { Wrapper } from '~/components/Popper';
 import Description from './Description';
 import * as videoServices from '~/services/videoServices';
+import { VideoDetailContext } from '~/context/VideoDetailProvider';
 
 const cx = classNames.bind(styles);
 const SHARE_ITEMS = [
@@ -77,11 +78,12 @@ const SUB_SHARE_ITEMS = [
   },
 ];
 
-function TabMenu({ user, video, convertDate, totalComments, borderDisplay }) {
-  const [likeCount, setLikeCount] = useState(video.likes_count);
+function TabMenu({ totalComments, borderDisplay, commentCount }) {
+  const { video, videoLikeCount, setVideoLikeCount } =
+    useContext(VideoDetailContext);
+  // const [likeCount, setLikeCount] = useState(video.likes_count);
   const [shareCount, setShareCount] = useState(video.shares_count);
-  
-  const [commentCount, setCommentCount] = useState(video.comments_count);
+
   const [like, setLike] = useState(video.is_liked);
   const [linkCopied, setLinkCopied] = useState(false);
 
@@ -90,13 +92,13 @@ function TabMenu({ user, video, convertDate, totalComments, borderDisplay }) {
     if (!like) {
       const likeVideo = async () => {
         let response = await videoServices.likeVideo(video.id);
-        setLikeCount(response.likes_count);
+        setVideoLikeCount(response.likes_count);
       };
       likeVideo();
     } else {
       const unLikeVideo = async () => {
         let response = await videoServices.unLikeVideo(video.id);
-        setLikeCount(response.likes_count);
+        setVideoLikeCount(response.likes_count);
       };
       unLikeVideo();
     }
@@ -113,7 +115,7 @@ function TabMenu({ user, video, convertDate, totalComments, borderDisplay }) {
   return (
     <>
       <div className={cx('tab-menu-wrapper')}>
-        <Description user={user} video={video} convertDate={convertDate} />
+        <Description />
         <div className={cx('main-content')}>
           <div className={cx('video-count-share')}>
             <div className={cx('video-count')}>
@@ -130,7 +132,7 @@ function TabMenu({ user, video, convertDate, totalComments, borderDisplay }) {
                   className={cx('icon')}
                   onClick={handleLikeVideo}
                 >
-                  <span className={cx('label')}>{likeCount}</span>
+                  <span className={cx('label')}>{videoLikeCount}</span>
                 </Button>
               </div>
               <div className={cx('count-item')}>

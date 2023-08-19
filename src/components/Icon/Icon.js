@@ -403,7 +403,7 @@ export const HeartIcon = ({ className, width = '2.4rem', height = '2.4rem' }) =>
       clipRule="evenodd"
       d="M7.5 2.25c3 0 4.5 2 4.5 2s1.5-2 4.5-2c3.5 0 6 2.75 6 6.25 0 4-3.269 7.566-6.25 10.25C14.41 20.407 13 21.5 12 21.5s-2.45-1.101-4.25-2.75C4.82 16.066 1.5 12.5 1.5 8.5c0-3.5 2.5-6.25 6-6.25Z"
     ></path>
-    <path
+    {/* <path
         fill="black"
         fillOpacity=".03"
         d="M2.402 12.2c1.187 2.497 3.357 4.727 5.348 6.55C9.55 20.399 11 21.5 12 21.5s2.41-1.093 4.25-2.75c2.98-2.684 6.25-6.25 6.25-10.25 0-.087-.002-.174-.005-.26C20.567 13.661 13.68 18.5 11.75 18.5c-1.437 0-6.14-2.687-9.348-6.3Z"
@@ -412,7 +412,7 @@ export const HeartIcon = ({ className, width = '2.4rem', height = '2.4rem' }) =>
       <clipPath id="heart-fill-03bd63df_a">
         <path fill="white" d="M0 0h24v24H0z"></path>
       </clipPath>
-    </defs>
+    </defs> */}
   </svg>
 );
 

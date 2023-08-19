@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
@@ -12,6 +12,7 @@ import Image from '~/components/Image';
 import Button from '~/components/Button/Button';
 import { IS_LOGIN, storage } from '~/storage';
 import { AuthContext } from '~/context/AuthProvider';
+import * as followServices from '~/services/followServices';
 
 const cx = classNames.bind(styles);
 
@@ -20,21 +21,16 @@ const defaultFn = () => {};
 function AccPreview({
   children,
   item,
-  isFollow,
-  onFollow = defaultFn,
-  followerCount,
   likeCount,
+  followerCount,
+  isFollow,
+  setFollowerCount,
+  setIsFollow,
   isLogin = storage.get(IS_LOGIN),
 }) {
-  const {
-    id,
-    avatar,
-    nickname,
-    first_name,
-    last_name,
-    tick,
-    bio,
-  } = item;
+
+  const { id, avatar, nickname, first_name, last_name, tick, bio } =
+    item;
 
   const { setShowModal } = useContext(AuthContext);
 
@@ -49,7 +45,26 @@ function AccPreview({
     tippyRef.current.hide();
   };
 
-  
+
+  const handleFollow = (id) => {
+    const followUser = async (id) => {
+      let response = await followServices.follow(id);
+      setFollowerCount(response.followers_count);
+      setIsFollow(!isFollow);
+    };
+
+    const unFollowUser = async (id) => {
+      let response = await followServices.unFollow(id);
+      setFollowerCount(response.followers_count);
+      setIsFollow(!isFollow);
+    };
+    if (isFollow) {
+      unFollowUser(id);
+    } else {
+      followUser(id);
+    }
+    
+  };
 
   const renderButtonFollow = () => {
     if (!isLogin) {
@@ -60,13 +75,13 @@ function AccPreview({
       );
     } else if (!isFollow) {
       return (
-        <Button primary onClick={() => onFollow(id)}>
+        <Button primary onClick={() => handleFollow(id)}>
           Follow
         </Button>
       );
     } else {
       return (
-        <Button outline onClick={() => onFollow(id)}>
+        <Button outline onClick={() => handleFollow(id)}>
           Following
         </Button>
       );

@@ -1,21 +1,25 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 
 import classNames from 'classnames/bind';
 import styles from './ContentContainer.module.scss';
 import * as commentServices from '~/services/commentServices';
 
-import Image from '~/components/Image';
 import CommentBottom from './CommentBottom';
 import TabMenu from '../TabMenu';
+import CommentItem from './CommentItem';
+import { VideoDetailContext } from '~/context/VideoDetailProvider';
 
 const cx = classNames.bind(styles);
 
-function ContentContainer({ user, video }) {
+function ContentContainer() {
+  const { video } = useContext(VideoDetailContext);
   const [commentList, setCommentList] = useState([]);
   const [totalComments, setTotalComments] = useState(0);
   const [borderDisplay, setBorderDisplay] = useState(false);
+  const [comment, setComment] = useState('');
+  const [commentCount, setCommentCount] = useState(video.comments_count);
+  const lastestComment = useRef();
+  const commentsRef = useRef();
 
   useEffect(() => {
     const getCommentList = async () => {
@@ -26,14 +30,7 @@ function ContentContainer({ user, video }) {
     if (video) {
       getCommentList();
     }
-  }, [video]);
-
-  const convertDate = (date) => {
-    const newDate = new Date(date);
-    return [newDate.getDate(), newDate.getMonth() + 1, newDate.getFullYear()].join('-');
-  };
-
-  const commentsRef = useRef();
+  }, [video, comment]);
 
   useEffect(() => {
     commentsRef.current.onscroll = () => {
@@ -50,46 +47,31 @@ function ContentContainer({ user, video }) {
       <div className={cx('comment-container')}>
         <div className={cx('comment-list-container')} ref={commentsRef}>
           <TabMenu
-            user={user}
-            video={video}
-            convertDate={convertDate}
             totalComments={totalComments}
             borderDisplay={borderDisplay}
+            commentCount={commentCount}
           />
           <div className={cx('comment-wrapper')}>
             {/* Render comment list in reverse order, because in API data is from lastest to oldest */}
-            {commentList.slice(0).reverse().map((comment) => (
-              <div className={cx('comment-item')} key={comment.id}>
-                <Image
-                  src={comment.user.avatar}
-                  alt=""
-                  className={cx('avatar')}
-                ></Image>
-                <div className={cx('comment-content')}>
-                  <div className={cx('nickname')}>
-                    {comment.user.nickname}
-                    {comment.user.tick && (
-                      <FontAwesomeIcon
-                        className={cx('check')}
-                        icon={faCircleCheck}
-                      />
-                    )}
-                  </div>
-                  <div className={cx('comment')}>{comment.comment}</div>
-                  <div className={cx('reply')}>
-                    <div className={cx('comment-date')}>
-                      {convertDate(comment.updated_at)}
-                    </div>
-                    <div>Reply</div>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {commentList
+              .slice(0)
+              .reverse()
+              .map((comment) => (
+                <CommentItem
+                  key={comment.id}
+                  comment={comment}
+                />
+              ))}
+            <div ref={lastestComment} style={{appearance: 'none'}}></div>
           </div>
         </div>
       </div>
 
-      <CommentBottom />
+      <CommentBottom
+        setComment={setComment}
+        lastestComment={lastestComment}
+        setCommentCount={setCommentCount}
+      />
     </section>
   );
 }

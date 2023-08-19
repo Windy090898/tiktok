@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useContext, useRef, useState } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
 
 import classNames from 'classnames/bind';
@@ -10,17 +10,52 @@ import {
   HeartBreakIcon,
   MoreIcon,
   PlayIcon,
-  VolumeOnIcon,
 } from '~/components/Icon';
-import { Link, useNavigate } from 'react-router-dom';
-import Video from '~/components/Video/Video';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import ReactPlayer from 'react-player';
+import Volume from '~/components/Volume/Volume';
+import VideoProgress from '~/components/VideoProgress/VideoProgress';
+import { browserHistory } from 'react-router-dom';
+import { VideoDetailContext } from '~/context/VideoDetailProvider';
 const cx = classNames.bind(styles);
 
-function VideoContainer({ video }) {
+function VideoContainer() {
+  const {video} = useContext(VideoDetailContext)
   const navigate = useNavigate();
+
   const handleGoBack = () => {
-    navigate(-1);
+    navigate(-1)
   };
+
+  const [playing, setPlaying] = useState(true);
+  const [volume, setVolume] = useState(50);
+  const [playedPct, setPlayPct] = useState(0);
+  const [playedSeconds, setPlayingSeconds] = useState({});
+  const [totalSeconds, setTotalSeconds] = useState({});
+
+  const handleControlVideo = () => {
+    setPlaying(!playing);
+  };
+
+  const handlePlayerProgress = useCallback((state) => {
+    setPlayPct(state.played * 100);
+    let playedSeconds = state.playedSeconds.toFixed();
+    let loadedSeconds = state.loadedSeconds.toFixed();
+    setPlayingSeconds(playedSeconds);
+    setTotalSeconds(loadedSeconds);
+  }, []);
+
+  const videoRef = useRef();
+
+  const handleChangePlayedTime = useCallback(
+    (e) => {
+      setPlayPct(e.target.value);
+      videoRef.current.seekTo(playedPct / 100, 'fraction');
+      let playedSeconds = videoRef.current.getCurrentTime();
+      setPlayingSeconds(playedSeconds);
+    },
+    [playedPct],
+  );
   return (
     <section className={cx('video-container')}>
       <div className={cx('blur-background')}></div>
@@ -56,32 +91,34 @@ function VideoContainer({ video }) {
             <ArrowIcon />
           </div>
         </div>
-        <div className={cx('icon')}>
-          <VolumeOnIcon />
-        </div>
+        <Volume volume={volume} setVolume={setVolume} className={cx('icon')} />
       </div>
       {video && (
-        <div className={cx('video-wrapper')}>
-          <Video video={video} />
-          <button>
-            <PlayIcon />
-          </button>
-          <div className={cx('player-control')}>
-            <div className={cx('progess-bar-container')}>
-              <div
-                className={cx('progress-bar')}
-                style={{ width: `${20}%` }}
-              ></div>
-              <input
-                type="range"
-                min={0}
-                max={100}
-                value={20}
-                // onInput={handleChangePlayedTime}
-              />
-            </div>
-            <div className={cx('progress-time')}>00:01/00:40</div>
-          </div>
+        <div className={cx('video-wrapper')} onClick={handleControlVideo}>
+          <ReactPlayer
+            url={video.file_url}
+            playing={playing}
+            volume={parseFloat(volume / 100) || 0}
+            muted={volume === 0}
+            loop
+            width={'100%'}
+            height={'100%'}
+            onProgress={handlePlayerProgress}
+            ref={videoRef}
+          />
+          {!playing && (
+            <button className={cx('play-icon')}>
+              <PlayIcon width="6.5rem" height="6.5rem" />
+            </button>
+          )}
+          {playedSeconds && (
+            <VideoProgress
+              playedPct={playedPct}
+              handleChangePlayedTime={handleChangePlayedTime}
+              playedSeconds={playedSeconds}
+              totalSeconds={totalSeconds}
+            />
+          )}
         </div>
       )}
     </section>

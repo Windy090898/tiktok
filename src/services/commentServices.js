@@ -14,3 +14,57 @@ export const getCommentList = async (id) => {
     console.log(error);
   }
 };
+
+export const createComment = async (uuid, dataInput) => {
+  try {
+    let res = await httpRequest.post(
+      `videos/${uuid}/comments`,
+      JSON.stringify(dataInput),
+      {
+        headers: {
+          Authorization: 'Bearer ' + storage.get(TOKEN),
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const likeComment = async (id) => {
+  try {
+    let res = await httpRequest.post(
+      `comments/${id}/like`,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + storage.get(TOKEN),
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const unLikeComment = async (id) => {
+  try {
+    let res = await httpRequest.post(
+      `comments/${id}/unlike`,
+      {},
+      {
+        headers: {
+          Authorization: 'Bearer ' + storage.get(TOKEN),
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};

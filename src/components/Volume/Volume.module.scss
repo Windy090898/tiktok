@@ -1,0 +1,45 @@
+.control-volume {
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 120px;
+    width: 100%;
+    background-color: transparent;
+    appearance: none;
+    z-index: 2;
+  }
+
+  .volume-icon {
+    z-index: 10;
+    position: relative;
+  }
+
+  input[type='range'][orient='vertical'] {
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* Chromium */
+    appearance: slider-vertical;
+    accent-color: var(--white-color);
+    width: 4px;
+    height: 70px;
+    padding: 0;
+  }
+
+  .volume-change {
+    position: absolute;
+    top: -72px;
+    right: 50%;
+    transform: translateX(50%);
+    display: none;
+    z-index: 4;
+  }
+
+  &:hover {
+    .volume-change {
+      display: block;
+      opacity: 1;
+    }
+  }
+}

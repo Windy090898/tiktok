@@ -1,20 +1,14 @@
-import React, {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
-import PropTypes from 'prop-types';
+import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import ReactPlayer from 'react-player';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
 import styles from './Video.module.scss';
 
-import { PauseIcon, PlayIcon, VolumeOffIcon, VolumeOnIcon } from '../Icon';
+import { PauseIcon, PlayIcon } from '../Icon';
 import { useElementOnScreen } from '~/hooks';
 import images from '~/assets/img';
-import ReactPlayer from 'react-player';
-import { useNavigate } from 'react-router-dom';
+import Volume from '~/components/Volume';
 
 const cx = classNames.bind(styles);
 
@@ -42,6 +36,7 @@ function Video(
   };
 
   const visible = useElementOnScreen(options, videoRef);
+  const { username } = useParams();
 
   useEffect(() => {
     if (visible) {
@@ -65,23 +60,14 @@ function Video(
     }
   };
 
-  const handleVolume = () => {
-    setVolume((prev) => (prev === 0 ? 50 : 0));
+  const navigate = useNavigate();
+  const navigateToVidDetail = () => {
+    navigate(`/@${video.user.nickname}/video/${video.uuid}`);;
   };
-
-  const handleVolumeChange = (e) => {
-    if (isNaN(e.target.value)) {
-      setVolume(0);
-    } else {
-      setVolume(e.target.value);
-    }
-  };
-
-  
 
   return (
     <>
-      <div className={cx('video-container')}>
+      <div className={cx('video-container')} onClick={navigateToVidDetail}>
         <ReactPlayer
           url={file_url}
           playing={playing}
@@ -102,21 +88,7 @@ function Video(
             {!playing && <PlayIcon />}
             {playing && <PauseIcon />}
           </div>
-          <div className={cx('control-volume')}>
-            <div className={cx('volume-icon')} onClick={handleVolume}>
-              {volume !== 0 && <VolumeOnIcon />}
-              {volume === 0 && <VolumeOffIcon />}
-            </div>
-            <input
-              type="range"
-              className={cx('volume-change')}
-              orient="vertical"
-              min={0}
-              max={100}
-              value={volume}
-              onChange={handleVolumeChange}
-            />
-          </div>
+          <Volume volume={volume} setVolume={setVolume} />
         </div>
       )}
     </>

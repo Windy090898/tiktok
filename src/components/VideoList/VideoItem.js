@@ -19,7 +19,7 @@ import * as videoServices from '~/services/videoServices';
 
 const cx = classNames.bind(styles);
 
-function VideoItem({ video, videoType }) {
+function VideoItem({ video }) {
   const {
     user,
     description,
@@ -31,6 +31,7 @@ function VideoItem({ video, videoType }) {
   const [isFollow, setIsFollow] = useState(user.is_followed);
   const [followerCount, setFollowerCount] = useState(user.followers_count);
   const [like, setLike] = useState(false);
+  const [userLikeCount, setUserLikeCount] = useState(user.likes_count);
   const [likeCount, setLikeCount] = useState(likes_count || 0);
   const [commentCount, setCommentCount] = useState(comments_count || 0);
   const [shareCount, setShareCount] = useState(shares_count || 0);
@@ -88,32 +89,30 @@ function VideoItem({ video, videoType }) {
       const likeVideo = async () => {
         let response = await videoServices.likeVideo(video.id);
         setLikeCount(response.likes_count);
+        setUserLikeCount(response.user.likes_count);
       };
       likeVideo();
     } else {
       const unLikeVideo = async () => {
         let response = await videoServices.unLikeVideo(video.id);
         setLikeCount(response.likes_count);
+        setUserLikeCount(response.user.likes_count);
+
       };
       unLikeVideo();
     }
-  };
-
-  const navigate = useNavigate();
-
-  const navigateToVidDetail = () => {
-    navigate(`/@${video.user.nickname}/video/${video.uuid}`);
   };
 
   return (
     <>
       <AccPreview
         item={user}
-        onFollow={handleFollow}
         isFollow={isFollow}
         followerCount={followerCount}
-        likeCount={likeCount}
+        likeCount={userLikeCount}
         isLogin={isLogin}
+        setFollowerCount={setFollowerCount}
+        setIsFollow={setIsFollow}
       >
         <Link className={cx('avatar-container')} to={`/@${user.nickname}`}>
           <Image src={user.avatar} alt="" className={cx('avatar')}></Image>
@@ -124,11 +123,12 @@ function VideoItem({ video, videoType }) {
           <div className={cx('infor')}>
             <AccPreview
               item={user}
-              onFollow={handleFollow}
               isFollow={isFollow}
               followerCount={followerCount}
-              likeCount={likeCount}
+              likeCount={userLikeCount}
               isLogin={isLogin}
+              setFollowerCount={setFollowerCount}
+              setIsFollow={setIsFollow}
             >
               <Link className={cx('author')} to={`/@${user.nickname}`}>
                 <div className={cx('nickname')}>
@@ -158,10 +158,7 @@ function VideoItem({ video, videoType }) {
         </div>
         <div className={cx('body')}>
           <div className={cx('wrapper')}>
-            <div
-              className={cx('video-container')}
-              onClick={navigateToVidDetail}
-            >
+            <div className={cx('video-container')}>
               <Video video={video} control volume={50} loop />
             </div>
           </div>

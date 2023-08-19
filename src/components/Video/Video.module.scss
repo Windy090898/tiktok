@@ -5,6 +5,10 @@
   cursor: pointer;
 }
 
+.video {
+  object-fit: contain;
+}
+
 .control {
   position: absolute;
   bottom: 0;

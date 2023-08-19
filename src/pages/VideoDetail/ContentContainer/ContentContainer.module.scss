@@ -3,6 +3,7 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
+  cursor: pointer;
 }
 
 .content-container {
@@ -38,7 +39,7 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  overflow-y: scroll;
+  overflow: hidden auto;
   .comment-item {
     display: flex;
     align-items: flex-start;
@@ -48,13 +49,14 @@
     flex: 1;
     .nickname {
       font-weight: 600;
+      cursor: pointer;
     }
-    .view-reply,
-    .reply {
+    .comment-infor {
       margin-top: 4px;
       display: flex;
       align-items: center;
       color: rgba(22, 24, 35, 0.5);
+      
       font-size: 1.4rem;
       .comment-date {
         min-width: 80px;
@@ -63,12 +65,23 @@
         text-overflow: ellipsis;
         margin-right: 10px;
       }
+      .comment-like {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+
+        .comment-like-icon {
+          color: var(--white-color);
+          stroke: rgba(22, 24, 35, 0.5);
+          cursor: pointer;
+          &.liked {
+            color: var(--pink-color);
+            stroke: var(--pink-color);
+          }
+        }
+      }
     }
 
-    .view-reply {
-      font-weight: 500;
-      gap: 10px;
-    }
   }
 }
 
