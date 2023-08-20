@@ -21,9 +21,9 @@ function CommentItem({ comment }) {
     authorFollowCount,
     setAuthorFollowCount,
     convertDate,
-    videoLikeCount,
     totalVideoLike,
   } = useContext(VideoDetailContext);
+
   const [commentLikeCount, setCommentLikeCount] = useState(comment.likes_count);
   const [liked, setLiked] = useState(false);
   const [followerCount, setFollowerCount] = useState(
@@ -31,18 +31,23 @@ function CommentItem({ comment }) {
   );
   const [isFollow, setIsFollow] = useState(comment.user.is_followed);
 
+  // Check if the comment user is the author and handle change the follow status and follower count accordingly (for the accpreview section)
   useEffect(() => {
     if (author.id === comment.user.id) {
       setAuthorIsFollow(isFollow);
       setAuthorFollowCount(followerCount);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFollow]);
+
   useEffect(() => {
     if (author.id === comment.user.id) {
       setIsFollow(authorIsFollow);
       setFollowerCount(authorFollowCount);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authorIsFollow]);
+
   const likeComment = async () => {
     let response = await commentServices.likeComment(comment.id);
     setCommentLikeCount(response.likes_count);

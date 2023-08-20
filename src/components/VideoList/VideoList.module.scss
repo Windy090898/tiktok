@@ -148,11 +148,59 @@
   }
 }
 
+.loader-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-20%);
+  position: relative;
+}
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 40%;
+  margin-left: 10%;
+  transform: translate3d(-50%, -50%, 0);
+}
+
+.dot {
+  width: 20px;
+  height: 20px;
+  background: #3ac;
+  border-radius: 100%;
+  display: inline-block;
+  animation: slide 1s infinite;
+}
+
+@for $i from 1 to 5 {
+  .dot:nth-child(#{$i}) {
+    animation-delay: (0.1s * $i);
+    background-color: adjust-hue(#3ac, 50*$i);
+  }
+}
+
 @keyframes scaleUp {
   from {
     transform: scale(1);
   }
   to {
     transform: scale(1.2);
+  }
+}
+
+
+
+
+@keyframes slide {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(2);
+  }
+  100% {
+    transform: scale(1);
   }
 }

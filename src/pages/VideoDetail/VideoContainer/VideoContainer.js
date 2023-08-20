@@ -11,11 +11,10 @@ import {
   MoreIcon,
   PlayIcon,
 } from '~/components/Icon';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 import Volume from '~/components/Volume/Volume';
 import VideoProgress from '~/components/VideoProgress/VideoProgress';
-import { browserHistory } from 'react-router-dom';
 import { VideoDetailContext } from '~/context/VideoDetailProvider';
 const cx = classNames.bind(styles);
 

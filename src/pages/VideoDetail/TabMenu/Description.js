@@ -26,7 +26,6 @@ function Description() {
     authorFollowCount,
     setAuthorFollowCount,
     convertDate,
-    videoLikeCount,
     totalVideoLike,
   } = useContext(VideoDetailContext);
   const captionRef = useRef();

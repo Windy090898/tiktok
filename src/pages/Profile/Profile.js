@@ -10,6 +10,7 @@ import * as userServices from '~/services/userServices';
 import ProfileHeader from './ProfileHeader';
 import ProfileVideos from './ProfileVideos';
 import { AuthContext } from '~/context/AuthProvider';
+import { useElementOnBottom } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
@@ -41,25 +42,37 @@ function Profile() {
 
   // Video Section
   const [videoList, setVideoList] = useState([]);
-  const [idList, setIdList] = useState([]);
-
-  useEffect(() => {
-    const getUser = async () => {
-      let response = await userServices.getUser(nickname);
-      setUser(response);
-      let newVideoList = [];
-      if (activeTab === 0) {
-        newVideoList = await videoServices.getUserVideo(response.id);
-      } else if (activeTab === 2 && response.id === currentUser.id) {
-        newVideoList = await videoServices.getLikedVideos(response.id);
-      }
-      setVideoList(newVideoList);
-      setIdList(newVideoList.map((video) => video.id));
-    };
-    getUser();
-  }, [nickname, activeTab]);
+  const [page, setPage] = useState(1);
+  const pageRef = useRef();
+  pageRef.current = 1;
 
   const tabRef = useRef();
+
+  const getUserVideo = async (id) => {
+    let page = 1;
+    let newVideoList = [];
+    let response = [];
+    do {
+      if (activeTab === 0) {
+        response = await videoServices.getUserVideo(id, page);
+      } else if (activeTab === 2 && id === currentUser.id) {
+        response = await videoServices.getLikedVideos(id, page);
+      }
+      newVideoList = [...newVideoList, ...response];
+      page++;
+    } while (response.length > 0);
+
+    setVideoList(newVideoList);
+  };
+
+  useEffect(() => {
+    const fetchUserInfor = async () => {
+      let response = await userServices.getUser(nickname);
+      setUser(response);
+      getUserVideo(response.id);
+    };
+    fetchUserInfor();
+  }, [nickname, activeTab]);
 
   const handleBottomLine = (index) => {
     const tabItems = Array.from(tabRef.current.children);
@@ -111,7 +124,7 @@ function Profile() {
           ></div>
         </div>
         {videoList.length > 0 ? (
-          <ProfileVideos videoList={videoList} idList={idList} />
+          <ProfileVideos videoList={videoList} />
         ) : (
           <div className={cx('lock-msg')}>
             <RegularLockIcon className={cx('lock-icon')} />

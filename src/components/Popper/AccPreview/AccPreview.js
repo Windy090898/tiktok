@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
@@ -16,7 +16,6 @@ import * as followServices from '~/services/followServices';
 
 const cx = classNames.bind(styles);
 
-const defaultFn = () => {};
 
 function AccPreview({
   children,

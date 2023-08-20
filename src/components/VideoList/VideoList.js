@@ -24,7 +24,7 @@ function VideoList() {
   useEffect(() => {
     const setRandomPage = async () => {
       let response = await videoServices.videoList(videoType, 1);
-      let { total_pages } = response.meta.pagination;
+      let { total_pages } = response?.meta?.pagination;
       setTotalPage(total_pages);
       setPage(Math.floor(Math.random() * total_pages));
     };
@@ -62,18 +62,33 @@ function VideoList() {
     }
   }, [isBottom]);
 
-  return (
-    <div className={cx('wrapper')}>
-      {videoList.map((video, index) => {
-        let ref = index === endPage ? lastVideoRef : undefined;
-        return (
-          <div className={cx('item-container')} key={video.id} ref={ref}>
-            <VideoItem video={video} videoType={videoType} />
-          </div>
-        );
-      })}
-    </div>
-  );
+  if (videoList.length > 0) {
+    return (
+      <div className={cx('wrapper')}>
+        {videoList.map((video, index) => {
+          let ref = index === endPage ? lastVideoRef : undefined;
+          return (
+            <div className={cx('item-container')} key={video.id} ref={ref}>
+              <VideoItem video={video} videoType={videoType} />
+            </div>
+          );
+        })}
+      </div>
+    );
+  } else {
+    return (
+      <div className={cx('loader-container')}>
+        <div className={cx('loader')}>
+          <div className={cx("dot")}></div>
+          <div className={cx("dot")}></div>
+          <div className={cx("dot")}></div>
+          <div className={cx("dot")}></div>
+          <div className={cx("dot")}></div>
+        </div>
+        
+      </div>
+    );
+  }
 }
 
 export default memo(VideoList);

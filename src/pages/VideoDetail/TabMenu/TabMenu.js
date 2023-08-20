@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './TabMenu.module.scss';
 import {
@@ -81,7 +81,6 @@ const SUB_SHARE_ITEMS = [
 function TabMenu({ totalComments, borderDisplay, commentCount }) {
   const { video, videoLikeCount, setVideoLikeCount } =
     useContext(VideoDetailContext);
-  // const [likeCount, setLikeCount] = useState(video.likes_count);
   const [shareCount, setShareCount] = useState(video.shares_count);
 
   const [like, setLike] = useState(video.is_liked);

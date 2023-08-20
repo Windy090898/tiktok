@@ -36,7 +36,6 @@ function Video(
   };
 
   const visible = useElementOnScreen(options, videoRef);
-  const { username } = useParams();
 
   useEffect(() => {
     if (visible) {

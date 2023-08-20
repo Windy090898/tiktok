@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -10,7 +10,7 @@ import Image from '~/components/Image';
 import Video from '~/components/Video';
 import AccPreview from '~/components/Popper/AccPreview';
 import * as followServices from '~/services/followServices';
-import { IS_LOGIN, VIDEO_LIST, storage } from '~/storage';
+import { IS_LOGIN, storage } from '~/storage';
 import { AuthContext } from '~/context/AuthProvider';
 import Button from '~/components/Button';
 import { MusicIcon } from '~/components/Icon';

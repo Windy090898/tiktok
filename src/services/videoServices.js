@@ -114,9 +114,12 @@ export const updateVideo = async (id, dataInput) => {
   }
 };
 
-export const getUserVideo = async (id) => {
+export const getUserVideo = async (id, page = 1) => {
   try {
     let res = await httpRequest.get(`users/${id}/videos`, {
+      params: {
+        page
+      },
       headers: {
         Authorization: 'Bearer ' + storage.get(TOKEN),
         'Content-Type': 'application/json',
@@ -129,9 +132,12 @@ export const getUserVideo = async (id) => {
   }
 }
 
-export const getLikedVideos = async (id) => {
+export const getLikedVideos = async (id, page) => {
   try {
     let res = await httpRequest.get(`users/${id}/liked-videos`, {
+      params: {
+        page,
+      },
       headers: {
         Authorization: 'Bearer ' + storage.get(TOKEN),
         'Content-Type': 'application/json',

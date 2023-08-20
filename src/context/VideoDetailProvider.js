@@ -33,13 +33,8 @@ function VideoDetailProvider({ children }) {
       setTotalVideoLike(response.user.likes_count);
     };
     getVideo();
-  }, [videoLikeCount]);
+  }, [videoLikeCount, uuid]);
 
-//   useEffect(() => {
-//       if (author) {
-//         setTotalVideoLike(author.likes_count);
-//     }
-//   }, [videoLikeCount]);
   if (video && author) {
     return (
       <VideoDetailContext.Provider
