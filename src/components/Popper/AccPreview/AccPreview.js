@@ -13,9 +13,10 @@ import Button from '~/components/Button/Button';
 import { IS_LOGIN, storage } from '~/storage';
 import { AuthContext } from '~/context/AuthProvider';
 import * as followServices from '~/services/followServices';
+import { UserContext } from '~/context/UserProvider';
+import FollowButton from '~/components/FollowButton/FollowButton';
 
 const cx = classNames.bind(styles);
-
 
 function AccPreview({
   children,
@@ -25,13 +26,8 @@ function AccPreview({
   isFollow,
   setFollowerCount,
   setIsFollow,
-  isLogin = storage.get(IS_LOGIN),
 }) {
-
-  const { id, avatar, nickname, first_name, last_name, tick, bio } =
-    item;
-
-  const { setShowModal } = useContext(AuthContext);
+  const { id, avatar, nickname, first_name, last_name, tick, bio } = item;
 
   const tippyRef = useRef();
 
@@ -39,53 +35,6 @@ function AccPreview({
     tippyRef.current = tippy;
   };
 
-  const handleLoginShow = () => {
-    setShowModal(true);
-    tippyRef.current.hide();
-  };
-
-
-  const handleFollow = (id) => {
-    const followUser = async (id) => {
-      let response = await followServices.follow(id);
-      setFollowerCount(response.followers_count);
-      setIsFollow(!isFollow);
-    };
-
-    const unFollowUser = async (id) => {
-      let response = await followServices.unFollow(id);
-      setFollowerCount(response.followers_count);
-      setIsFollow(!isFollow);
-    };
-    if (isFollow) {
-      unFollowUser(id);
-    } else {
-      followUser(id);
-    }
-    
-  };
-
-  const renderButtonFollow = () => {
-    if (!isLogin) {
-      return (
-        <Button primary onClick={handleLoginShow}>
-          Follow
-        </Button>
-      );
-    } else if (!isFollow) {
-      return (
-        <Button primary onClick={() => handleFollow(id)}>
-          Follow
-        </Button>
-      );
-    } else {
-      return (
-        <Button outline onClick={() => handleFollow(id)}>
-          Following
-        </Button>
-      );
-    }
-  };
   return (
     // Using a wrapper <div> around the reference element solves this by creating a new parentNode context.
     <div>
@@ -100,7 +49,13 @@ function AccPreview({
             <div className={cx('account-preview')} tabIndex="-1" {...attrs}>
               <div className={cx('action')}>
                 <Image src={avatar} alt="" className={cx('avatar')}></Image>
-                {renderButtonFollow()}
+                <FollowButton
+                  isFollow={isFollow}
+                  setIsFollow={setIsFollow}
+                  setFollowerCount={setFollowerCount}
+                  tippyRef={tippyRef}
+                  id={id}
+                />
               </div>
               <div className={cx('user-infor')}>
                 <h4 className={cx('nickname')}>

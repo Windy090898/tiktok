@@ -14,7 +14,7 @@ function DefaultLayout({ children }) {
 
 
   return (
-    <UserProvider>
+
       <div className={cx('wrapper')}>
         <Header />
         <div className={cx('container')}>
@@ -22,7 +22,7 @@ function DefaultLayout({ children }) {
           <div className={cx('content')}>{children}</div>
         </div>
       </div>
-    </UserProvider>
+
   );
 }
 

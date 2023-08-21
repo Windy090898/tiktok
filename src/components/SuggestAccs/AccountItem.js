@@ -11,6 +11,7 @@ import AccPreview from '~/components/Popper/AccPreview';
 import * as followServices from '~/services/followServices';
 import { UserContext } from '~/context/UserProvider';
 import { Link } from 'react-router-dom';
+import { IS_LOGIN, storage } from '~/storage';
 
 const cx = classNames.bind(styles);
 
@@ -61,10 +62,10 @@ function AccountItem({ preview, item }) {
         item={item}
         likeCount={likes_count}
         isFollow={isFollow}
-        onFollow={handleFollow}
         followerCount={followerCount}
         setFollowerCount={setFollowerCount}
         setIsFollow={setIsFollow}
+        isLogin={storage.get(IS_LOGIN)}
       >
         {renderItem()}
       </AccPreview>

@@ -10,7 +10,8 @@ import config from '~/config'
 
 const cx = classNames.bind(styles)
 
-function SuggestAccs({ label, preview, type, renderArr }) {
+function SuggestAccs({ label, preview, renderArr }) {
+
   
   return (
     <div className={cx('wrapper')}>

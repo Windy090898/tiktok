@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -16,6 +16,7 @@ import Button from '~/components/Button';
 import { MusicIcon } from '~/components/Icon';
 import { CommentIcon, HeartIcon, ShareIcon } from '~/components/Icon';
 import * as videoServices from '~/services/videoServices';
+import FollowButton from '../FollowButton/FollowButton';
 
 const cx = classNames.bind(styles);
 
@@ -42,65 +43,32 @@ function VideoItem({ video }) {
     setShowModal(true);
   };
 
-  const handleFollow = (id) => {
-    let response;
-    const followUser = async () => {
-      response = await followServices.follow(id);
-      setFollowerCount(response.followers_count);
-      setIsFollow(!isFollow);
-    };
-    const unFollowUser = async () => {
-      response = await followServices.unFollow(id);
-      setFollowerCount(response.followers_count);
-      setIsFollow(!isFollow);
-    };
-    if (isFollow) {
-      unFollowUser();
-    } else {
-      followUser();
-    }
-  };
-
-  const renderButtonFollow = () => {
-    if (!isLogin) {
-      return (
-        <Button primary onClick={handleLoginShow}>
-          Follow
-        </Button>
-      );
-    } else if (!isFollow) {
-      return (
-        <Button primary onClick={() => handleFollow(user.id)}>
-          Follow
-        </Button>
-      );
-    } else {
-      return (
-        <Button outline onClick={() => handleFollow(user.id)}>
-          Following
-        </Button>
-      );
-    }
-  };
-
   const handleLike = () => {
-    setLike(!like);
-    if (!like) {
-      const likeVideo = async () => {
-        let response = await videoServices.likeVideo(video.id);
-        setLikeCount(response.likes_count);
-        setUserLikeCount(response.user.likes_count);
-      };
-      likeVideo();
+    if (isLogin) {
+      setLike(!like);
+      if (!like) {
+        const likeVideo = async () => {
+          let response = await videoServices.likeVideo(video.id);
+          setLikeCount(response.likes_count);
+          setUserLikeCount(response.user.likes_count);
+        };
+        likeVideo();
+      } else {
+        const unLikeVideo = async () => {
+          let response = await videoServices.unLikeVideo(video.id);
+          setLikeCount(response.likes_count);
+          setUserLikeCount(response.user.likes_count);
+        };
+        unLikeVideo();
+      }
     } else {
-      const unLikeVideo = async () => {
-        let response = await videoServices.unLikeVideo(video.id);
-        setLikeCount(response.likes_count);
-        setUserLikeCount(response.user.likes_count);
-
-      };
-      unLikeVideo();
+      handleLoginShow()
     }
+  };
+
+  const navigate = useNavigate();
+  const navigateToVidDetail = () => {
+    navigate(`/@${user.nickname}/video/${video.uuid}`);
   };
 
   return (
@@ -154,7 +122,13 @@ function VideoItem({ video }) {
               </div>
             </Link>
           </div>
-          {renderButtonFollow()}
+          <FollowButton
+            isFollow={isFollow}
+            setIsFollow={setIsFollow}
+            setFollowerCount={setFollowerCount}
+            tippyRef
+            id={user.id}
+          />
         </div>
         <div className={cx('body')}>
           <div className={cx('wrapper')}>
@@ -170,7 +144,11 @@ function VideoItem({ video }) {
               <div className={cx('label')}>{likeCount}</div>
             </li>
             <li className={cx('action-item')}>
-              <Button circle to="/comment" className={cx('icon')}>
+              <Button
+                circle
+                onClick={navigateToVidDetail}
+                className={cx('icon')}
+              >
                 <CommentIcon />
               </Button>
               <div className={cx('label')}>{commentCount}</div>

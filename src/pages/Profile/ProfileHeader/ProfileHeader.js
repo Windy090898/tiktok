@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import classNames from 'classnames/bind';
 import styles from './ProfileHeader.module.scss';
@@ -6,11 +6,15 @@ import Button from '~/components/Button';
 import { EditIcon, LightShareIcon } from '~/components/Icon';
 import Image from '~/components/Image';
 import EditProfileModal from './EditProfileModal';
+import { AuthContext } from '~/context/AuthProvider';
+import FollowButton from '~/components/FollowButton/FollowButton';
+import { UserContext } from '~/context/UserProvider';
 
 const cx = classNames.bind(styles);
 
 function ProfileHeader({ user }) {
   const {
+    id,
     nickname,
     avatar,
     first_name,
@@ -20,7 +24,14 @@ function ProfileHeader({ user }) {
     bio,
   } = user;
 
+  
+
   const [showModal, setShowModal] = useState(false);
+  const { currentUser } = useContext(AuthContext);
+  const {followedList} = useContext(UserContext);
+  const [isFollow, setIsFollow] = useState(followedList.includes(id));
+  const [followerCount, setFollowerCount] = useState(followers_count);
+
 
   return (
     <>
@@ -32,13 +43,24 @@ function ProfileHeader({ user }) {
           <div className={cx('title-container')}>
             <h3 className={cx('nickname')}>{nickname}</h3>
             <p className={cx('fullname')}>{first_name}</p>
-            <Button
-              className={cx('edit-btn')}
-              onClick={() => setShowModal(true)}
-            >
-              <EditIcon />
-              <span className={cx('edit-title')}>Edit Profile</span>
-            </Button>
+            {currentUser.id === id ? (
+              <Button
+                className={cx('profile-btn')}
+                onClick={() => setShowModal(true)}
+              >
+                <EditIcon />
+                <span className={cx('edit-title')}>Edit Profile</span>
+              </Button>
+            ) : (
+              <FollowButton
+                className={cx('profile-btn')}
+                isFollow={isFollow}
+                setIsFollow={setIsFollow}
+                setFollowerCount={setFollowerCount}
+                tippyRef
+                id={id}
+              />
+            )}
           </div>
         </div>
         <div className={cx('share')}>
@@ -50,7 +72,7 @@ function ProfileHeader({ user }) {
             <span className={cx('title')}>Following</span>
           </div>
           <div className={cx('countInfor-item')}>
-            <span className={cx('number')}>{followers_count || 0}</span>
+            <span className={cx('number')}>{followerCount || 0}</span>
             <span className={cx('title')}>Followers</span>
           </div>
           <div className={cx('countInfor-item')}>

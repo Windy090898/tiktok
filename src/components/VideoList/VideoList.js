@@ -24,9 +24,12 @@ function VideoList() {
   useEffect(() => {
     const setRandomPage = async () => {
       let response = await videoServices.videoList(videoType, 1);
-      let { total_pages } = response?.meta?.pagination;
-      setTotalPage(total_pages);
-      setPage(Math.floor(Math.random() * total_pages));
+
+      if (response) {
+        let { total_pages } = response?.meta?.pagination;
+        setTotalPage(total_pages);
+        setPage(Math.floor(Math.random() * total_pages));
+      }
     };
     setRandomPage();
   }, []);

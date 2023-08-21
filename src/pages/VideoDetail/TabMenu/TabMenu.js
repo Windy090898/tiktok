@@ -204,7 +204,7 @@ function TabMenu({ totalComments, borderDisplay, commentCount }) {
           </div>
           <div className={cx('tab-menu-container')}>
             <div>
-              Comments (<span>{totalComments}</span>)
+              Comments (<span>{commentCount}</span>)
             </div>
           </div>
           {borderDisplay && <div className={cx('border')}></div>}

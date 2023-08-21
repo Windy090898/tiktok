@@ -14,6 +14,7 @@ import * as followServices from '~/services/followServices';
 import { IS_LOGIN, storage } from '~/storage';
 import { AuthContext } from '~/context/AuthProvider';
 import { VideoDetailContext } from '~/context/VideoDetailProvider';
+import FollowButton from '~/components/FollowButton/FollowButton';
 
 const cx = classNames.bind(styles);
 
@@ -34,49 +35,6 @@ function Description() {
 
   const toggleCaptionExpanded = () => {
     setCaptionExpanded(!captionExpanded);
-  };
-
-  const handleFollow = (id) => {
-    const followUser = async (id) => {
-      let response = await followServices.follow(id);
-      setAuthorIsFollow(!authorIsFollow);
-      setAuthorFollowCount(response.followers_count);
-    };
-
-    const unFollowUser = async (id) => {
-      let response = await followServices.unFollow(id);
-      setAuthorIsFollow(!authorIsFollow);
-      setAuthorFollowCount(response.followers_count);
-
-    };
-    if (authorIsFollow) {
-      unFollowUser(id);
-    } else {
-      followUser(id);
-    }
-  };
-
-  const { setShowModal } = useContext(AuthContext);
-  const renderButtonFollow = (id) => {
-    if (!storage.get(IS_LOGIN)) {
-      return (
-        <Button primary onClick={() => setShowModal(true)}>
-          Follow
-        </Button>
-      );
-    } else if (!authorIsFollow) {
-      return (
-        <Button primary onClick={() => handleFollow(id)}>
-          Follow
-        </Button>
-      );
-    } else {
-      return (
-        <Button outline onClick={() => handleFollow(id)}>
-          Following
-        </Button>
-      );
-    }
   };
 
   return (
@@ -111,7 +69,13 @@ function Description() {
             </div>
           </Link>
         </AccPreview>
-        {renderButtonFollow(author.id)}
+        <FollowButton
+          isFollow={authorIsFollow}
+          setIsFollow={setAuthorIsFollow}
+          setFollowerCount={setAuthorFollowCount}
+          tippyRef
+          id={author.id}
+        />
       </div>
       <div className={cx('caption-wrapper')}>
         <div
