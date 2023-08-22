@@ -6,6 +6,7 @@ import GlobalStyles from './components/GlobalStyles';
 import AuthProvider from './context/AuthProvider';
 import UserModal from './components/UserModal/UserModal';
 import UserProvider from './context/UserProvider';
+import VideoListProvider from './context/VideoListProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,8 +14,10 @@ root.render(
     <GlobalStyles>
       <AuthProvider>
         <UserProvider>
-          <App />
-          <UserModal />
+          <VideoListProvider>
+            <App />
+            <UserModal />
+          </VideoListProvider>
         </UserProvider>
       </AuthProvider>
     </GlobalStyles>

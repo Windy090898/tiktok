@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react';
+import React, { forwardRef, useContext, useEffect, useRef, useState } from 'react';
 import ReactPlayer from 'react-player';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import { PauseIcon, PlayIcon } from '../Icon';
 import { useElementOnScreen } from '~/hooks';
 import images from '~/assets/img';
 import Volume from '~/components/Volume';
+import {  VideosContext } from '~/context/VideoListProvider';
 
 const cx = classNames.bind(styles);
 
@@ -20,6 +21,8 @@ function Video(
     loop = false,
     activeId,
     handleNextVideo,
+    videoList,
+    prePage = '/'
   },
   ref,
 ) {
@@ -29,6 +32,9 @@ function Video(
   const [playing, setPlaying] = useState(true);
   const [volume, setVolume] = useState(initialVolume);
 
+  const {setVideos, setPrevPage} = useContext(VideosContext);
+
+  
   let options = {
     root: null,
     rootMargin: '0px',
@@ -61,7 +67,9 @@ function Video(
 
   const navigate = useNavigate();
   const navigateToVidDetail = () => {
-    navigate(`/@${video.user.nickname}/video/${video.uuid}`);;
+    navigate(`/@${video.user.nickname}/video/${video.uuid}`);
+    setVideos(videoList);
+    setPrevPage(prePage)
   };
 
   return (

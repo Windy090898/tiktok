@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import classNames from 'classnames/bind';
 import styles from './ContentContainer.module.scss';
 import { MentionIcon, SmileIcon } from '~/components/Icon';
 import Tippy from '@tippyjs/react';
 import { useParams } from 'react-router-dom';
 import * as commentServices from '~/services/commentServices';
+import { VideoDetailContext } from '~/context/VideoDetailProvider';
 
 const cx = classNames.bind(styles);
 
-function CommentBottom({ setComment, lastestComment, setCommentCount }) {
+function CommentBottom({ setComment, lastestComment }) {
   const { uuid } = useParams();
+  const { setCommentCount} = useContext(VideoDetailContext)
   const [commentValue, setCommentValue] = useState('');
 
   const handleInputComment = (e) => {

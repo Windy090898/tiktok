@@ -78,9 +78,10 @@ const SUB_SHARE_ITEMS = [
   },
 ];
 
-function TabMenu({ totalComments, borderDisplay, commentCount }) {
-  const { video, videoLikeCount, setVideoLikeCount } =
+function TabMenu({ totalComments, borderDisplay }) {
+  const { video, videoLikeCount, setVideoLikeCount, commentCount } =
     useContext(VideoDetailContext);
+
   const [shareCount, setShareCount] = useState(video.shares_count);
 
   const [like, setLike] = useState(video.is_liked);

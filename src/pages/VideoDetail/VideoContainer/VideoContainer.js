@@ -1,4 +1,10 @@
-import React, { useCallback, useContext, useRef, useState } from 'react';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
 
 import classNames from 'classnames/bind';
@@ -16,15 +22,20 @@ import ReactPlayer from 'react-player';
 import Volume from '~/components/Volume/Volume';
 import VideoProgress from '~/components/VideoProgress/VideoProgress';
 import { VideoDetailContext } from '~/context/VideoDetailProvider';
+import { VideosContext } from '~/context/VideoListProvider';
 const cx = classNames.bind(styles);
 
 function VideoContainer() {
-  const {video} = useContext(VideoDetailContext)
-  const navigate = useNavigate();
+  const { video, setVideo, author } = useContext(VideoDetailContext);
+  const { videos, prevPage } = useContext(VideosContext);
 
-  const handleGoBack = () => {
-    navigate(-1)
-  };
+  const [activeIndex, setActiveIndex] = useState();
+
+  useEffect(() => {
+    const index = videos.findIndex((item) => item.id === video.id);
+    setActiveIndex(index);
+  }, [video, videos]);
+
 
   const [playing, setPlaying] = useState(true);
   const [volume, setVolume] = useState(50);
@@ -55,6 +66,31 @@ function VideoContainer() {
     },
     [playedPct],
   );
+
+  
+  const handlePrevVideo = () => {
+    let newVideo = videos[activeIndex - 1];
+    setVideo(newVideo);
+    navigate(`/@${newVideo.user.nickname}/video/${newVideo.uuid}`);
+    setPlaying(true)
+  };
+
+  const handleNextVideo = () => {
+    let newVideo = videos[activeIndex + 1];
+    setVideo(newVideo);
+    navigate(`/@${newVideo.user.nickname}/video/${newVideo.uuid}`);
+    setPlaying(true);
+  };
+
+  const navigate = useNavigate();
+
+  const handleGoBack = () => {
+    if (prevPage === '/profile') {
+      navigate(`/@${author.nickname}`);
+    } else if (prevPage === '/') {
+      navigate(`/`);
+    }
+  };
   return (
     <section className={cx('video-container')}>
       <div className={cx('blur-background')}></div>
@@ -83,12 +119,20 @@ function VideoContainer() {
           </div>
         </HeadlessTippy>
         <div className={cx('page-nav-button')}>
-          <div className={cx('icon', 'up-icon')}>
-            <ArrowIcon />
-          </div>
-          <div className={cx('icon', 'down-icon')}>
-            <ArrowIcon />
-          </div>
+          {activeIndex !== 0 && (
+            <div className={cx('icon', 'up-icon')} onClick={handlePrevVideo}>
+              
+                <ArrowIcon />
+              
+            </div>
+          )}
+          {activeIndex !== videos.length - 1 && (
+            <div className={cx('icon', 'down-icon')} onClick={handleNextVideo}>
+              
+                <ArrowIcon />
+              
+            </div>
+          )}
         </div>
         <Volume volume={volume} setVolume={setVolume} className={cx('icon')} />
       </div>

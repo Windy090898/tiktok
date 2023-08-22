@@ -20,7 +20,7 @@ import FollowButton from '../FollowButton/FollowButton';
 
 const cx = classNames.bind(styles);
 
-function VideoItem({ video }) {
+function VideoItem({ video, videoList }) {
   const {
     user,
     description,
@@ -133,7 +133,13 @@ function VideoItem({ video }) {
         <div className={cx('body')}>
           <div className={cx('wrapper')}>
             <div className={cx('video-container')}>
-              <Video video={video} control volume={50} loop />
+              <Video
+                video={video}
+                control
+                volume={50}
+                loop
+                videoList={videoList}
+              />
             </div>
           </div>
           <ul className={cx('actions')}>

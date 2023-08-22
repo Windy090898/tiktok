@@ -129,10 +129,12 @@ function Profile() {
           <div className={cx('lock-msg')}>
             <RegularLockIcon className={cx('lock-icon')} />
             <h3 className={cx('title')}>
-              This user's liked videos are private
+              This user's {activeTab === 1 ? 'favored' : 'liked'} videos are
+              private
             </h3>
             <p className={cx('sub-title')}>
-              Videos liked by letuankhang2002 are currently hidden
+              Videos {activeTab === 1 ? 'favored' : 'liked'} by 
+              {` ${user.nickname}`} are currently hidden
             </p>
           </div>
         )}

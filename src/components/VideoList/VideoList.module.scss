@@ -128,13 +128,13 @@
           .heart-icon.like {
             color: var(--pink-color);
             transition: all ease-in-out 200ms;
-            animation: scaleUp 0.2s linear;
+            animation: scaleUp 0.5s linear;
           }
 
           .save-icon.active {
             color: #face15;
             transition: all ease-in-out 200ms;
-            animation: scaleUp 0.2s linear;
+            animation: scaleUp 0.5s linear;
           }
 
           .label {
@@ -182,7 +182,7 @@
 
 @keyframes scaleUp {
   from {
-    transform: scale(1);
+    transform: scale(0.5);
   }
   to {
     transform: scale(1.2);

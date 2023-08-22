@@ -21,7 +21,7 @@ function ContentContainer() {
   const [totalComments, setTotalComments] = useState(0);
   const [borderDisplay, setBorderDisplay] = useState(false);
   const [comment, setComment] = useState('');
-  const [commentCount, setCommentCount] = useState(video.comments_count);
+  // const [commentCount, setCommentCount] = useState(video.comments_count);
   const lastestComment = useRef();
   const commentsRef = useRef();
 
@@ -64,7 +64,9 @@ function ContentContainer() {
           <div ref={lastestComment} style={{ appearance: 'none' }}></div>
         </div>
       ) : (
-        <span>Hãy là người đầu tiên bình luận!</span>
+        <div className={cx('no-comment')}>
+          Hãy là người đầu tiên bình luận!
+        </div>
       );
     } else {
       return (
@@ -82,7 +84,7 @@ function ContentContainer() {
     <section className={cx('content-container')}>
       <div className={cx('comment-container')}>
         <div className={cx('comment-list-container')} ref={commentsRef}>
-          <TabMenu borderDisplay={borderDisplay} commentCount={commentCount} />
+          <TabMenu borderDisplay={borderDisplay}  />
           {renderCommentList()}
           
         </div>
@@ -92,7 +94,7 @@ function ContentContainer() {
         <CommentBottom
           setComment={setComment}
           lastestComment={lastestComment}
-          setCommentCount={setCommentCount}
+          // setCommentCount={setCommentCount}
         />
       )}
     </section>

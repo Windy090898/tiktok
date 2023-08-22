@@ -38,6 +38,8 @@ function ProfileVideos({ videoList }) {
                 volume={0}
                 activeId={reverseVideoList[activeIndex].id}
                 handleNextVideo={handleNextVideo}
+                videoList={reverseVideoList}
+                prePage='/profile'
               ></Video>
               <div className={cx('video-bottom')}>
                 <PlayIcon width="1.8rem" height="1.8rem" />

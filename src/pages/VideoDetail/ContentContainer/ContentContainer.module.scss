@@ -136,11 +136,8 @@
   color: var(--tick-color);
 }
 
-.not-login-comment-list {
-  color: rgba(22, 24, 35, 0.75);
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+.no-comment {
+  margin-top: 20%;
+  text-align: center;
+  color: #ccc;
 }
