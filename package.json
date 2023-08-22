@@ -2,7 +2,7 @@
   "name": "tiktok",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://huynhngochomg.github.io/tiktok-ui",
+  "homepage": "https://windy090898.github.io/tiktok/",
   "start_url": ".",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.3.0",
