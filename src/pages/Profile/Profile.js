@@ -75,7 +75,7 @@ function Profile() {
   }, [nickname, activeTab]);
 
   const handleBottomLine = (index) => {
-    const tabItems = Array.from(tabRef.current.children);
+    let tabItems = Array.from(tabRef.current.children);
     let translate = 0;
     for (let i = 0; i < index; i++) {
       translate += tabItems[i].offsetWidth;
@@ -133,8 +133,8 @@ function Profile() {
               private
             </h3>
             <p className={cx('sub-title')}>
-              Videos {activeTab === 1 ? 'favored' : 'liked'} by 
-              {` ${user.nickname}`} are currently hidden
+              Videos {activeTab === 1 ? 'favored' : 'liked'} by
+              {user && `${user.nickname}`} are currently hidden
             </p>
           </div>
         )}
