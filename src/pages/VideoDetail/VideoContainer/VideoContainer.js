@@ -23,6 +23,7 @@ import Volume from '~/components/Volume/Volume';
 import VideoProgress from '~/components/VideoProgress/VideoProgress';
 import { VideoDetailContext } from '~/context/VideoDetailProvider';
 import { VideosContext } from '~/context/VideoListProvider';
+import config from '~/config';
 const cx = classNames.bind(styles);
 
 function VideoContainer() {
@@ -88,7 +89,7 @@ function VideoContainer() {
     if (prevPage === '/profile') {
       navigate(`/@${author.nickname}`);
     } else if (prevPage === '/') {
-      navigate(`/`);
+      navigate(config.routes.home);
     }
   };
   return (
