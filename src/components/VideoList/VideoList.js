@@ -14,7 +14,7 @@ function VideoList() {
   const location = useLocation();
   const pathName = location.pathname.slice(1);
 
-  const videoType = pathName ? pathName : 'for-you';
+  const videoType = pathName === 'following' ? pathName : 'for-you';
 
   const [videoList, setVideoList] = useState([]);
   const [page, setPage] = useState(null);
