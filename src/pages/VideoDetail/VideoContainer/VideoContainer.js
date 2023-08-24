@@ -90,7 +90,7 @@ function VideoContainer() {
       navigate(`/@${author.nickname}`);
     } else if (prevPage === '/') {
     console.log(config.routes.home)
-      // navigate(config.routes.home);
+      navigate(config.routes.home);
     }
   };
   return (
