@@ -89,7 +89,7 @@ function VideoContainer() {
     if (prevPage === '/profile') {
       navigate(`/@${author.nickname}`);
     } else if (prevPage === '/') {
-     navigate(-1);
+     navigate(config.routes.home);
     }
   };
   return (
