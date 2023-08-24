@@ -88,9 +88,8 @@ function VideoContainer() {
   const handleGoBack = () => {
     if (prevPage === '/profile') {
       navigate(`/@${author.nickname}`);
-    } else if (prevPage === '/') {
-     navigate(`${config.routes.home}/tiktok`);
-    }
+    } 
+    navigate(config.routes.home)
   };
   return (
     <section className={cx('video-container')}>
