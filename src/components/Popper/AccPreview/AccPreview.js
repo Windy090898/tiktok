@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 import Tippy from '@tippyjs/react/headless';
@@ -9,11 +9,6 @@ import styles from './AccPreview.module.scss';
 
 import Wrapper from '../Wrapper';
 import Image from '~/components/Image';
-import Button from '~/components/Button/Button';
-import { IS_LOGIN, storage } from '~/storage';
-import { AuthContext } from '~/context/AuthProvider';
-import * as followServices from '~/services/followServices';
-import { UserContext } from '~/context/UserProvider';
 import FollowButton from '~/components/FollowButton/FollowButton';
 
 const cx = classNames.bind(styles);

@@ -7,6 +7,9 @@ const routes = {
   explore: '/explore',
   live: '/live',
   suggest: '/suggest',
+  coin: '/coin',
+  settings: '/settings',
+  feedback: '/feedback',
 };
 
 export default routes

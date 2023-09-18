@@ -10,7 +10,7 @@ function Following() {
   const { setShowModal } = useContext(AuthContext);
 
   return isLogin ? (
-    <VideoList />
+    <VideoList videoType="following"/>
   ) : (
     <div className='not-login-message'>
       <Button outline onClick={() => setShowModal(true)}>

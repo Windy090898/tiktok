@@ -18,7 +18,7 @@ function Form({ formDisplay, setFormDisplay }) {
   const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
 
-  const { setAuth, setShowModal, setCurrentUser } = useContext(AuthContext);
+  const { setShowModal } = useContext(AuthContext);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,10 +36,7 @@ function Form({ formDisplay, setFormDisplay }) {
     if (response.error) {
       setErrMsg(response.error);
     } else {
-      // const userInfor = response?.data;
       const accessToken = response?.meta?.token;
-      // setAuth({ userInfor, accessToken });
-      // setCurrentUser(userInfor)
       storage.set(TOKEN, accessToken);
       storage.set(IS_LOGIN, true);
       storage.set(USER_ID, response?.data?.id)
@@ -48,7 +45,7 @@ function Form({ formDisplay, setFormDisplay }) {
       setShowModal(false);
     }
     setFormDisplay('signin');
-    window.location.href = '/';
+    window.location.href = '/tiktok';
   };
 
   return (

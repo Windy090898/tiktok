@@ -17,6 +17,7 @@ function Menu({
   onChange = defaultFn,
   hideOnClick = false,
 }) {
+
   const [history, setHistory] = useState([{ data: items }]);
 
   useEffect(() => {

@@ -8,11 +8,7 @@ import { Link } from 'react-router-dom';
 import Image from '~/components/Image/Image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
-import Button from '~/components/Button';
 import { MusicIcon } from '~/components/Icon';
-import * as followServices from '~/services/followServices';
-import { IS_LOGIN, storage } from '~/storage';
-import { AuthContext } from '~/context/AuthProvider';
 import { VideoDetailContext } from '~/context/VideoDetailProvider';
 import FollowButton from '~/components/FollowButton/FollowButton';
 

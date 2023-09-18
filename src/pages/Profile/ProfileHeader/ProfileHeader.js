@@ -6,13 +6,12 @@ import Button from '~/components/Button';
 import { EditIcon, LightShareIcon } from '~/components/Icon';
 import Image from '~/components/Image';
 import EditProfileModal from './EditProfileModal';
-import { AuthContext } from '~/context/AuthProvider';
 import FollowButton from '~/components/FollowButton/FollowButton';
 import { UserContext } from '~/context/UserProvider';
 
 const cx = classNames.bind(styles);
 
-function ProfileHeader({ user }) {
+function ProfileHeader({ user, isCurrentUser, setUser }) {
   const {
     id,
     nickname,
@@ -24,14 +23,10 @@ function ProfileHeader({ user }) {
     bio,
   } = user;
 
-  
-
   const [showModal, setShowModal] = useState(false);
-  const { currentUser } = useContext(AuthContext);
-  const {followedList} = useContext(UserContext);
+  const { followedList } = useContext(UserContext);
   const [isFollow, setIsFollow] = useState(followedList.includes(id));
   const [followerCount, setFollowerCount] = useState(followers_count);
-
 
   return (
     <>
@@ -43,7 +38,7 @@ function ProfileHeader({ user }) {
           <div className={cx('title-container')}>
             <h3 className={cx('nickname')}>{nickname}</h3>
             <p className={cx('fullname')}>{first_name}</p>
-            {currentUser.id === id ? (
+            {isCurrentUser ? (
               <Button
                 className={cx('profile-btn')}
                 onClick={() => setShowModal(true)}
@@ -82,7 +77,11 @@ function ProfileHeader({ user }) {
         </div>
         <div className={cx('bio')}>{bio || 'No bio yet.'}</div>
       </section>
-      <EditProfileModal showModal={showModal} setShowModal={setShowModal} />
+      <EditProfileModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        setUser={setUser}
+      />
     </>
   );
 }

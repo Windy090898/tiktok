@@ -3,11 +3,11 @@ import Header from '~/layouts/components/Header';
 import Footer from '~/layouts/components/Footer';
 
 import classNames from 'classnames/bind';
-import styles from './HeaderOnlyLayout.module.scss';
+import styles from './FullLayout.module.scss';
 
 const cx = classNames.bind(styles);
 
-function HeaderOnlyLayout({ children }) {
+function FullLayout({ children }) {
   return (
     <div className={cx('wrapper')}>
       <Header />
@@ -19,4 +19,4 @@ function HeaderOnlyLayout({ children }) {
   );
 }
 
-export default HeaderOnlyLayout;
+export default FullLayout;

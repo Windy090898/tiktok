@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useRef, useState } from 'react';
+import { Fragment, memo, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Tippy from '@tippyjs/react';
 import 'tippy.js/dist/tippy.css';
@@ -19,42 +19,14 @@ import * as authServices from '~/services/authServices';
 
 const cx = className.bind(styles);
 
-const MENU_ITEMS = [
-  {
-    icon: <i className="fa-solid fa-earth-asia"></i>,
-    title: 'English',
-    children: {
-      title: 'Language',
-      data: [
-        {
-          code: 'en',
-          title: 'English',
-        },
-        {
-          code: 'vn',
-          title: 'Vietnamese',
-        },
-      ],
-    },
-  },
-  {
-    icon: <i className="fa-solid fa-circle-question"></i>,
-    title: 'Feedback and help',
-    to: '/feedback',
-  },
-  {
-    icon: <i className="fa-solid fa-keyboard"></i>,
-    title: 'Keyboard shortcuts',
-  },
-];
-
 function Header() {
   const { setShowModal, currentUser } = useContext(AuthContext);
   const isLoggedIn = storage.get(IS_LOGIN);
 
   const [user, setCurrentUser] = useState(currentUser);
-  const [menuDisplay, setMenuDisplay] = useState(MENU_ITEMS);
+  const [menuDisplay, setMenuDisplay] = useState(config.menus.HEADER_MENU);
 
+  // Set current user when login
   useEffect(() => {
     const getCurrentUser = async () => {
       let response = await authServices.getCurrentUser();
@@ -69,18 +41,17 @@ function Header() {
           {
             icon: <i className="fa-solid fa-coins"></i>,
             title: 'Get coins',
-            to: '/coin',
+            to: config.routes.coin,
           },
           {
             icon: <i className="fa-solid fa-gear"></i>,
             title: 'Settings',
-            to: '/settings',
+            to: config.routes.settings,
           },
-          ...MENU_ITEMS,
+          ...config.menus.HEADER_MENU,
           {
             icon: <i className="fa-solid fa-arrow-right-from-bracket"></i>,
             title: 'Log out',
-            // to: '/',
             onClick: handleLogout,
             separate: true,
           },
@@ -90,24 +61,21 @@ function Header() {
     };
     if (isLoggedIn) {
       getCurrentUser();
-    } else {
-      setCurrentUser(null);
     }
   }, [isLoggedIn]);
 
   const handleLogout = async () => {
-    let token = storage.get(TOKEN);
-    await authServices.signout(token);
-    window.location.href = '/';
+    await authServices.signout(storage.get(TOKEN));
     storage.set(IS_LOGIN, false);
     setCurrentUser(null);
+    window.location.href = '/tiktok';
   };
 
   const handleMenuChange = (menuItem) => {
     if (menuItem.onClick) {
       menuItem.onClick();
     }
-  };
+  }
 
   const handleLoginShow = () => {
     setShowModal(true);
@@ -163,4 +131,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default memo(Header);

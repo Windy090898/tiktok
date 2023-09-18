@@ -6,7 +6,6 @@ export const AuthContext = createContext();
 
 function AuthProvider({ children }) {
   const [showModal, setShowModal] = useState(false);
-  // const [auth, setAuth] = useState({})
   const [currentUser, setCurrentUser] = useState({});
   const isLogin = storage.get(IS_LOGIN);
 

@@ -22,36 +22,38 @@ function ProfileVideos({ videoList }) {
     });
   }, [reverseVideoList]);
     
-  return (
-    <div className={cx('videos-list-container')}>
-      {reverseVideoList.map((video, index) => (
-        <Link
-          className={cx('video-item')}
-          key={index}
-          to={`video/${video.uuid}`}
-        >
-          <div className={cx('video-preview')}>
-            <div className={cx('video-wrapper')}>
-              <Video
-                video={video}
-                playing={activeIndex === index}
-                volume={0}
-                activeId={reverseVideoList[activeIndex].id}
-                handleNextVideo={handleNextVideo}
-                videoList={reverseVideoList}
-                prePage='/profile'
-              ></Video>
-              <div className={cx('video-bottom')}>
-                <PlayIcon width="1.8rem" height="1.8rem" />
-                <span className={cx('view-count')}>{video.views_count}</span>
+  if (reverseVideoList) {
+    return (
+      <div className={cx('videos-list-container')}>
+        {reverseVideoList.map((video, index) => (
+          <Link
+            className={cx('video-item')}
+            key={index}
+            to={`video/${video.uuid}`}
+          >
+            <div className={cx('video-preview')}>
+              <div className={cx('video-wrapper')}>
+                <Video
+                  video={video}
+                  playing={activeIndex === index}
+                  volume={0}
+                  activeId={reverseVideoList[activeIndex].id}
+                  handleNextVideo={handleNextVideo}
+                  videoList={reverseVideoList}
+                  prePage="/profile"
+                ></Video>
+                <div className={cx('video-bottom')}>
+                  <PlayIcon width="1.8rem" height="1.8rem" />
+                  <span className={cx('view-count')}>{video.views_count}</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div className={cx('title')}>{video.description}</div>
-        </Link>
-      ))}
-    </div>
-  );
+            <div className={cx('title')}>{video.description}</div>
+          </Link>
+        ))}
+      </div>
+    );
+  }
 }
 
 export default ProfileVideos;

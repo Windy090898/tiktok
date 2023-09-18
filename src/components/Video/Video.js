@@ -22,10 +22,12 @@ function Video(
     activeId,
     handleNextVideo,
     videoList,
-    prePage = '/'
+    prePage
   },
   ref,
 ) {
+
+
   const { file_url, thumb_url, id } = video;
   const videoRef = useRef();
 
@@ -67,10 +69,11 @@ function Video(
 
   const navigate = useNavigate();
   const navigateToVidDetail = () => {
-    navigate(`/@${video.user.nickname}/video/${video.uuid}`);
     setVideos(videoList);
-    setPrevPage(prePage)
+    setPrevPage(prePage);
+    navigate(`/@${video.user.nickname}/video/${video.uuid}`);
   };
+
 
   return (
     <>

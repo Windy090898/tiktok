@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { memo, useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
 
@@ -9,7 +9,6 @@ import styles from './VideoList.module.scss';
 import Image from '~/components/Image';
 import Video from '~/components/Video';
 import AccPreview from '~/components/Popper/AccPreview';
-import * as followServices from '~/services/followServices';
 import { IS_LOGIN, storage } from '~/storage';
 import { AuthContext } from '~/context/AuthProvider';
 import Button from '~/components/Button';
@@ -17,6 +16,7 @@ import { MusicIcon } from '~/components/Icon';
 import { CommentIcon, HeartIcon, ShareIcon } from '~/components/Icon';
 import * as videoServices from '~/services/videoServices';
 import FollowButton from '../FollowButton/FollowButton';
+import { VideosContext } from '~/context/VideoListProvider';
 
 const cx = classNames.bind(styles);
 
@@ -29,6 +29,7 @@ function VideoItem({ video, videoList }) {
     comments_count,
     shares_count,
   } = video;
+
   const [isFollow, setIsFollow] = useState(user.is_followed);
   const [followerCount, setFollowerCount] = useState(user.followers_count);
   const [like, setLike] = useState(false);
@@ -39,6 +40,9 @@ function VideoItem({ video, videoList }) {
 
   let isLogin = storage.get(IS_LOGIN);
   const { setShowModal } = useContext(AuthContext);
+  const { setVideos, setPrevPage } = useContext(VideosContext);
+  const {pathname} = useLocation()
+
   const handleLoginShow = () => {
     setShowModal(true);
   };
@@ -64,11 +68,15 @@ function VideoItem({ video, videoList }) {
     } else {
       handleLoginShow()
     }
-  };
+  }
 
   const navigate = useNavigate();
   const navigateToVidDetail = () => {
     navigate(`/@${user.nickname}/video/${video.uuid}`);
+    setVideos(videoList);
+    if (pathname) {
+      setPrevPage(pathname)
+    }
   };
 
   return (
@@ -139,6 +147,7 @@ function VideoItem({ video, videoList }) {
                 volume={50}
                 loop
                 videoList={videoList}
+                prePage={pathname}
               />
             </div>
           </div>
@@ -172,4 +181,4 @@ function VideoItem({ video, videoList }) {
   );
 }
 
-export default VideoItem;
+export default memo(VideoItem);

@@ -6,6 +6,8 @@ import React, {
   useState,
 } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
+import { Link, useNavigate } from 'react-router-dom';
+import ReactPlayer from 'react-player';
 
 import classNames from 'classnames/bind';
 import styles from './VideoContainer.module.scss';
@@ -17,8 +19,6 @@ import {
   MoreIcon,
   PlayIcon,
 } from '~/components/Icon';
-import { Link, useNavigate } from 'react-router-dom';
-import ReactPlayer from 'react-player';
 import Volume from '~/components/Volume/Volume';
 import VideoProgress from '~/components/VideoProgress/VideoProgress';
 import { VideoDetailContext } from '~/context/VideoDetailProvider';
@@ -36,7 +36,6 @@ function VideoContainer() {
     const index = videos.findIndex((item) => item.id === video.id);
     setActiveIndex(index);
   }, [video, videos]);
-
 
   const [playing, setPlaying] = useState(true);
   const [volume, setVolume] = useState(50);
@@ -68,12 +67,11 @@ function VideoContainer() {
     [playedPct],
   );
 
-  
   const handlePrevVideo = () => {
     let newVideo = videos[activeIndex - 1];
     setVideo(newVideo);
     navigate(`/@${newVideo.user.nickname}/video/${newVideo.uuid}`);
-    setPlaying(true)
+    setPlaying(true);
   };
 
   const handleNextVideo = () => {
@@ -86,10 +84,12 @@ function VideoContainer() {
   const navigate = useNavigate();
 
   const handleGoBack = () => {
+    console.log(prevPage)
     if (prevPage === '/profile') {
       navigate(`/@${author.nickname}`);
-    } 
-    navigate(config.routes.home)
+    } else {
+      navigate( prevPage);
+    }
   };
   return (
     <section className={cx('video-container')}>
@@ -119,18 +119,14 @@ function VideoContainer() {
           </div>
         </HeadlessTippy>
         <div className={cx('page-nav-button')}>
-          {activeIndex !== 0 && (
+          {videos.length > 1 && activeIndex !== 0 && (
             <div className={cx('icon', 'up-icon')} onClick={handlePrevVideo}>
-              
-                <ArrowIcon />
-              
+              <ArrowIcon />
             </div>
           )}
-          {activeIndex !== videos.length - 1 && (
+          {videos.length > 1 && activeIndex !== videos.length - 1 && (
             <div className={cx('icon', 'down-icon')} onClick={handleNextVideo}>
-              
-                <ArrowIcon />
-              
+              <ArrowIcon />
             </div>
           )}
         </div>

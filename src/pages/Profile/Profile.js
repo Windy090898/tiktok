@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { memo, useContext, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
@@ -10,7 +10,6 @@ import * as userServices from '~/services/userServices';
 import ProfileHeader from './ProfileHeader';
 import ProfileVideos from './ProfileVideos';
 import { AuthContext } from '~/context/AuthProvider';
-import { useElementOnBottom } from '~/hooks';
 
 const cx = classNames.bind(styles);
 
@@ -34,6 +33,7 @@ function Profile() {
 
   //User section
   const [user, setUser] = useState();
+  const [isCurrentUser, setIsCurrentUser] = useState(false);
 
   // Tab section
   const [tabBottomWidth, setTabBottomWidth] = useState(0);
@@ -42,37 +42,48 @@ function Profile() {
 
   // Video Section
   const [videoList, setVideoList] = useState([]);
-  const [page, setPage] = useState(1);
-  const pageRef = useRef();
-  pageRef.current = 1;
 
   const tabRef = useRef();
 
-  const getUserVideo = async (id) => {
+  useEffect(() => {
+    setActiveTab(0);
+    handleBottomLine(0);
+
+    const fetchUsernVideos = async () => {
+      let response = await userServices.getUser(nickname);
+      setUser(response);
+      getUserVideo(response.id, 0);
+      setIsCurrentUser(response.id === currentUser.id);
+    };
+    if (nickname) {
+      fetchUsernVideos();
+    }
+  }, [nickname]);
+
+  useEffect(() => {
+    const fetchVideos = async () => {
+      getUserVideo(user.id, activeTab);
+    };
+    if (user) {
+      fetchVideos();
+    }
+  }, [activeTab]);
+
+  const getUserVideo = async (id, activeTab) => {
     let page = 1;
     let newVideoList = [];
     let response = [];
     do {
-      if (activeTab === 0) {
-        response = await videoServices.getUserVideo(id, page);
-      } else if (activeTab === 2 && id === currentUser.id) {
+      if (activeTab === 2 && isCurrentUser) {
         response = await videoServices.getLikedVideos(id, page);
+      } else if (activeTab === 0) {
+        response = await videoServices.getUserVideo(id, page);
       }
       newVideoList = [...newVideoList, ...response];
       page++;
     } while (response.length > 0);
-
     setVideoList(newVideoList);
   };
-
-  useEffect(() => {
-    const fetchUserInfor = async () => {
-      let response = await userServices.getUser(nickname);
-      setUser(response);
-      getUserVideo(response.id);
-    };
-    fetchUserInfor();
-  }, [nickname, activeTab]);
 
   const handleBottomLine = (index) => {
     let tabItems = Array.from(tabRef.current.children);
@@ -84,11 +95,6 @@ function Profile() {
     setTabBottomWidth(tabItems[index].offsetWidth);
   };
 
-  useEffect(() => {
-    setActiveTab(0);
-    handleBottomLine(0);
-  }, [nickname]);
-
   const handleChangeTab = (index) => {
     handleBottomLine(index);
     setActiveTab(index);
@@ -96,7 +102,13 @@ function Profile() {
 
   return (
     <div className={cx('wrapper')}>
-      {user && <ProfileHeader user={user} />}
+      {user && currentUser && (
+        <ProfileHeader
+          user={user}
+          isCurrentUser={isCurrentUser}
+          setUser={setUser}
+        />
+      )}
       <section className={cx('main')}>
         <div
           className={cx('nav-tab')}
@@ -123,7 +135,7 @@ function Profile() {
             }}
           ></div>
         </div>
-        {videoList.length > 0 ? (
+        {(currentUser && user && isCurrentUser) || videoList.length > 0 ? (
           <ProfileVideos videoList={videoList} />
         ) : (
           <div className={cx('lock-msg')}>
@@ -143,4 +155,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default memo(Profile);

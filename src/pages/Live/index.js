@@ -1,9 +1,8 @@
 import React from 'react'
+import ComingSoon from '../ComingSoon';
 
 function Live() {
-  return (
-    <div>Live</div>
-  )
+  return <ComingSoon />;
 }
 
 export default Live

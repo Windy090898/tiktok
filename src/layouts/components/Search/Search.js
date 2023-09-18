@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import HeadlessTippy from '@tippyjs/react/headless';
 
 import className from 'classnames/bind';
@@ -13,6 +13,7 @@ import { SearchIcon } from '~/components/Icon';
 const cx = className.bind(styles);
 
 function Search() {
+
   const [searchText, setSearchText] = useState('');
   const [searchResult, setSearchResult] = useState([]);
   const [showResult, setShowResult] = useState(false);
@@ -64,7 +65,7 @@ function Search() {
     setShowResult(false);
     setSearchText('');
     setSearchResult([]);
-  };
+  }
   return (
     // Using a wrapper <div> tag around the reference element solves Tippy problems by creating a new parentNode context
     <div>
@@ -86,7 +87,6 @@ function Search() {
         )}
         visible={searchResult.length > 0 && showResult}
         onClickOutside={handleHideResult}
-        // hideOnClick
       >
         <div className={cx('nav-search')}>
           <input
@@ -118,4 +118,4 @@ function Search() {
   );
 }
 
-export default Search;
+export default memo(Search);

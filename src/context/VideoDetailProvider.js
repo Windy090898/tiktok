@@ -34,7 +34,9 @@ function VideoDetailProvider({ children }) {
       setTotalVideoLike(response.user.likes_count);
       setCommentCount(response.comments_count);
     };
-    getVideo();
+    if (uuid) {
+      getVideo();
+    }
   }, [uuid]);
 
   useEffect(() => {
@@ -43,7 +45,9 @@ function VideoDetailProvider({ children }) {
       setVideoLikeCount(response.likes_count);
       setTotalVideoLike(response.user.likes_count);
     };
-    getVideo();
+    if (uuid) {
+      getVideo();
+    }
   }, [videoLikeCount]);
 
   

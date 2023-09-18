@@ -35,8 +35,7 @@ function UserProvider({ children }) {
   // if followedList length change => re get API to have new list
   useEffect(() => {
     const getSuggestAccs = async () => {
-      let response;
-        response = await userServices.suggestAccs(1, 5, followedList.join(','));
+      let response = await userServices.suggestAccs(1, 5, followedList.join(','));
       setSuggestAccs(response);
     };
     getSuggestAccs();

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -11,8 +11,7 @@ import config from '~/config'
 const cx = classNames.bind(styles)
 
 function SuggestAccs({ label, preview, renderArr }) {
-
-  
+ 
   return (
     <div className={cx('wrapper')}>
       <p className={cx('label')}>{label}</p>
@@ -37,4 +36,4 @@ SuggestAccs.propTypes = {
   preview: PropTypes.bool,
 }
 
-export default SuggestAccs
+export default memo(SuggestAccs)

@@ -1,8 +1,9 @@
 import React from 'react'
+import ComingSoon from '../ComingSoon'
 
 function Explore() {
   return (
-    <div>Explore</div>
+    <ComingSoon />
   )
 }
 

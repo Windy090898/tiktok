@@ -12,7 +12,7 @@ import * as authServices from '~/services/authServices';
 
 const cx = classNames.bind(styles);
 
-function EditProfileModal({ showModal, setShowModal }) {
+function EditProfileModal({ showModal, setShowModal, setUser }) {
   const { currentUser, setCurrentUser } = useContext(AuthContext);
   const { nickname, avatar, first_name, bio } = currentUser;
   const [editAvatar, setEditAvatar] = useState(null);
@@ -90,6 +90,7 @@ function EditProfileModal({ showModal, setShowModal }) {
       editBio !== bio && formData.append('bio', editBio);
       const response = await authServices.updateCurrentUser(formData);
       setCurrentUser(response);
+      setUser(response)
       setShowModal(false);
     };
     updateUser();
@@ -126,9 +127,10 @@ function EditProfileModal({ showModal, setShowModal }) {
               <input
                 type="text"
                 placeholder="Username"
-                className={cx('edit-input-text')}
+                className={cx('edit-input-text', 'username')}
                 value={editUsername}
                 onInput={handleChangeUsername}
+                disabled
               />
               <p className={cx('username-link')}>
                 www.tiktok.com/@{editUsername}

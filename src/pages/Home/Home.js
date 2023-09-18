@@ -2,7 +2,7 @@ import React from 'react';
 import VideoList from '~/components/VideoList';
 
 function Home() {
-  return <VideoList />;
+  return <VideoList videoType="for-you" />;
 }
 
 export default Home;

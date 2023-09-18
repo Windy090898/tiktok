@@ -15,8 +15,8 @@ root.render(
       <AuthProvider>
         <UserProvider>
           <VideoListProvider>
-            <App />
-            <UserModal />
+              <App />
+              <UserModal />
           </VideoListProvider>
         </UserProvider>
       </AuthProvider>

@@ -6,21 +6,16 @@ import styles from './VideoList.module.scss';
 import * as videoServices from '~/services/videoServices';
 import { useElementOnBottom } from '~/hooks';
 import VideoItem from './VideoItem';
-import { useLocation } from 'react-router-dom';
 
 const cx = classNames.bind(styles);
 
-function VideoList() {
-  const location = useLocation();
-  const pathName = location.pathname.slice(1);
-
-  const videoType = pathName === 'following' ? pathName : 'for-you';
-
+function VideoList({ videoType }) {
   const [videoList, setVideoList] = useState([]);
   const [page, setPage] = useState(null);
-  const [endPage, setEndPage] = useState();
+  const [endIndex, setEndIndex] = useState();
   const [totalPage, setTotalPage] = useState(null);
 
+  // get a random page to call API, 1 time only when page load
   useEffect(() => {
     const setRandomPage = async () => {
       let response = await videoServices.videoList(videoType, 1);
@@ -34,12 +29,13 @@ function VideoList() {
     setRandomPage();
   }, []);
 
+  // setVideoList to render when have page
   useEffect(() => {
     const getVideoList = async () => {
       let response = await videoServices.videoList(videoType, page);
       const newList = [...videoList, ...response.data];
       setVideoList(newList);
-      setEndPage(newList.length - 1);
+      setEndIndex(newList.length - 1);
     };
     if (page) {
       getVideoList();
@@ -53,6 +49,7 @@ function VideoList() {
   };
   let isBottom = useElementOnBottom(lastVideoRef, options);
 
+  // Update page number when scroll to bottom
   useEffect(() => {
     if (isBottom) {
       setPage((prev) => {
@@ -69,10 +66,13 @@ function VideoList() {
     return (
       <div className={cx('wrapper')}>
         {videoList.map((video, index) => {
-          let ref = index === endPage ? lastVideoRef : undefined;
+          let ref = index === endIndex ? lastVideoRef : undefined;
           return (
             <div className={cx('item-container')} key={video.id} ref={ref}>
-              <VideoItem video={video} videoType={videoType} videoList={videoList} />
+              <VideoItem
+                video={video}
+                videoList={videoList}
+              />
             </div>
           );
         })}
@@ -82,13 +82,12 @@ function VideoList() {
     return (
       <div className={cx('loader-container')}>
         <div className={cx('loader')}>
-          <div className={cx("dot")}></div>
-          <div className={cx("dot")}></div>
-          <div className={cx("dot")}></div>
-          <div className={cx("dot")}></div>
-          <div className={cx("dot")}></div>
+          <div className={cx('dot')}></div>
+          <div className={cx('dot')}></div>
+          <div className={cx('dot')}></div>
+          <div className={cx('dot')}></div>
+          <div className={cx('dot')}></div>
         </div>
-        
       </div>
     );
   }
