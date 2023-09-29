@@ -1,19 +1,20 @@
 {
   "files": {
-    "main.css": "/tiktok/static/css/main.88bf8319.css",
-    "main.js": "/tiktok/static/js/main.935ef807.js",
+    "main.css": "/tiktok/static/css/main.db0d33a8.css",
+    "main.js": "/tiktok/static/js/main.b78dce72.js",
     "static/js/787.fe00223f.chunk.js": "/tiktok/static/js/787.fe00223f.chunk.js",
+    "static/media/coming-soon-bg.jpg": "/tiktok/static/media/coming-soon-bg.9789888698b774072833.jpg",
     "static/media/login-image.jpg": "/tiktok/static/media/login-image.6f90f9010c6a618ff926.jpg",
     "static/media/signup-image.jpg": "/tiktok/static/media/signup-image.a76d36f87b29b5619b75.jpg",
     "static/media/footerLogo.svg": "/tiktok/static/media/footerLogo.7b2b45b33fc958a5d6e83eb20fa3c982.svg",
     "static/media/headerLogo.svg": "/tiktok/static/media/headerLogo.c6838e82b1ed98b0e5f32b4f50151b5d.svg",
     "index.html": "/tiktok/index.html",
-    "main.88bf8319.css.map": "/tiktok/static/css/main.88bf8319.css.map",
-    "main.935ef807.js.map": "/tiktok/static/js/main.935ef807.js.map",
+    "main.db0d33a8.css.map": "/tiktok/static/css/main.db0d33a8.css.map",
+    "main.b78dce72.js.map": "/tiktok/static/js/main.b78dce72.js.map",
     "787.fe00223f.chunk.js.map": "/tiktok/static/js/787.fe00223f.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.88bf8319.css",
-    "static/js/main.935ef807.js"
+    "static/css/main.db0d33a8.css",
+    "static/js/main.b78dce72.js"
   ]
 }
